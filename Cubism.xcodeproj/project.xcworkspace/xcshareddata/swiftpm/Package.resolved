@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ArrayBuilder",
+        "repositoryURL": "https://github.com/juliand665/ArrayBuilder",
+        "state": {
+          "branch": null,
+          "revision": "f713ffd1432c5fb7cbf47a84bd634b18256957b6",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "HandyOperators",
+        "repositoryURL": "https://github.com/juliand665/HandyOperators",
+        "state": {
+          "branch": null,
+          "revision": "27f60a00d9ad310afdf66cc7a25adc4bdb387d58",
+          "version": "2.0.1"
+        }
+      },
+      {
+        "package": "UserDefault",
+        "repositoryURL": "https://github.com/juliand665/UserDefault",
+        "state": {
+          "branch": null,
+          "revision": "01f3380fb7ba86b4ac0c81d96c8992bed9f2b8f5",
+          "version": "1.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

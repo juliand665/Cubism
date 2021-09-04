@@ -1,0 +1,562 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
+		B96E9BFB26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
+		B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BED26E2755300A46A3B /* ContentView.swift */; };
+		B96E9BFD26E2755600A46A3B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BED26E2755300A46A3B /* ContentView.swift */; };
+		B96E9BFE26E2755600A46A3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B96E9BEE26E2755600A46A3B /* Assets.xcassets */; };
+		B96E9BFF26E2755600A46A3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B96E9BEE26E2755600A46A3B /* Assets.xcassets */; };
+		B96E9C0A26E27A4C00A46A3B /* HandyOperators in Frameworks */ = {isa = PBXBuildFile; productRef = B96E9C0926E27A4C00A46A3B /* HandyOperators */; };
+		B96E9C0D26E2867800A46A3B /* ArrayBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = B96E9C0C26E2867800A46A3B /* ArrayBuilder */; };
+		B96E9C0F26E2883600A46A3B /* TimerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C0E26E2883600A46A3B /* TimerScreen.swift */; };
+		B96E9C1026E2883600A46A3B /* TimerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C0E26E2883600A46A3B /* TimerScreen.swift */; };
+		B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */ = {isa = PBXBuildFile; productRef = B96E9C1226E2992D00A46A3B /* UserDefault */; };
+		B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
+		B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
+		B9CF259326E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
+		B9CF259426E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
+		B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */; };
+		B9CF259726E2DF9E00E14E94 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */; };
+		B9CF259926E2DFDA00E14E94 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */; };
+		B9CF259A26E2DFDA00E14E94 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */; };
+		B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
+		B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B96E9BEC26E2755300A46A3B /* CubismApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubismApp.swift; sourceTree = "<group>"; };
+		B96E9BED26E2755300A46A3B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B96E9BEE26E2755600A46A3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B96E9BF326E2755600A46A3B /* Cubism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubism.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B96E9BF926E2755600A46A3B /* Cubism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubism.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B96E9C0E26E2883600A46A3B /* TimerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerScreen.swift; sourceTree = "<group>"; };
+		B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Previews.swift"; sourceTree = "<group>"; };
+		B9CF259226E2DF6C00E14E94 /* TimerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerResult.swift; sourceTree = "<group>"; };
+		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
+		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
+		B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Helpers.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B96E9BF026E2755600A46A3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B96E9C0D26E2867800A46A3B /* ArrayBuilder in Frameworks */,
+				B96E9C0A26E27A4C00A46A3B /* HandyOperators in Frameworks */,
+				B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B96E9BF626E2755600A46A3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B96E9BE626E2755200A46A3B = {
+			isa = PBXGroup;
+			children = (
+				B96E9BEB26E2755300A46A3B /* Shared */,
+				B96E9BF426E2755600A46A3B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B96E9BEB26E2755300A46A3B /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B96E9BEC26E2755300A46A3B /* CubismApp.swift */,
+				B96E9BED26E2755300A46A3B /* ContentView.swift */,
+				B9CF259126E2DF5700E14E94 /* Timer */,
+				B96E9C1426E2D82700A46A3B /* Helpers */,
+				B96E9BEE26E2755600A46A3B /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		B96E9BF426E2755600A46A3B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B96E9BF326E2755600A46A3B /* Cubism.app */,
+				B96E9BF926E2755600A46A3B /* Cubism.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B96E9C1426E2D82700A46A3B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */,
+				B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */,
+				B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B9CF259126E2DF5700E14E94 /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				B96E9C0E26E2883600A46A3B /* TimerScreen.swift */,
+				B9CF259226E2DF6C00E14E94 /* TimerResult.swift */,
+				B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */,
+			);
+			path = Timer;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B96E9BF226E2755600A46A3B /* Cubism (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B96E9C0226E2755600A46A3B /* Build configuration list for PBXNativeTarget "Cubism (iOS)" */;
+			buildPhases = (
+				B96E9BEF26E2755600A46A3B /* Sources */,
+				B96E9BF026E2755600A46A3B /* Frameworks */,
+				B96E9BF126E2755600A46A3B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Cubism (iOS)";
+			packageProductDependencies = (
+				B96E9C0926E27A4C00A46A3B /* HandyOperators */,
+				B96E9C0C26E2867800A46A3B /* ArrayBuilder */,
+				B96E9C1226E2992D00A46A3B /* UserDefault */,
+			);
+			productName = "Cubism (iOS)";
+			productReference = B96E9BF326E2755600A46A3B /* Cubism.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B96E9BF826E2755600A46A3B /* Cubism (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B96E9C0526E2755600A46A3B /* Build configuration list for PBXNativeTarget "Cubism (macOS)" */;
+			buildPhases = (
+				B96E9BF526E2755600A46A3B /* Sources */,
+				B96E9BF626E2755600A46A3B /* Frameworks */,
+				B96E9BF726E2755600A46A3B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Cubism (macOS)";
+			productName = "Cubism (macOS)";
+			productReference = B96E9BF926E2755600A46A3B /* Cubism.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B96E9BE726E2755200A46A3B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					B96E9BF226E2755600A46A3B = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					B96E9BF826E2755600A46A3B = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = B96E9BEA26E2755200A46A3B /* Build configuration list for PBXProject "Cubism" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B96E9BE626E2755200A46A3B;
+			packageReferences = (
+				B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */,
+				B96E9C0B26E2867800A46A3B /* XCRemoteSwiftPackageReference "ArrayBuilder" */,
+				B96E9C1126E2992D00A46A3B /* XCRemoteSwiftPackageReference "UserDefault" */,
+			);
+			productRefGroup = B96E9BF426E2755600A46A3B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B96E9BF226E2755600A46A3B /* Cubism (iOS) */,
+				B96E9BF826E2755600A46A3B /* Cubism (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B96E9BF126E2755600A46A3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B96E9BFE26E2755600A46A3B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B96E9BF726E2755600A46A3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B96E9BFF26E2755600A46A3B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B96E9BEF26E2755600A46A3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9CF259326E2DF6C00E14E94 /* TimerResult.swift in Sources */,
+				B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
+				B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
+				B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */,
+				B96E9C0F26E2883600A46A3B /* TimerScreen.swift in Sources */,
+				B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */,
+				B9CF259926E2DFDA00E14E94 /* Stopwatch.swift in Sources */,
+				B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B96E9BF526E2755600A46A3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9CF259426E2DF6C00E14E94 /* TimerResult.swift in Sources */,
+				B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
+				B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
+				B96E9BFD26E2755600A46A3B /* ContentView.swift in Sources */,
+				B96E9C1026E2883600A46A3B /* TimerScreen.swift in Sources */,
+				B9CF259726E2DF9E00E14E94 /* TimeFormatting.swift in Sources */,
+				B9CF259A26E2DFDA00E14E94 /* Stopwatch.swift in Sources */,
+				B96E9BFB26E2755600A46A3B /* CubismApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B96E9C0026E2755600A46A3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B96E9C0126E2755600A46A3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		B96E9C0326E2755600A46A3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V2EPDFA9PV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
+				PRODUCT_NAME = Cubism;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B96E9C0426E2755600A46A3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V2EPDFA9PV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
+				PRODUCT_NAME = Cubism;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B96E9C0626E2755600A46A3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V2EPDFA9PV;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
+				PRODUCT_NAME = Cubism;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B96E9C0726E2755600A46A3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V2EPDFA9PV;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
+				PRODUCT_NAME = Cubism;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B96E9BEA26E2755200A46A3B /* Build configuration list for PBXProject "Cubism" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B96E9C0026E2755600A46A3B /* Debug */,
+				B96E9C0126E2755600A46A3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B96E9C0226E2755600A46A3B /* Build configuration list for PBXNativeTarget "Cubism (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B96E9C0326E2755600A46A3B /* Debug */,
+				B96E9C0426E2755600A46A3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B96E9C0526E2755600A46A3B /* Build configuration list for PBXNativeTarget "Cubism (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B96E9C0626E2755600A46A3B /* Debug */,
+				B96E9C0726E2755600A46A3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/juliand665/HandyOperators";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		B96E9C0B26E2867800A46A3B /* XCRemoteSwiftPackageReference "ArrayBuilder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/juliand665/ArrayBuilder";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		B96E9C1126E2992D00A46A3B /* XCRemoteSwiftPackageReference "UserDefault" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/juliand665/UserDefault";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B96E9C0926E27A4C00A46A3B /* HandyOperators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */;
+			productName = HandyOperators;
+		};
+		B96E9C0C26E2867800A46A3B /* ArrayBuilder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C0B26E2867800A46A3B /* XCRemoteSwiftPackageReference "ArrayBuilder" */;
+			productName = ArrayBuilder;
+		};
+		B96E9C1226E2992D00A46A3B /* UserDefault */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C1126E2992D00A46A3B /* XCRemoteSwiftPackageReference "UserDefault" */;
+			productName = UserDefault;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B96E9BE726E2755200A46A3B /* Project object */;
+}
