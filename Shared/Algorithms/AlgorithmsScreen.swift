@@ -43,25 +43,18 @@ struct AlgorithmCell: View {
 	let algorithm: Algorithm
 	
 	var body: some View {
-		VStack(alignment: .leading, spacing: 8) {
-			Text(algorithm.name).bold().foregroundStyle(.secondary)
+		HStack(spacing: 20) {
+			CubeConfigurationDiagram(configuration: algorithm.configuration)
 			
-			ForEach(static: algorithm.variants) { variant in
-				Text(variant.description(using: NaturalNotation.self)) // TODO: allow choosing notation
+			VStack(alignment: .leading, spacing: 8) {
+				Text(algorithm.name).bold().foregroundStyle(.secondary)
+				
+				ForEach(static: algorithm.variants) { variant in
+					Text(variant.description(using: NaturalNotation.self)) // TODO: allow choosing notation
+				}
 			}
 		}
 		.padding(.vertical, 8)
-	}
-}
-
-extension ForEach where Content: View {
-	init<StaticData: RandomAccessCollection>(
-		static staticData: StaticData,
-		@ViewBuilder content: @escaping (StaticData.Element) -> Content
-	) where Data == Array<StaticData.Index>, ID == StaticData.Index {
-		self.init(Array(staticData.indices), id: \.self) { i in
-			content(staticData[i])
-		}
 	}
 }
 
@@ -72,5 +65,11 @@ struct AlgorithmsScreen_Previews: PreviewProvider {
 		NavigationView {
 			AlgorithmsList(folder: .twoLookOLL)
 		}
+		.inEachColorScheme()
+		
+		NavigationView {
+			AlgorithmsList(folder: .minimalPLL)
+		}
+		.inEachColorScheme()
     }
 }

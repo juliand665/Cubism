@@ -6,14 +6,14 @@ enum CubeConfiguration: Codable {
 }
 
 struct OLLConfiguration: Codable {
-	var correctEdges: FaceEdge = .all
+	var correctEdges = FaceEdge.Set.all
 	
 	var neCorner: CornerState?
 	var seCorner: CornerState?
 	var swCorner: CornerState?
 	var nwCorner: CornerState?
 	
-	static func edgesOnly(correctEdges: FaceEdge) -> Self {
+	static func edgesOnly(correctEdges: FaceEdge.Set) -> Self {
 		.init(correctEdges: correctEdges)
 	}
 	
@@ -40,28 +40,53 @@ struct PLLPermutation: Codable {
 	var cornerCycles: [[FaceCorner]] = []
 }
 
-struct FaceEdge: OptionSet, Codable {
-	static let north = Self(rawValue: 1 << 0)
-	static let east = Self(rawValue: 1 << 1)
-	static let south = Self(rawValue: 1 << 2)
-	static let west = Self(rawValue: 1 << 3)
+enum FaceEdge: Int, Codable {
+	case north
+	case east
+	case south
+	case west
 	
-	static let all: Self = [.north, .east, .south, .west]
-	
-	var rawValue: UInt8
+	struct Set: OptionSet, Codable {
+		static let north = Self(.north)
+		static let east = Self(.east)
+		static let south = Self(.south)
+		static let west = Self(.west)
+		
+		static let all: Self = [.north, .east, .south, .west]
+		
+		var rawValue: UInt8
+	}
 }
 
-struct FaceCorner: OptionSet, Codable {
+extension FaceEdge.Set {
+	init(_ edge: FaceEdge) {
+		self.init(rawValue: 1 << edge.rawValue)
+	}
+}
+
+enum FaceCorner: Int, Codable {
+	case northEast
+	case southEast
+	case southWest
+	case northWest
+	
 	static let ne = northEast
-	static let northEast = Self(rawValue: 1 << 0)
 	static let se = southEast
-	static let southEast = Self(rawValue: 1 << 1)
 	static let sw = southWest
-	static let southWest = Self(rawValue: 1 << 2)
 	static let nw = northWest
-	static let northWest = Self(rawValue: 1 << 3)
 	
-	static let all: Self = [.ne, .se, .sw, .nw]
-	
-	var rawValue: UInt8
+	struct Set: OptionSet, Codable {
+		static let ne = northEast
+		static let northEast = Self(rawValue: 1 << 0)
+		static let se = southEast
+		static let southEast = Self(rawValue: 1 << 1)
+		static let sw = southWest
+		static let southWest = Self(rawValue: 1 << 2)
+		static let nw = northWest
+		static let northWest = Self(rawValue: 1 << 3)
+		
+		static let all: Self = [.ne, .se, .sw, .nw]
+		
+		var rawValue: UInt8
+	}
 }

@@ -32,7 +32,7 @@ extension AlgorithmCollection.Folder {
 			// corners
 			Algorithm(
 				name: "Sune",
-				configuration: .oll(.cornersOnly(se: .facingCW, sw: .facingCW, nw: .facingCW)),
+				configuration: .oll(.cornersOnly(ne: .facingCW, se: .facingCW, nw: .facingCW)),
 				variants: ["(R U Ri) U (R UU Ri)"]
 			),
 			Algorithm(
@@ -131,7 +131,11 @@ extension Algorithm {
 		configuration: .pll(.init(
 			edgeCycles: [[.east, .south, .west]]
 		)),
-		variants: ["FF U (L Ri) FF (Li R) U FF"]
+		variants: [
+			"MM Ui M UU Mi Ui MM",
+			"FF U (L Ri) FF (Li R) U FF",
+			"RR U [R U Ri Ui] (Ri Ui) (Ri U Ri)",
+		]
 	)
 	
 	static let uPermCCW = Self(
@@ -139,7 +143,11 @@ extension Algorithm {
 		configuration: .pll(.init(
 			edgeCycles: [[.west, .south, .east]]
 		)),
-		variants: ["FF Ui (L Ri) FF (Li R) Ui FF"]
+		variants: [
+			"MM U M UU Mi U MM",
+			"FF Ui (L Ri) FF (Li R) Ui FF",
+			"[R Ui] [R U] [R U] [R Ui] Ri Ui RR",
+		]
 	)
 	
 	static let hPerm = Self(

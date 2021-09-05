@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B92A59D626E46B64002AC260 /* CGeometry in Frameworks */ = {isa = PBXBuildFile; productRef = B92A59D526E46B64002AC260 /* CGeometry */; };
 		B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */; };
 		B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
 		B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
@@ -34,6 +35,7 @@
 		B9CF259A26E2DFDA00E14E94 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */; };
 		B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
 		B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
+		B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,7 @@
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Helpers.swift"; sourceTree = "<group>"; };
+		B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfigurationDiagram.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B92A59D626E46B64002AC260 /* CGeometry in Frameworks */,
 				B96E9C0D26E2867800A46A3B /* ArrayBuilder in Frameworks */,
 				B96E9C0A26E27A4C00A46A3B /* HandyOperators in Frameworks */,
 				B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */,
@@ -81,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */,
+				B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */,
 			);
 			path = Algorithms;
 			sourceTree = "<group>";
@@ -168,6 +173,7 @@
 				B96E9C0926E27A4C00A46A3B /* HandyOperators */,
 				B96E9C0C26E2867800A46A3B /* ArrayBuilder */,
 				B96E9C1226E2992D00A46A3B /* UserDefault */,
+				B92A59D526E46B64002AC260 /* CGeometry */,
 			);
 			productName = "Cubism (iOS)";
 			productReference = B96E9BF326E2755600A46A3B /* Cubism.app */;
@@ -221,6 +227,7 @@
 				B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */,
 				B96E9C0B26E2867800A46A3B /* XCRemoteSwiftPackageReference "ArrayBuilder" */,
 				B96E9C1126E2992D00A46A3B /* XCRemoteSwiftPackageReference "UserDefault" */,
+				B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */,
 			);
 			productRefGroup = B96E9BF426E2755600A46A3B /* Products */;
 			projectDirPath = "";
@@ -267,6 +274,7 @@
 				B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */,
 				B9CF259926E2DFDA00E14E94 /* Stopwatch.swift in Sources */,
 				B9A2962F26E43495005C59D1 /* Notation.swift in Sources */,
+				B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */,
 				B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */,
 				B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */,
 				B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */,
@@ -554,6 +562,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/juliand665/CGeometry";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
 		B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/juliand665/HandyOperators";
@@ -581,6 +597,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B92A59D526E46B64002AC260 /* CGeometry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */;
+			productName = CGeometry;
+		};
 		B96E9C0926E27A4C00A46A3B /* HandyOperators */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */;
