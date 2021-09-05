@@ -29,7 +29,7 @@ struct AlgorithmsScreen: View {
 }
 
 struct AlgorithmsList: View {
-	let folder: AlgorithmCollection.Folder
+	let folder: AlgorithmFolder
 	
 	var body: some View {
 		List(folder.algorithms) { algorithm in
@@ -52,27 +52,38 @@ struct AlgorithmCell: View {
 				Text(algorithm.name).bold().foregroundStyle(.secondary)
 				
 				ForEach(static: algorithm.variants) { variant in
+					Divider()
+					
 					Text(variant.description(using: NaturalNotation.self)) // TODO: allow choosing notation
 						.fixedSize(horizontal: false, vertical: true) // allow multiple lines
 				}
 			}
 		}
-		.padding(.vertical, 8)
+		.padding(.vertical, 12)
+	}
+}
+
+extension MoveSequence {
+	private static let thinSpace = Character(UnicodeScalar(0x2009)!)
+	private static let moveSpacing = " " + String(repeating: thinSpace, count: 2)
+	
+	func description(using notation: Notation.Type) -> String {
+		moves.map(notation.description(for:)).joined(separator: Self.moveSpacing)
 	}
 }
 
 struct AlgorithmsScreen_Previews: PreviewProvider {
     static var previews: some View {
         AlgorithmsScreen()
+			.inEachColorScheme()
 		
 		NavigationView {
 			AlgorithmsList(folder: .twoLookOLL)
 		}
-		.inEachColorScheme()
 		
 		NavigationView {
-			AlgorithmsList(folder: .minimalPLL)
+			AlgorithmsList(folder: .fullPLL)
 		}
-		.inEachColorScheme()
+		.preferredColorScheme(.dark)
     }
 }

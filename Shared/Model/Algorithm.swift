@@ -17,10 +17,6 @@ struct Algorithm: Identifiable, Codable {
 
 struct MoveSequence: Codable {
 	var moves: [Move]
-	
-	func description(using notation: Notation.Type) -> String {
-		moves.map(notation.description(for:)).joined(separator: " ")
-	}
 }
 
 extension MoveSequence: Collection {
@@ -43,15 +39,15 @@ extension MoveSequence: Collection {
 }
 
 struct AlgorithmCollection {
-	var folders: [Folder]
+	var folders: [AlgorithmFolder]
+}
+
+struct AlgorithmFolder: Identifiable {
+	let id = UUID()
 	
-	struct Folder: Identifiable {
-		let id = UUID()
-		
-		var name: String
-		var description: String
-		var algorithms: [Algorithm]
-	}
+	var name: String
+	var description: String
+	var algorithms: [Algorithm]
 }
 
 struct Move: Codable {

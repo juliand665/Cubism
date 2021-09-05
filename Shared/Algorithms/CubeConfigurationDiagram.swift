@@ -320,7 +320,8 @@ struct CubeConfigurationDiagram_Previews: PreviewProvider {
 				neCorner: .facingCCW, swCorner: .facingCW, nwCorner: .correct
 			)))
 			CubeConfigurationDiagram(configuration: Algorithm.tPerm.configuration!)
-			CubeConfigurationDiagram(configuration: Algorithm.uPermCW.configuration!)
+			CubeConfigurationDiagram(configuration: Algorithm.uPermB.configuration!)
+			CubeConfigurationDiagram(configuration: Algorithm.gPermA.configuration!)
 		}
 		.inEachColorScheme()
 		.previewInterfaceOrientation(.landscapeLeft)

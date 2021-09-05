@@ -23,6 +23,9 @@
 		B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */ = {isa = PBXBuildFile; productRef = B96E9C1226E2992D00A46A3B /* UserDefault */; };
 		B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
 		B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
+		B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476526E5732200E19911 /* OLLAlgorithms.swift */; };
+		B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476726E5737500E19911 /* PLLAlgorithms.swift */; };
+		B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476926E5738D00E19911 /* MiscAlgorithms.swift */; };
 		B9A2962B26E43453005C59D1 /* NotationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962A26E43453005C59D1 /* NotationParser.swift */; };
 		B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */; };
 		B9A2962F26E43495005C59D1 /* Notation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962E26E43495005C59D1 /* Notation.swift */; };
@@ -48,6 +51,9 @@
 		B96E9BF926E2755600A46A3B /* Cubism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubism.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96E9C0E26E2883600A46A3B /* TimerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerScreen.swift; sourceTree = "<group>"; };
 		B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Previews.swift"; sourceTree = "<group>"; };
+		B988476526E5732200E19911 /* OLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLLAlgorithms.swift; sourceTree = "<group>"; };
+		B988476726E5737500E19911 /* PLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLAlgorithms.swift; sourceTree = "<group>"; };
+		B988476926E5738D00E19911 /* MiscAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscAlgorithms.swift; sourceTree = "<group>"; };
 		B9A2962A26E43453005C59D1 /* NotationParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotationParser.swift; sourceTree = "<group>"; };
 		B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfiguration.swift; sourceTree = "<group>"; };
 		B9A2962E26E43495005C59D1 /* Notation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notation.swift; sourceTree = "<group>"; };
@@ -131,12 +137,23 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		B988476426E572D800E19911 /* Base Algorithms */ = {
+			isa = PBXGroup;
+			children = (
+				B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */,
+				B988476526E5732200E19911 /* OLLAlgorithms.swift */,
+				B988476726E5737500E19911 /* PLLAlgorithms.swift */,
+				B988476926E5738D00E19911 /* MiscAlgorithms.swift */,
+			);
+			path = "Base Algorithms";
+			sourceTree = "<group>";
+		};
 		B9A2963226E434ED005C59D1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				B96AB4D026E3B358003E38E4 /* Algorithm.swift */,
 				B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */,
-				B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */,
+				B988476426E572D800E19911 /* Base Algorithms */,
 				B9A2962E26E43495005C59D1 /* Notation.swift */,
 				B9A2962A26E43453005C59D1 /* NotationParser.swift */,
 			);
@@ -267,6 +284,8 @@
 				B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
 				B9A2963126E434C4005C59D1 /* BaseAlgorithms.swift in Sources */,
 				B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
+				B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */,
+				B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */,
 				B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */,
 				B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */,
 				B9A2962B26E43453005C59D1 /* NotationParser.swift in Sources */,
@@ -278,6 +297,7 @@
 				B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */,
 				B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */,
 				B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */,
+				B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
