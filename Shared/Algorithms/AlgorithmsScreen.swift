@@ -53,6 +53,7 @@ struct AlgorithmCell: View {
 				
 				ForEach(static: algorithm.variants) { variant in
 					Text(variant.description(using: NaturalNotation.self)) // TODO: allow choosing notation
+						.fixedSize(horizontal: false, vertical: true) // allow multiple lines
 				}
 			}
 		}
