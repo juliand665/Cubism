@@ -70,6 +70,12 @@ struct CubeConfigurationDiagram: View {
 		typealias Parts = DiagramParts
 		
 		let permutation: PLLPermutation
+		let edges: PLLEdges
+		
+		init(permutation: PLLPermutation) {
+			self.permutation = permutation
+			self.edges = .init() <- { $0.apply(permutation) }
+		}
 		
 		var body: some View {
 			ZStack {
@@ -87,40 +93,41 @@ struct CubeConfigurationDiagram: View {
 		@ViewBuilder
 		var face: some View {
 			let spacing = DiagramParts.spacing
+			
 			VStack(spacing: spacing) {
 				HStack(spacing: spacing) {
 					Parts.cornerSpacer
-					Parts.horizontalTile(color: .orange) // TODO: switch colors based on cycles
-					Parts.horizontalTile(color: .orange)
-					Parts.horizontalTile(color: .orange)
+					Parts.horizontalTile(color: edges.colors[0])
+					Parts.horizontalTile(color: edges.colors[1])
+					Parts.horizontalTile(color: edges.colors[2])
 					Parts.cornerSpacer
 				}
 				HStack(spacing: spacing) {
-					Parts.verticalTile(color: .blue)
+					Parts.verticalTile(color: edges.colors[11])
 					Parts.yellowSquareTile
 					Parts.yellowSquareTile
 					Parts.yellowSquareTile
-					Parts.verticalTile(color: .green)
+					Parts.verticalTile(color: edges.colors[3])
 				}
 				HStack(spacing: spacing) {
-					Parts.verticalTile(color: .blue)
+					Parts.verticalTile(color: edges.colors[10])
 					Parts.yellowSquareTile
 					Parts.yellowSquareTile
 					Parts.yellowSquareTile
-					Parts.verticalTile(color: .green)
+					Parts.verticalTile(color: edges.colors[4])
 				}
 				HStack(spacing: spacing) {
-					Parts.verticalTile(color: .blue)
+					Parts.verticalTile(color: edges.colors[9])
 					Parts.yellowSquareTile
 					Parts.yellowSquareTile
 					Parts.yellowSquareTile
-					Parts.verticalTile(color: .green)
+					Parts.verticalTile(color: edges.colors[5])
 				}
 				HStack(spacing: spacing) {
 					Parts.cornerSpacer
-					Parts.horizontalTile(color: .red)
-					Parts.horizontalTile(color: .red)
-					Parts.horizontalTile(color: .red)
+					Parts.horizontalTile(color: edges.colors[8])
+					Parts.horizontalTile(color: edges.colors[7])
+					Parts.horizontalTile(color: edges.colors[6])
 					Parts.cornerSpacer
 				}
 			}
@@ -267,6 +274,41 @@ enum DiagramParts {
 	
 	struct Point {
 		var x, y: Int
+	}
+}
+
+struct PLLEdges {
+	private static let faceColors = [Color.orange, .green, .red, .blue] // NESW
+	private static let baseEdgeColors = faceColors.flatMap { repeatElement($0, count: 3) }
+	
+	var colors = Self.baseEdgeColors
+	
+	private func index(of edge: FaceEdge) -> Int {
+		edge.rawValue * 3 + 1
+	}
+	
+	private func index(of corner: FaceCorner, clockwise: Bool) -> Int {
+		(corner.rawValue * 3 + (clockwise ? 3 : 2)) % colors.count
+	}
+	
+	mutating func apply(_ permutation: PLLPermutation) {
+		for cycle in permutation.edgeCycles {
+			cycleColors(at: cycle.map(index(of:)))
+		}
+		
+		for cycle in permutation.cornerCycles {
+			for isClockwise in [false, true] {
+				cycleColors(at: cycle.map { index(of: $0, clockwise: isClockwise) })
+			}
+		}
+	}
+	
+	mutating func cycleColors(at indices: [Int]) {
+		guard let first = indices.first else { return }
+		var prev = colors[first]
+		for index in indices.reversed() {
+			swap(&colors[index], &prev)
+		}
 	}
 }
 
