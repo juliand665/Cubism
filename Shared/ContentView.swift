@@ -5,6 +5,9 @@ struct ContentView: View {
 		TabView {
 			TimerScreen()
 				.tabItem { Label("Timer", systemImage: "stopwatch") }
+			
+			AlgorithmsScreen()
+				.tabItem { Label("Algorithms", systemImage: "list.number") }
 		}
 	}
 }
