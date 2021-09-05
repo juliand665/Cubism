@@ -44,7 +44,9 @@ struct AlgorithmCell: View {
 	
 	var body: some View {
 		HStack(spacing: 20) {
-			CubeConfigurationDiagram(configuration: algorithm.configuration)
+			if let configuration = algorithm.configuration {
+				CubeConfigurationDiagram(configuration: configuration)
+			}
 			
 			VStack(alignment: .leading, spacing: 8) {
 				Text(algorithm.name).bold().foregroundStyle(.secondary)

@@ -5,7 +5,7 @@ struct Algorithm: Identifiable, Codable {
 	let id = UUID()
 	
 	var name: String
-	var configuration: CubeConfiguration
+	var configuration: CubeConfiguration?
 	var variants: [MoveSequence]
 	
 	private enum CodingKeys: String, CodingKey {

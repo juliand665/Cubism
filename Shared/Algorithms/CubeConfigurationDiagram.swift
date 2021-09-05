@@ -253,14 +253,6 @@ struct CubeConfigurationDiagram: View {
 	}
 }
 
-extension View {
-	func sizeIndependent() -> some View {
-		self
-			.offset(x: 1, y: 1)
-			.frame(width: 2, height: 2) // zero frames are treated as hidden
-	}
-}
-
 private let squareSize = 16.0
 private let edgeSize = 4.0
 private let _cornerRadius = 1.0
@@ -273,17 +265,6 @@ var cornerSpacer: some View {
 	Color.clear.frame(width: edgeSize, height: edgeSize)
 }
 
-extension ForEach where Content: View {
-	init<StaticData: RandomAccessCollection>(
-		static staticData: StaticData,
-		@ViewBuilder content: @escaping (StaticData.Element) -> Content
-	) where Data == Array<StaticData.Index>, ID == StaticData.Index {
-		self.init(Array(staticData.indices), id: \.self) { i in
-			content(staticData[i])
-		}
-	}
-}
-
 struct CubeConfigurationDiagram_Previews: PreviewProvider {
     static var previews: some View {
 		HStack(spacing: 20) {
@@ -291,8 +272,8 @@ struct CubeConfigurationDiagram_Previews: PreviewProvider {
 				correctEdges: [.south, .east],
 				neCorner: .facingCCW, swCorner: .facingCW, nwCorner: .correct
 			)))
-			CubeConfigurationDiagram(configuration: Algorithm.tPerm.configuration)
-			CubeConfigurationDiagram(configuration: Algorithm.uPermCW.configuration)
+			CubeConfigurationDiagram(configuration: Algorithm.tPerm.configuration!)
+			CubeConfigurationDiagram(configuration: Algorithm.uPermCW.configuration!)
 		}
 		.inEachColorScheme()
 		.previewInterfaceOrientation(.landscapeLeft)
