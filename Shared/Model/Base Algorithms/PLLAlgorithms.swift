@@ -54,20 +54,22 @@ extension Algorithm {
 	static let aPermA = Self(
 		name: "Aa (clockwise)",
 		configuration: .pll(.init(
-			cornerCycles: [[.nw, .ne, .sw]]
+			cornerCycles: [[.nw, .ne, .se]]
 		)),
 		variants: [
-			"x LL DD Li Ui L DD Li U Li",
+			"x (Ri U Ri) DD (R Ui Ri) DD RR",
+			"yi x LL DD Li Ui L DD Li U Li",
 		]
 	)
 	
 	static let aPermB = Self(
 		name: "Ab (counterclockwise)",
 		configuration: .pll(.init(
-			cornerCycles: [[.nw, .sw, .se]]
+			cornerCycles: [[.sw, .se, .ne]]
 		)),
 		variants: [
-			"x' LL DD L U Li DD L Ui L",
+			"xi (R Ui R) DD (Ri U R) DD RR",
+			"y xi LL DD L U Li DD L Ui L",
 		]
 	)
 	
@@ -78,6 +80,8 @@ extension Algorithm {
 		)),
 		variants: [
 			"xi (R Ui Ri) D (R U Ri) Di (R U Ri) D (R Ui Ri) Di",
+			"xi (R Ui Ri) D (R U Ri) uu (Ri U R) D (Ri Ui R)",
+			"xi Li U L Di Li Ui L D Li Ui L Di Li U L D",
 		]
 	)
 	
@@ -89,6 +93,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"Ri Ui Fi (R U Ri Ui) (Ri F) (RR Ui Ri Ui) R U Ri U R",
+			"y (Ri UU Ri di) Ri Fi (RR Ui Ri U) (Ri F R Ui F)",
 		]
 	)
 	
@@ -162,6 +167,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"(Ri U Li) UU (R Ui Ri) UU (R L Ui)",
+			"y x RR F R Fi R UU ri U r UU",
 		]
 	)
 	
@@ -185,6 +191,7 @@ extension Algorithm {
 		variants: [
 			"((L Ui R) UU (Li U Ri)) ((L Ui R) UU (Li U Ri)) U",
 			"y R Ui Ri U l U F Ui Ri Fi R Ui R U li U Ri",
+			"y R U Ri U (R U Ri Fi) (R U Ri Ui) (Ri F) RR Ui Ri UU R Ui Ri",
 		]
 	)
 	
@@ -196,6 +203,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"((Ri U Li) UU (R Ui L)) ((Ri U Li) UU (R Ui L)) Ui",
+			"y Ri U R Ui Ri Fi Ui F R U Ri F Ri Fi R Ui R"
 		]
 	)
 	
@@ -207,6 +215,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"L UU Li UU L Fi Li Ui L U L F LL U",
+			"y R Ui Ri Ui R U R D Ri Ui R Di Ri UU Ri",
 		]
 	)
 	
@@ -218,6 +227,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"Ri UU R UU (Ri F) (R U Ri Ui) Ri Fi RR Ui",
+			"y RR F R U R Ui Ri Fi R UU Ri UU R",
 		]
 	)
 	
@@ -264,13 +274,14 @@ extension Algorithm {
 		)),
 		variants: [
 			"Ri U Ri di Ri Fi RR Ui Ri U Ri F R F",
+			"Ri U Ri Ui y Ri Fi RR Ui Ri U Ri F R F",
 		]
 	)
 	
 	static let yPerm = Self(
 		name: "Y",
 		configuration: .pll(.init(
-			edgeCycles: [[.south, .west]],
+			edgeCycles: [[.north, .west]],
 			cornerCycles: [[.nw, .se]]
 		)),
 		variants: [

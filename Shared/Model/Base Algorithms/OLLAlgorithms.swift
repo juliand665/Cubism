@@ -35,7 +35,7 @@ extension AlgorithmFolder {
 				),
 				Algorithm(
 					name: "Symmetrical Cross",
-					configuration: .oll(.cornersOnly(ne: .facingCCW, se: .facingCW, sw: .facingCW, nw: .facingCCW)),
+					configuration: .oll(.cornersOnly(ne: .facingCCW, se: .facingCW, sw: .facingCCW, nw: .facingCW)),
 					variants: [
 						"F (R U Ri Ui) (R U Ri Ui) (R U Ri Ui) Fi",
 						"y (Ri Ui R) Ui (Ri U R) Ui (Ri UU R)",
