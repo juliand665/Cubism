@@ -167,7 +167,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"(Ri U Li) UU (R Ui Ri) UU (R L Ui)",
-			"y x RR F R Fi R UU ri U r UU",
+			"y li Ri F R Fi R UU ri U r UU",
 		]
 	)
 	
@@ -215,7 +215,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"L UU Li UU L Fi Li Ui L U L F LL U",
-			"y R Ui Ri Ui R U R D Ri Ui R Di Ri UU Ri",
+			"y R Ui Ri Ui R U R D Ri Ui R Di Ri UU Ri Ui",
 		]
 	)
 	
@@ -227,7 +227,7 @@ extension Algorithm {
 		)),
 		variants: [
 			"Ri UU R UU (Ri F) (R U Ri Ui) Ri Fi RR Ui",
-			"y RR F R U R Ui Ri Fi R UU Ri UU R",
+			"y RR F R U R Ui Ri Fi R UU Ri UU R U",
 		]
 	)
 	
