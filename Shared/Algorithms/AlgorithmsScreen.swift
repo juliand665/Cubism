@@ -32,8 +32,12 @@ struct AlgorithmsList: View {
 	let folder: AlgorithmFolder
 	
 	var body: some View {
-		List(folder.algorithms) { algorithm in
-			AlgorithmCell(algorithm: algorithm)
+		List(folder.sections) { section in
+			Section(section.name) {
+				ForEach(section.algorithms) { algorithm in
+					AlgorithmCell(algorithm: algorithm)
+				}
+			}
 		}
 		.navigationTitle(folder.name)
 	}
@@ -52,7 +56,7 @@ struct AlgorithmCell: View {
 				Text(algorithm.name).bold().foregroundStyle(.secondary)
 				
 				ForEach(static: algorithm.variants) { variant in
-					Divider()
+					Divider().opacity(0.5)
 					
 					Text(variant.description(using: NaturalNotation.self)) // TODO: allow choosing notation
 						.fixedSize(horizontal: false, vertical: true) // allow multiple lines
@@ -65,7 +69,7 @@ struct AlgorithmCell: View {
 
 extension MoveSequence {
 	private static let thinSpace = Character(UnicodeScalar(0x2009)!)
-	private static let moveSpacing = " " + String(repeating: thinSpace, count: 2)
+	private static let moveSpacing = String(repeating: thinSpace, count: 0) + " "
 	
 	func description(using notation: Notation.Type) -> String {
 		moves.map(notation.description(for:)).joined(separator: Self.moveSpacing)

@@ -1,42 +1,51 @@
 import Foundation
 
 extension AlgorithmFolder {
-	static let minimalPLL = Self(
-		name: "Minimal PLL",
+	static let simplifiedPLL = Self(
+		name: "Simplified PLL",
 		description: "A small subset of easy PLL algorithms allowing you to solve any configuration in up to 3 applications.",
-		algorithms: [
-			.tPerm,
-			.yPerm,
-			.uPermA,
-			.uPermB,
-			.hPerm,
-			.zPerm,
+		sections: [
+			.init(name: "corners", algorithms: [
+				.tPerm,
+				.yPerm,
+			]),
+			.init(name: "edges", algorithms: [
+				.uPermA,
+				.uPermB,
+				.hPerm,
+				.zPerm,
+			]),
 		]
 	)
 	
 	static let fullPLL = Self(
 		name: "Full PLL",
 		description: "Permute the pieces in the last layer, keeping orientation intact, using just one algorithm.",
-		algorithms: [
-			// edges only
-			.uPermB, .uPermA,
-			.zPerm,
-			.hPerm,
-			// corners only
-			.aPermA, .aPermB,
-			.ePerm,
-			// swap adjacent corners
-			.rPermB, .rPermA,
-			.jPermB, .jPermA,
-			.tPerm,
-			.fPerm,
-			// swap opposite corners
-			.vPerm,
-			.yPerm,
-			.nPermB, .nPermA,
-			// double spins
-			.gPermA, .gPermB,
-			.gPermD, .gPermC,
+		sections: [
+			.init(name: "edges only", algorithms: [
+				.uPermB, .uPermA,
+				.zPerm,
+				.hPerm,
+			]),
+			.init(name: "corners only", algorithms: [
+				.aPermA, .aPermB,
+				.ePerm,
+			]),
+			.init(name: "swap adjacent corners", algorithms: [
+				.rPermB, .rPermA,
+				.jPermB, .jPermA,
+				.tPerm,
+				.fPerm,
+			]),
+			.init(name: "swap opposite corners", algorithms: [
+				.vPerm,
+				.yPerm,
+				.nPermB, .nPermA,
+			]),
+			.init(name: "double spins", algorithms: [
+				.gPermA, .gPermB,
+				.gPermD, .gPermC,
+			]),
 		]
 	)
 }
@@ -47,7 +56,9 @@ extension Algorithm {
 		configuration: .pll(.init(
 			cornerCycles: [[.nw, .ne, .sw]]
 		)),
-		variants: ["x LL DD Li Ui L DD Li U Li"]
+		variants: [
+			"x LL DD Li Ui L DD Li U Li",
+		]
 	)
 	
 	static let aPermB = Self(
@@ -55,7 +66,9 @@ extension Algorithm {
 		configuration: .pll(.init(
 			cornerCycles: [[.nw, .sw, .se]]
 		)),
-		variants: ["x' LL DD L U Li DD L Ui L"]
+		variants: [
+			"x' LL DD L U Li DD L Ui L",
+		]
 	)
 	
 	static let ePerm = Self(
@@ -63,7 +76,9 @@ extension Algorithm {
 		configuration: .pll(.init(
 			cornerCycles: [[.ne, .se], [.nw, .sw]]
 		)),
-		variants: ["xi (R Ui Ri) D (R U Ri) Di (R U Ri) D (R Ui Ri) Di"]
+		variants: [
+			"xi (R Ui Ri) D (R U Ri) Di (R U Ri) D (R Ui Ri) Di",
+		]
 	)
 	
 	static let fPerm = Self(
@@ -72,7 +87,9 @@ extension Algorithm {
 			edgeCycles: [[.north, .south]],
 			cornerCycles: [[.ne, .se]]
 		)),
-		variants: ["Ri Ui Fi (R U Ri Ui) (Ri F) (RR Ui Ri Ui) R U Ri U R"]
+		variants: [
+			"Ri Ui Fi (R U Ri Ui) (Ri F) (RR Ui Ri Ui) R U Ri U R",
+		]
 	)
 	
 	static let gPermA = Self(
@@ -132,7 +149,9 @@ extension Algorithm {
 		configuration: .pll(.init(
 			edgeCycles: [[.north, .south], [.east, .west]]
 		)),
-		variants: ["MM U MM UU MM U MM"]
+		variants: [
+			"MM U MM UU MM U MM",
+		]
 	)
 	
 	static let jPermA = Self(
@@ -141,7 +160,9 @@ extension Algorithm {
 			edgeCycles: [[.north, .west]],
 			cornerCycles: [[.nw, .ne]]
 		)),
-		variants: ["(Ri U Li) UU (R Ui Ri) UU (R L Ui)"]
+		variants: [
+			"(Ri U Li) UU (R Ui Ri) UU (R L Ui)",
+		]
 	)
 	
 	static let jPermB = Self(
@@ -150,7 +171,9 @@ extension Algorithm {
 			edgeCycles: [[.south, .east]],
 			cornerCycles: [[.se, .ne]]
 		)),
-		variants: ["(R U Ri Fi) (R U Ri Ui) (Ri F) (RR Ui Ri Ui)"]
+		variants: [
+			"(R U Ri Fi) (R U Ri Ui) (Ri F) (RR Ui Ri Ui)",
+		]
 	)
 	
 	static let nPermA = Self(
@@ -204,7 +227,9 @@ extension Algorithm {
 			edgeCycles: [[.east, .west]],
 			cornerCycles: [[.ne, .se]]
 		)),
-		variants: ["(R U Ri Ui) (Ri F) (RR Ui Ri Ui) (R U Ri Fi)"]
+		variants: [
+			"(R U Ri Ui) (Ri F) (RR Ui Ri Ui) (R U Ri Fi)",
+		]
 	)
 	
 	static let uPermA = Self(
@@ -237,7 +262,9 @@ extension Algorithm {
 			edgeCycles: [[.north, .east]],
 			cornerCycles: [[.nw, .se]]
 		)),
-		variants: ["Ri U Ri di Ri Fi RR Ui Ri U Ri F R F"]
+		variants: [
+			"Ri U Ri di Ri Fi RR Ui Ri U Ri F R F",
+		]
 	)
 	
 	static let yPerm = Self(
@@ -246,7 +273,9 @@ extension Algorithm {
 			edgeCycles: [[.south, .west]],
 			cornerCycles: [[.nw, .se]]
 		)),
-		variants: ["F [R Ui Ri Ui] [R U Ri Fi] {[R U Ri Ui] [Ri F R Fi]}"]
+		variants: [
+			"F [R Ui Ri Ui] [R U Ri Fi] {[R U Ri Ui] [Ri F R Fi]}",
+		]
 	)
 	
 	static let zPerm = Self(
@@ -254,6 +283,9 @@ extension Algorithm {
 		configuration: .pll(.init(
 			edgeCycles: [[.north, .west], [.south, .east]]
 		)),
-		variants: ["MM U MM U Mi UU MM UU Mi UU"]
+		variants: [
+			"MM U MM U Mi UU MM UU Mi UU",
+			"MM U MM U M UU MM UU M UU",
+		]
 	)
 }

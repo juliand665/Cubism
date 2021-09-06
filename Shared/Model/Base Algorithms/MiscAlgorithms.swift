@@ -4,9 +4,11 @@ extension AlgorithmFolder {
 	static let miscellaneous = Self(
 		name: "Miscellaneous",
 		description: "Some fun algorithms that don't fit into the other categories.",
-		algorithms: [
-			.cubeInACube,
-			.cubeletInACube,
+		sections: [
+			.init(name: "cube in a cube", algorithms: [
+				.cubeInACube,
+				.cubeletInACube,
+			])
 		]
 	)
 }

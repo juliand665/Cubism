@@ -47,7 +47,14 @@ struct AlgorithmFolder: Identifiable {
 	
 	var name: String
 	var description: String
-	var algorithms: [Algorithm]
+	var sections: [Section]
+	
+	struct Section: Identifiable {
+		let id = UUID()
+		
+		var name: String
+		var algorithms: [Algorithm]
+	}
 }
 
 struct Move: Codable {

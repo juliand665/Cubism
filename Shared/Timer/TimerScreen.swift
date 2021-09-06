@@ -81,12 +81,15 @@ struct TimerScreen: View {
 				}
 				.padding()
 			} else {
-				Button("Start Timer") {
+				Button {
 					withAnimation(.default.speed(2)) {
 						stopwatch.start()
 					}
+				} label: {
+					Text("Start Timer")
+						.fontWeight(.bold)
+						.padding(10)
 				}
-				.font(.headline)
 				.padding()
 				.frame(maxWidth: .infinity)
 				.buttonStyle(.borderedProminent)
