@@ -19,6 +19,21 @@ struct MoveSequence: Codable {
 	var moves: [Move]
 }
 
+extension MoveSequence {
+	static func randomScramble(length: Int) -> Self {
+		let faces = sequence(first: Face.allCases.randomElement()!) { prev in
+			Face.allCases.filter { $0 != prev }.randomElement()!
+		}
+		
+		return Self(
+			moves: faces.prefix(length).map { Move(
+				target: .singleFace($0),
+				direction: .allCases.randomElement()!
+			) }
+		)
+	}
+}
+
 extension MoveSequence: Collection {
 	typealias Element = Move
 	typealias Index = Array<Move>.Index
@@ -57,25 +72,25 @@ struct AlgorithmFolder: Identifiable {
 	}
 }
 
-struct Move: Codable {
+struct Move: Codable, Hashable {
 	var target: Target
 	var direction: Direction
 	
-	enum Target: Codable {
+	enum Target: Codable, Hashable {
 		case singleFace(Face)
 		case doubleFace(Face)
 		case slice(Slice)
 		case rotation(FullCubeRotation)
 	}
 	
-	enum Direction: Codable {
+	enum Direction: Codable, CaseIterable {
 		case clockwise
 		case counterclockwise
 		case double
 	}
 }
 
-enum Face: Character, Codable {
+enum Face: Character, Codable, CaseIterable {
 	case front = "F"
 	case back = "B"
 	case up = "U"

@@ -7,16 +7,17 @@ struct TimerScreen: View {
 	@StateObject var stopwatch = Stopwatch()
 	@StateObject var storage = ResultsStorage()
 	@State var latestResult: TimerResult?
+	@State var scramble: MoveSequence?
 	
 	var body: some View {
 		ZStack {
 			AdaptiveStack(spacing: 16) {
-				Group {
-					storedResultsArea
-					timerArea
+				box { storedResultsArea }
+				
+				VStack(spacing: 16) {
+					box { timerArea }
+					box { scrambleArea }
 				}
-				.background(Color.groupedContentBackground)
-				.cornerRadius(16)
 			}
 			.compositingGroup()
 			.shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
@@ -29,6 +30,12 @@ struct TimerScreen: View {
 				}
 			}
 		}
+	}
+	
+	func box<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+		content()
+			.background(Color.groupedContentBackground)
+			.cornerRadius(16)
 	}
 	
 	var stopOverlay: some View {
@@ -51,18 +58,14 @@ struct TimerScreen: View {
 		.transition(.slide)
 	}
 	
-	@ViewBuilder
 	var timerArea: some View {
-		VStack(spacing: 0) {
+		VStack(spacing: 16) {
 			timerText
 				.font(
-					.system(size: 48)
+					.system(size: 40)
 						.weight(stopwatch.isRunning ? .light : .medium)
 						.monospacedDigit()
 				)
-				.padding()
-			
-			Divider()
 			
 			if let latestResult = latestResult {
 				VStack {
@@ -79,23 +82,42 @@ struct TimerScreen: View {
 						Label("Discard Result", systemImage: "trash")
 					}
 				}
-				.padding()
 			} else {
 				Button {
+					scramble = nil
 					withAnimation(.default.speed(2)) {
 						stopwatch.start()
 					}
 				} label: {
 					Text("Start Timer")
 						.fontWeight(.bold)
-						.padding(10)
+						.padding(8)
 				}
-				.padding()
-				.frame(maxWidth: .infinity)
 				.buttonStyle(.borderedProminent)
 			}
 		}
 		.buttonStyle(.bordered)
+		.padding()
+		.frame(maxWidth: .infinity)
+	}
+	
+	var scrambleArea: some View {
+		VStack {
+			if let scramble = scramble {
+				Text(scramble.description(using: StandardNotation.self))
+					.fixedSize(horizontal: false, vertical: true)
+					.frame(maxWidth: .infinity, alignment: .leading)
+			}
+			
+			Button {
+				scramble = .randomScramble(length: 30)
+			} label: {
+				Label("Generate Scramble", systemImage: "shuffle")
+			}
+		}
+		.buttonStyle(.bordered)
+		.padding()
+		.frame(maxWidth: .infinity)
 	}
 	
 	var timerText: some View {
