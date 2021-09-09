@@ -19,6 +19,7 @@ enum NotationParser {
 		let rawMoves = raw
 			.filter { !semanticCharacters.contains($0) }
 			.components(separatedBy: .whitespaces)
+		
 		return try rawMoves.compactMap { raw in
 			guard let rawTarget = raw.first else { return nil }
 			let target = try target(for: rawTarget)

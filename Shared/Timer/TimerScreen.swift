@@ -84,7 +84,6 @@ struct TimerScreen: View {
 				}
 			} else {
 				Button {
-					scramble = nil
 					withAnimation(.default.speed(2)) {
 						stopwatch.start()
 					}
