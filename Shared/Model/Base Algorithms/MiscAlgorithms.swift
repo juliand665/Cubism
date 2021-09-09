@@ -19,35 +19,41 @@ extension AlgorithmFolder {
 }
 
 extension Algorithm {
-	static let cubeInACube = Self(
-		name: "Cube in a Cube (CCW)",
-		variants: ["(F L F) (Ui R U) FF LL (Ui Li B Di Bi) LL U"]
-	)
+	static let cubeInACube = builtIn(
+		id: "cube in a cube ccw",
+		name: "Cube in a Cube (CCW)"
+	) {
+		"(F L F) (Ui R U) FF LL (Ui Li B Di Bi) LL U"
+	}
 	
-	static let cubeletInACube = Self(
-		name: "Cubelet in a Cube (CW)",
-		variants: ["BB (Ri D R Di Ri D R) U (Ri Di R D Ri Di R) Ui BB"]
-	)
+	static let cubeletInACube = builtIn(
+		id: "cubelet in a cube cw",
+		name: "Cubelet in a Cube (CW)"
+	) {
+		"BB (Ri D R Di Ri D R) U (Ri Di R D Ri Di R) Ui BB"
+	}
 }
 
 extension Algorithm {
-	static let centerRotation90UL = Self(
-		name: "Rotate 2 Centers 90° (U CW, L CCW)",
-		variants: ["U M E Mi Ui M Ei Mi"]
-	)
+	static let centerRotation90UL = builtIn(
+		id: "center rotation 90 ul",
+		name: "Rotate 2 Centers 90° (U CW, L CCW)"
+	) {
+		"U M E Mi Ui M Ei Mi"
+	}
 	
-	static let centerRotation90UF = Self(
-		name: "Rotate 2 Centers 90° (U CW, F CCW)",
-		variants: [
-			"(Mi Ui M U) (Mi Ui M U) (Mi Ui M U) (Mi Ui M U) (Mi Ui M U)",
-		]
-	)
+	static let centerRotation90UF = builtIn(
+		id: "center rotation 90 uf",
+		name: "Rotate 2 Centers 90° (U CW, F CCW)"
+	) {
+		"(Mi Ui M U) (Mi Ui M U) (Mi Ui M U) (Mi Ui M U) (Mi Ui M U)"
+	}
 	
-	static let centerRotation180 = Self(
-		name: "Rotate Center 180° (U face)",
-		variants: [
-			"(U R L UU Li Ri) (U R L UU Li Ri)",
-			"(R U Ri U) (R U Ri U) (R U Ri U) (R U Ri U) (R U Ri U)",
-		]
-	)
+	static let centerRotation180 = builtIn(
+		id: "center rotation 180 u",
+		name: "Rotate Center 180° (U face)"
+	) {
+		"(U R L UU Li Ri) (U R L UU Li Ri)"
+		"(R U Ri U) (R U Ri U) (R U Ri U) (R U Ri U) (R U Ri U)"
+	}
 }

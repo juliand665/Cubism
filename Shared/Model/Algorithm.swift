@@ -2,16 +2,30 @@ import Foundation
 import ArrayBuilder
 
 struct Algorithm: Identifiable, Codable {
-	let id = UUID()
-	
+	let id: ID
 	var name: String
 	var configuration: CubeConfiguration?
 	var variants: [MoveSequence]
 	
-	private enum CodingKeys: String, CodingKey {
-		case name
-		case configuration
-		case variants
+	enum ID: Hashable, Codable {
+		case builtIn(String)
+		case dynamic(UUID)
+	}
+}
+
+extension Algorithm {
+	static func builtIn(
+		id: String,
+		name: String,
+		configuration: CubeConfiguration? = nil,
+		@ArrayBuilder<MoveSequence> variants: () -> [MoveSequence]
+	) -> Self {
+		.init(
+			id: .builtIn(id),
+			name: name,
+			configuration: configuration,
+			variants: variants()
+		)
 	}
 }
 
