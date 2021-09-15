@@ -239,7 +239,7 @@ enum DiagramParts {
 	}
 	
 	static let arrowTip = Path {
-		let radius = squareSize * 0.2
+		let radius: CGFloat = squareSize * 0.2
 		$0.move(to: CGPoint(x: 0, y: -radius))
 		$0.addLine(to: CGPoint(x: +radius, y: radius))
 		$0.addLine(to: CGPoint(x: -radius, y: radius))
@@ -278,7 +278,7 @@ enum DiagramParts {
 }
 
 struct PLLEdges {
-	private static let faceColors = [Color.orange, .green, .red, .blue] // NESW
+	private static let faceColors = [Face.back, .right, .front, .left].map(\.color)
 	private static let baseEdgeColors = faceColors.flatMap { repeatElement($0, count: 3) }
 	
 	var colors = Self.baseEdgeColors

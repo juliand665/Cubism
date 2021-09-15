@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B92A59D626E46B64002AC260 /* CGeometry in Frameworks */ = {isa = PBXBuildFile; productRef = B92A59D526E46B64002AC260 /* CGeometry */; };
+		B955EF9E26ED73C0008F65E3 /* AlgorithmDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */; };
 		B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */; };
 		B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
 		B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
@@ -23,6 +24,9 @@
 		B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */ = {isa = PBXBuildFile; productRef = B96E9C1226E2992D00A46A3B /* UserDefault */; };
 		B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
 		B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
+		B9855C1926EDA53E006764BD /* MoveSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9855C1826EDA53E006764BD /* MoveSequenceView.swift */; };
+		B9855C1C26EE2848006764BD /* SwiftUIMissingPieces in Frameworks */ = {isa = PBXBuildFile; productRef = B9855C1B26EE2848006764BD /* SwiftUIMissingPieces */; };
+		B9855C1F26EE2AB5006764BD /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = B9855C1E26EE2AB5006764BD /* Algorithms */; };
 		B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476526E5732200E19911 /* OLLAlgorithms.swift */; };
 		B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476726E5737500E19911 /* PLLAlgorithms.swift */; };
 		B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476926E5738D00E19911 /* MiscAlgorithms.swift */; };
@@ -39,9 +43,12 @@
 		B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
 		B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
 		B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */; };
+		B9DE914126F292F200DE0E29 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DE914026F292F200DE0E29 /* Colors.swift */; };
+		B9F5E6B426EA4DA100652979 /* AlgorithmCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmDetailsView.swift; sourceTree = "<group>"; };
 		B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmsScreen.swift; sourceTree = "<group>"; };
 		B96AB4D026E3B358003E38E4 /* Algorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
 		B96E9BEC26E2755300A46A3B /* CubismApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubismApp.swift; sourceTree = "<group>"; };
@@ -51,6 +58,7 @@
 		B96E9BF926E2755600A46A3B /* Cubism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubism.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96E9C0E26E2883600A46A3B /* TimerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerScreen.swift; sourceTree = "<group>"; };
 		B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Previews.swift"; sourceTree = "<group>"; };
+		B9855C1826EDA53E006764BD /* MoveSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveSequenceView.swift; sourceTree = "<group>"; };
 		B988476526E5732200E19911 /* OLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLLAlgorithms.swift; sourceTree = "<group>"; };
 		B988476726E5737500E19911 /* PLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLAlgorithms.swift; sourceTree = "<group>"; };
 		B988476926E5738D00E19911 /* MiscAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscAlgorithms.swift; sourceTree = "<group>"; };
@@ -63,6 +71,8 @@
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Helpers.swift"; sourceTree = "<group>"; };
 		B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfigurationDiagram.swift; sourceTree = "<group>"; };
+		B9DE914026F292F200DE0E29 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmCustomization.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,10 +80,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9855C1F26EE2AB5006764BD /* Algorithms in Frameworks */,
 				B92A59D626E46B64002AC260 /* CGeometry in Frameworks */,
 				B96E9C0D26E2867800A46A3B /* ArrayBuilder in Frameworks */,
 				B96E9C0A26E27A4C00A46A3B /* HandyOperators in Frameworks */,
 				B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */,
+				B9855C1C26EE2848006764BD /* SwiftUIMissingPieces in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */,
+				B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */,
+				B9855C1826EDA53E006764BD /* MoveSequenceView.swift */,
 				B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */,
+				B9DE914026F292F200DE0E29 /* Colors.swift */,
 			);
 			path = Algorithms;
 			sourceTree = "<group>";
@@ -156,6 +171,7 @@
 				B988476426E572D800E19911 /* Base Algorithms */,
 				B9A2962E26E43495005C59D1 /* Notation.swift */,
 				B9A2962A26E43453005C59D1 /* NotationParser.swift */,
+				B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -191,6 +207,8 @@
 				B96E9C0C26E2867800A46A3B /* ArrayBuilder */,
 				B96E9C1226E2992D00A46A3B /* UserDefault */,
 				B92A59D526E46B64002AC260 /* CGeometry */,
+				B9855C1B26EE2848006764BD /* SwiftUIMissingPieces */,
+				B9855C1E26EE2AB5006764BD /* Algorithms */,
 			);
 			productName = "Cubism (iOS)";
 			productReference = B96E9BF326E2755600A46A3B /* Cubism.app */;
@@ -245,6 +263,8 @@
 				B96E9C0B26E2867800A46A3B /* XCRemoteSwiftPackageReference "ArrayBuilder" */,
 				B96E9C1126E2992D00A46A3B /* XCRemoteSwiftPackageReference "UserDefault" */,
 				B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */,
+				B9855C1A26EE2848006764BD /* XCRemoteSwiftPackageReference "SwifUI-Missing-Pieces" */,
+				B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = B96E9BF426E2755600A46A3B /* Products */;
 			projectDirPath = "";
@@ -281,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9CF259326E2DF6C00E14E94 /* TimerResult.swift in Sources */,
+				B9DE914126F292F200DE0E29 /* Colors.swift in Sources */,
+				B955EF9E26ED73C0008F65E3 /* AlgorithmDetailsView.swift in Sources */,
 				B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
 				B9A2963126E434C4005C59D1 /* BaseAlgorithms.swift in Sources */,
 				B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
@@ -288,6 +310,7 @@
 				B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */,
 				B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */,
 				B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */,
+				B9855C1926EDA53E006764BD /* MoveSequenceView.swift in Sources */,
 				B9A2962B26E43453005C59D1 /* NotationParser.swift in Sources */,
 				B96E9C0F26E2883600A46A3B /* TimerScreen.swift in Sources */,
 				B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */,
@@ -296,6 +319,7 @@
 				B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */,
 				B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */,
 				B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */,
+				B9F5E6B426EA4DA100652979 /* AlgorithmCustomization.swift in Sources */,
 				B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */,
 				B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */,
 			);
@@ -440,6 +464,7 @@
 				DEVELOPMENT_TEAM = V2EPDFA9PV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -451,6 +476,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-expression-type-checking=500 -Xfrontend -warn-long-function-bodies=500";
 				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
 				PRODUCT_NAME = Cubism;
 				SDKROOT = iphoneos;
@@ -470,6 +496,7 @@
 				DEVELOPMENT_TEAM = V2EPDFA9PV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -614,6 +641,22 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		B9855C1A26EE2848006764BD /* XCRemoteSwiftPackageReference "SwifUI-Missing-Pieces" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/juliand665/SwifUI-Missing-Pieces.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -636,6 +679,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B96E9C1126E2992D00A46A3B /* XCRemoteSwiftPackageReference "UserDefault" */;
 			productName = UserDefault;
+		};
+		B9855C1B26EE2848006764BD /* SwiftUIMissingPieces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9855C1A26EE2848006764BD /* XCRemoteSwiftPackageReference "SwifUI-Missing-Pieces" */;
+			productName = SwiftUIMissingPieces;
+		};
+		B9855C1E26EE2AB5006764BD /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

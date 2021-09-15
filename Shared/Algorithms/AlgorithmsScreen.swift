@@ -25,6 +25,7 @@ struct AlgorithmsScreen: View {
 			}
 			.navigationTitle("Algorithms")
 		}
+		.environmentObject(AlgorithmCustomizer())
     }
 }
 
@@ -46,24 +47,39 @@ struct AlgorithmsList: View {
 struct AlgorithmCell: View {
 	let algorithm: Algorithm
 	
+	@EnvironmentObject private var customizer: AlgorithmCustomizer
+	
 	var body: some View {
-		HStack(spacing: 20) {
-			if let configuration = algorithm.configuration {
-				CubeConfigurationDiagram(configuration: configuration)
-			}
-			
-			VStack(alignment: .leading, spacing: 8) {
-				Text(algorithm.name).bold().foregroundStyle(.secondary)
+		let customization = customizer[algorithm.id]
+		NavigationLink {
+			AlgorithmDetailsView(algorithm: algorithm, customization: $customizer[algorithm.id])
+		} label: {
+			HStack(spacing: 20) {
+				if let configuration = algorithm.configuration {
+					CubeConfigurationDiagram(configuration: configuration)
+				}
 				
-				ForEach(static: algorithm.variants) { variant in
-					Divider().opacity(0.5)
+				VStack(alignment: .leading, spacing: 4) {
+					Text(customization.nameOverride ?? algorithm.name)
+						.bold()
+						.font(.subheadline)
+						.foregroundStyle(.secondary)
 					
-					Text(variant.description(using: NaturalNotation.self)) // TODO: allow choosing notation
+					let variant = algorithm.preferredVariant(using: customization)
+						?? algorithm.variants.first!
+					Text(variant.moves.description(using: NaturalNotation.self)) // TODO: allow choosing notation
 						.fixedSize(horizontal: false, vertical: true) // allow multiple lines
+					
+					let variantCount = algorithm.variants.count + customization.customVariants.count
+					if variantCount > 1 {
+						Text("\(variantCount) variants available")
+							.font(.footnote)
+							.foregroundColor(.secondary)
+					}
 				}
 			}
+			.padding(.vertical, 6)
 		}
-		.padding(.vertical, 12)
 	}
 }
 
@@ -71,7 +87,7 @@ extension MoveSequence {
 	private static let thinSpace = Character(UnicodeScalar(0x2009)!)
 	private static let moveSpacing = String(repeating: thinSpace, count: 0) + " "
 	
-	func description(using notation: Notation.Type) -> String {
+	func description(using notation: Notation.Type = StandardNotation.self) -> String {
 		moves.map(notation.description(for:)).joined(separator: Self.moveSpacing)
 	}
 }
@@ -83,10 +99,12 @@ struct AlgorithmsScreen_Previews: PreviewProvider {
 		
 		NavigationView {
 			AlgorithmsList(folder: .twoLookOLL)
+				.environmentObject(AlgorithmCustomizer())
 		}
 		
 		NavigationView {
 			AlgorithmsList(folder: .fullPLL)
+				.environmentObject(AlgorithmCustomizer())
 		}
 		.preferredColorScheme(.dark)
     }

@@ -9,11 +9,33 @@ extension ForEach where Content: View {
 	init<StaticData: RandomAccessCollection>(
 		static staticData: StaticData,
 		@ViewBuilder content: @escaping (StaticData.Element) -> Content
-	) where Data == Array<StaticData.Index>, ID == StaticData.Index {
-		self.init(Array(staticData.indices), id: \.self) { i in
-			content(staticData[i])
+	) where Data == Array<Foo<StaticData.Index>>, ID == Foo<StaticData.Index> {
+		self.init(Array(staticData.indices.map(Foo.init)), id: \.self) { i in
+			content(staticData[i.index])
 		}
 	}
+	
+	init<ElementView: View, SeparatorView: View>(
+		_ data: Data,
+		@ViewBuilder content: @escaping (Data.Element) -> ElementView,
+		@ViewBuilder separator: @escaping () -> SeparatorView
+	) where
+		Data.Element: Identifiable,
+		ID == Data.Element.ID,
+		Content == TupleView<(ElementView, SeparatorView?)>
+	{
+		self.init(data) { element in
+			content(element)
+			
+			if element.id != data.last?.id {
+				separator()
+			}
+		}
+	}
+}
+
+struct Foo<Index: Hashable>: Hashable {
+	var index: Index
 }
 
 extension View {

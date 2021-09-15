@@ -106,7 +106,7 @@ extension Algorithm {
 		))
 	) {
 		"RR u Ri U Ri Ui R ui RR yi Ri U R"
-		"RR u Ri U Ri Ui R ui RR Bi U B"
+		"RR u Ri U Ri Ui R ui RR Fi U F"
 		"RR U Ri U Ri Ui R Ui RR Ui D Ri U R Di U"
 	}
 	

@@ -2,15 +2,20 @@ import Foundation
 import ArrayBuilder
 
 struct Algorithm: Identifiable, Codable {
-	let id: ID
+	let id: ExtensibleID<Self>
 	var name: String
 	var configuration: CubeConfiguration?
-	var variants: [MoveSequence]
+	var variants: [Variant]
 	
-	enum ID: Hashable, Codable {
-		case builtIn(String)
-		case dynamic(UUID)
+	struct Variant: Identifiable, Codable {
+		let id: ExtensibleID<Self>
+		var moves: MoveSequence
 	}
+}
+
+enum ExtensibleID<Object>: Hashable, Codable {
+	case builtIn(String)
+	case dynamic(UUID)
 }
 
 extension Algorithm {
@@ -24,7 +29,7 @@ extension Algorithm {
 			id: .builtIn(id),
 			name: name,
 			configuration: configuration,
-			variants: variants()
+			variants: variants().map { .init(id: .builtIn($0.description()), moves: $0) }
 		)
 	}
 }
@@ -86,9 +91,15 @@ struct AlgorithmFolder: Identifiable {
 	}
 }
 
-struct Move: Codable, Hashable {
+struct Move: Codable, Hashable, Identifiable {
+	let id = UUID()
 	var target: Target
 	var direction: Direction
+	
+	private enum CodingKeys: String, CodingKey {
+		case target
+		case direction
+	}
 	
 	enum Target: Codable, Hashable {
 		case singleFace(Face)
@@ -117,6 +128,17 @@ enum Slice: Character, Codable {
 	case behindDown = "E"
 	case behindLeft = "M"
 	case behindFront = "S"
+	
+	var baseFace: Face {
+		switch self {
+		case .behindDown:
+			return .down
+		case .behindLeft:
+			return .left
+		case .behindFront:
+			return .front
+		}
+	}
 }
 
 enum FullCubeRotation: Character, Codable {

@@ -44,7 +44,7 @@ struct TimeIntervalFormatStyle: FormatStyle {
 				"\(minutes):"
 			}
 			secondsWithinMinute
-				.formatted(FloatFormatStyle().precision(.integerAndFractionLength(
+				.formatted(FloatingPointFormatStyle().precision(.integerAndFractionLength(
 					integerLimits: minutes > 0 ? 2...2 : 1...2,
 					fractionLimits: 2...2
 				)))
