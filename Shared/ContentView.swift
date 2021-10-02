@@ -8,6 +8,9 @@ struct ContentView: View {
 			
 			AlgorithmsScreen()
 				.tabItem { Label("Algorithms", systemImage: "list.number") }
+			
+			Text("TODO")
+				.tabItem { Label("Settings", systemImage: "gear") }
 		}
 	}
 }
