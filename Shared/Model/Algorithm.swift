@@ -29,8 +29,12 @@ extension Algorithm {
 			id: .builtIn(id),
 			name: name,
 			configuration: configuration,
-			variants: variants().map { .init(id: .builtIn($0.description()), moves: $0) }
+			variants: variants().map { .init(id: .builtIn(rawID(for: $0)), moves: $0) }
 		)
+	}
+	
+	private static func rawID(for sequence: MoveSequence) -> String {
+		sequence.map(StandardNotation.description(for:)).joined(separator: " ")
 	}
 }
 
