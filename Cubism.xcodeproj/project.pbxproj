@@ -11,6 +11,17 @@
 		B955EF9E26ED73C0008F65E3 /* AlgorithmDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */; };
 		B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */; };
 		B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
+		B96C709127088496001DAEF8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709027088496001DAEF8 /* main.swift */; };
+		B96C7095270884DB001DAEF8 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
+		B96C7098270885AB001DAEF8 /* ArrayBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = B96C7097270885AB001DAEF8 /* ArrayBuilder */; };
+		B96C7099270885BA001DAEF8 /* CubeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */; };
+		B96C709A270885CC001DAEF8 /* Notation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962E26E43495005C59D1 /* Notation.swift */; };
+		B96C709C2708C46A001DAEF8 /* Pieces.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709B2708C46A001DAEF8 /* Pieces.swift */; };
+		B96C709E2708C4B6001DAEF8 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709D2708C4B6001DAEF8 /* Orientation.swift */; };
+		B96C70A62708EAF3001DAEF8 /* HandyOperators in Frameworks */ = {isa = PBXBuildFile; productRef = B96C70A52708EAF3001DAEF8 /* HandyOperators */; };
+		B96C70A827090EE3001DAEF8 /* PieceOrientations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709F2708C4D9001DAEF8 /* PieceOrientations.swift */; };
+		B96C70A927090F6C001DAEF8 /* PiecePermutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C70A12708C524001DAEF8 /* PiecePermutation.swift */; };
+		B96C70AA270910D7001DAEF8 /* CubeTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */; };
 		B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
 		B96E9BFB26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
 		B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BED26E2755300A46A3B /* ContentView.swift */; };
@@ -47,10 +58,29 @@
 		B9F5E6B426EA4DA100652979 /* AlgorithmCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B96C708C27088495001DAEF8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmDetailsView.swift; sourceTree = "<group>"; };
 		B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmsScreen.swift; sourceTree = "<group>"; };
 		B96AB4D026E3B358003E38E4 /* Algorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
+		B96C708E27088495001DAEF8 /* Solver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Solver; sourceTree = BUILT_PRODUCTS_DIR; };
+		B96C709027088496001DAEF8 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B96C709B2708C46A001DAEF8 /* Pieces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pieces.swift; sourceTree = "<group>"; };
+		B96C709D2708C4B6001DAEF8 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		B96C709F2708C4D9001DAEF8 /* PieceOrientations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceOrientations.swift; sourceTree = "<group>"; };
+		B96C70A12708C524001DAEF8 /* PiecePermutation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecePermutation.swift; sourceTree = "<group>"; };
+		B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeTransformation.swift; sourceTree = "<group>"; };
 		B96E9BEC26E2755300A46A3B /* CubismApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubismApp.swift; sourceTree = "<group>"; };
 		B96E9BED26E2755300A46A3B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B96E9BEE26E2755600A46A3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -76,6 +106,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B96C708B27088495001DAEF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B96C7098270885AB001DAEF8 /* ArrayBuilder in Frameworks */,
+				B96C70A62708EAF3001DAEF8 /* HandyOperators in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B96E9BF026E2755600A46A3B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,11 +150,33 @@
 			path = Algorithms;
 			sourceTree = "<group>";
 		};
+		B96C708F27088496001DAEF8 /* Solver */ = {
+			isa = PBXGroup;
+			children = (
+				B96C709027088496001DAEF8 /* main.swift */,
+				B96C709B2708C46A001DAEF8 /* Pieces.swift */,
+				B96C709D2708C4B6001DAEF8 /* Orientation.swift */,
+				B96C709F2708C4D9001DAEF8 /* PieceOrientations.swift */,
+				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
+				B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */,
+			);
+			path = Solver;
+			sourceTree = "<group>";
+		};
+		B96C7096270885AB001DAEF8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B96E9BE626E2755200A46A3B = {
 			isa = PBXGroup;
 			children = (
 				B96E9BEB26E2755300A46A3B /* Shared */,
+				B96C708F27088496001DAEF8 /* Solver */,
 				B96E9BF426E2755600A46A3B /* Products */,
+				B96C7096270885AB001DAEF8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,6 +199,7 @@
 			children = (
 				B96E9BF326E2755600A46A3B /* Cubism.app */,
 				B96E9BF926E2755600A46A3B /* Cubism.app */,
+				B96C708E27088495001DAEF8 /* Solver */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,9 +207,9 @@
 		B96E9C1426E2D82700A46A3B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */,
 				B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */,
 				B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */,
+				B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -189,6 +251,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B96C708D27088495001DAEF8 /* Solver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B96C709427088496001DAEF8 /* Build configuration list for PBXNativeTarget "Solver" */;
+			buildPhases = (
+				B96C708A27088495001DAEF8 /* Sources */,
+				B96C708B27088495001DAEF8 /* Frameworks */,
+				B96C708C27088495001DAEF8 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Solver;
+			packageProductDependencies = (
+				B96C7097270885AB001DAEF8 /* ArrayBuilder */,
+				B96C70A52708EAF3001DAEF8 /* HandyOperators */,
+			);
+			productName = Solver;
+			productReference = B96C708E27088495001DAEF8 /* Solver */;
+			productType = "com.apple.product-type.tool";
+		};
 		B96E9BF226E2755600A46A3B /* Cubism (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B96E9C0226E2755600A46A3B /* Build configuration list for PBXNativeTarget "Cubism (iOS)" */;
@@ -241,6 +324,9 @@
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					B96C708D27088495001DAEF8 = {
+						CreatedOnToolsVersion = 13.0;
+					};
 					B96E9BF226E2755600A46A3B = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -272,6 +358,7 @@
 			targets = (
 				B96E9BF226E2755600A46A3B /* Cubism (iOS) */,
 				B96E9BF826E2755600A46A3B /* Cubism (macOS) */,
+				B96C708D27088495001DAEF8 /* Solver */,
 			);
 		};
 /* End PBXProject section */
@@ -296,6 +383,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B96C708A27088495001DAEF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B96C709C2708C46A001DAEF8 /* Pieces.swift in Sources */,
+				B96C709E2708C4B6001DAEF8 /* Orientation.swift in Sources */,
+				B96C7099270885BA001DAEF8 /* CubeConfiguration.swift in Sources */,
+				B96C709A270885CC001DAEF8 /* Notation.swift in Sources */,
+				B96C70A827090EE3001DAEF8 /* PieceOrientations.swift in Sources */,
+				B96C70AA270910D7001DAEF8 /* CubeTransformation.swift in Sources */,
+				B96C709127088496001DAEF8 /* main.swift in Sources */,
+				B96C7095270884DB001DAEF8 /* Algorithm.swift in Sources */,
+				B96C70A927090F6C001DAEF8 /* PiecePermutation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B96E9BEF26E2755600A46A3B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -343,6 +446,33 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		B96C709227088496001DAEF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V2EPDFA9PV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-expression-type-checking=500 -Xfrontend -warn-long-function-bodies=500";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B96C709327088496001DAEF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V2EPDFA9PV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		B96E9C0026E2755600A46A3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -579,6 +709,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B96C709427088496001DAEF8 /* Build configuration list for PBXNativeTarget "Solver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B96C709227088496001DAEF8 /* Debug */,
+				B96C709327088496001DAEF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B96E9BEA26E2755200A46A3B /* Build configuration list for PBXProject "Cubism" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -664,6 +803,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */;
 			productName = CGeometry;
+		};
+		B96C7097270885AB001DAEF8 /* ArrayBuilder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C0B26E2867800A46A3B /* XCRemoteSwiftPackageReference "ArrayBuilder" */;
+			productName = ArrayBuilder;
+		};
+		B96C70A52708EAF3001DAEF8 /* HandyOperators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */;
+			productName = HandyOperators;
 		};
 		B96E9C0926E27A4C00A46A3B /* HandyOperators */ = {
 			isa = XCSwiftPackageProductDependency;
