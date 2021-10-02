@@ -169,6 +169,7 @@ extension Algorithm {
 	) {
 		"(Ri U Li) UU (R Ui Ri) UU (R L Ui)"
 		"y li Ri F R Fi R UU ri U r UU"
+		"y (ll U l Fi) R UU (ri U r) UU"
 	}
 	
 	static let jPermB = builtIn(
@@ -276,6 +277,7 @@ extension Algorithm {
 	) {
 		"Ri U Ri di Ri Fi RR Ui Ri U Ri F R F"
 		"Ri U Ri Ui y Ri Fi RR Ui Ri U Ri F R F"
+		"y R Ui (R U Ri) D R Di R (Ui D) RR U RR Di RR"
 	}
 	
 	static let yPerm = builtIn(
