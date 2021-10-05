@@ -1,5 +1,6 @@
 import Foundation
 import HandyOperators
+import Algorithms
 
 protocol PiecePermutation: AdditiveArithmeticWithNegation {
 	associatedtype Piece: Comparable, CaseIterable
@@ -14,18 +15,7 @@ protocol PiecePermutation: AdditiveArithmeticWithNegation {
 
 extension PiecePermutation {
 	func coordinate() -> Int {
-		let array = asArray()
-		return array
-			.enumerated()
-			.map { (index, piece) in
-				array.prefix(upTo: index).count { $0 > piece }
-			}
-			.enumerated()
-			.reduce(into: (sum: 0, base: 1)) { state, new in
-				state.sum += new.element * state.base
-				state.base *= new.offset + 1
-			}
-			.sum
+		asArray().permutationCoordinate()
 	}
 	
 	static prefix func - (perm: Self) -> Self {
@@ -180,5 +170,70 @@ struct EdgePermutation: Hashable, PiecePermutation {
 	
 	func asArray() -> [Edge] {
 		[ur, uf, ul, ub, dr, df, dl, db, fr, fl, bl, br]
+	}
+	
+	/// 495 possibilities (0-494)
+	func udSliceCoordinate() -> Int {
+		let state = asArray()
+			.enumerated()
+			.reduce(into: (sum: 0, coefficient: 0, k: -1)) { state, new in
+				// a complex-looking way to improve performance by avoiding lots of factorial calculations and counting occupied spots in the process
+				let edge = new.element
+				let n = new.offset
+				
+				state.coefficient *= n
+				if edge.isPartOfUDSlice {
+					state.k += 1
+					if state.k == 0 {
+						state.coefficient = 1
+					} else {
+						state.coefficient /= state.k
+					}
+				} else {
+					state.coefficient /= n - state.k
+					
+					if state.k >= 0 {
+						state.sum += state.coefficient
+					}
+				}
+			}
+		
+		assert(state.coefficient == 165) // nCr(11, 3)
+		assert(state.k == 3)
+		return state.sum
+	}
+	
+	func sliceEdgePermCoordinate() -> Int {
+		asArray()
+			.filter { !$0.isPartOfUDSlice }
+			.permutationCoordinate()
+	}
+	
+	func nonSliceEdgePermCoordinate() -> Int {
+		asArray()
+			.filter { $0.isPartOfUDSlice }
+			.permutationCoordinate()
+	}
+}
+
+private extension Array where Element: Comparable {
+	func permutationCoordinate() -> Int {
+		self
+			.enumerated()
+			.map { (index, piece) in
+				prefix(upTo: index).count { $0 > piece }
+			}
+			.sumWithFactorialBases()
+	}
+}
+
+extension Edge {
+	var isPartOfUDSlice: Bool {
+		switch self {
+		case .fr, .fl, .bl, .br:
+			return true
+		default:
+			return false
+		}
 	}
 }

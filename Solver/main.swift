@@ -1,8 +1,31 @@
 import Foundation
+import Algorithms
 
 extension Sequence {
 	func count(where isIncluded: (Element) throws -> Bool) rethrows -> Int {
 		try lazy.filter(isIncluded).count
+	}
+}
+
+extension Sequence where Element: AdditiveArithmetic {
+	func sum() -> Element {
+		reduce(.zero, +)
+	}
+}
+
+extension Sequence where Element == Int {
+	func product() -> Element {
+		reduce(1, *)
+	}
+	
+	func sumWithFactorialBases() -> Element {
+		self
+			.enumerated()
+			.reduce(into: (sum: 0, base: 1)) { state, new in
+				state.sum += new.element * state.base
+				state.base *= new.offset + 1
+			}
+			.sum
 	}
 }
 

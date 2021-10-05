@@ -22,6 +22,7 @@
 		B96C70A827090EE3001DAEF8 /* PieceOrientations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709F2708C4D9001DAEF8 /* PieceOrientations.swift */; };
 		B96C70A927090F6C001DAEF8 /* PiecePermutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C70A12708C524001DAEF8 /* PiecePermutation.swift */; };
 		B96C70AA270910D7001DAEF8 /* CubeTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */; };
+		B96C70AC27091CB2001DAEF8 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = B96C70AB27091CB2001DAEF8 /* Algorithms */; };
 		B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
 		B96E9BFB26E2755600A46A3B /* CubismApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BEC26E2755300A46A3B /* CubismApp.swift */; };
 		B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9BED26E2755300A46A3B /* ContentView.swift */; };
@@ -110,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B96C70AC27091CB2001DAEF8 /* Algorithms in Frameworks */,
 				B96C7098270885AB001DAEF8 /* ArrayBuilder in Frameworks */,
 				B96C70A62708EAF3001DAEF8 /* HandyOperators in Frameworks */,
 			);
@@ -267,6 +269,7 @@
 			packageProductDependencies = (
 				B96C7097270885AB001DAEF8 /* ArrayBuilder */,
 				B96C70A52708EAF3001DAEF8 /* HandyOperators */,
+				B96C70AB27091CB2001DAEF8 /* Algorithms */,
 			);
 			productName = Solver;
 			productReference = B96C708E27088495001DAEF8 /* Solver */;
@@ -813,6 +816,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */;
 			productName = HandyOperators;
+		};
+		B96C70AB27091CB2001DAEF8 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
 		};
 		B96E9C0926E27A4C00A46A3B /* HandyOperators */ = {
 			isa = XCSwiftPackageProductDependency;
