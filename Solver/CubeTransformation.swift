@@ -3,9 +3,9 @@ import Foundation
 /// Expresses anything you can do to the cube. Either interpreted as a transformation of the cube relative to another state, or as a state (a transformation relative to the solved state).
 struct CubeTransformation: Hashable {
 	var cornerPermutation = CornerPermutation()
-	var cornerOrientations = CornerOrientations()
+	var cornerOrientation = CornerOrientation()
 	var edgePermutation = EdgePermutation()
-	var edgeOrientations = EdgeOrientations()
+	var edgeOrientation = EdgeOrientation()
 }
 
 extension CubeTransformation: PartialCubeState {
@@ -14,9 +14,9 @@ extension CubeTransformation: PartialCubeState {
 	static func + (one: Self, two: Self) -> Self {
 		.init(
 			cornerPermutation: one.cornerPermutation + two.cornerPermutation,
-			cornerOrientations: one.cornerOrientations.applying(two.cornerPermutation) + two.cornerOrientations,
+			cornerOrientation: one.cornerOrientation.applying(two.cornerPermutation) + two.cornerOrientation,
 			edgePermutation: one.edgePermutation + two.edgePermutation,
-			edgeOrientations: one.edgeOrientations.applying(two.edgePermutation) + two.edgeOrientations
+			edgeOrientation: one.edgeOrientation.applying(two.edgePermutation) + two.edgeOrientation
 		)
 	}
 	
@@ -25,9 +25,9 @@ extension CubeTransformation: PartialCubeState {
 		let inverseEdges = -t.edgePermutation
 		return .init(
 			cornerPermutation: inverseCorners,
-			cornerOrientations: -t.cornerOrientations.applying(inverseCorners),
+			cornerOrientation: -t.cornerOrientation.applying(inverseCorners),
 			edgePermutation: inverseEdges,
-			edgeOrientations: -t.edgeOrientations.applying(inverseEdges)
+			edgeOrientation: -t.edgeOrientation.applying(inverseEdges)
 		)
 	}
 	
@@ -56,7 +56,7 @@ extension CubeTransformation: TextOutputStreamable {
 				return "\($0.name) ← \(new.name)"
 			},
 			Corner.allCases.compactMap {
-				let orientation = cornerOrientations[$0]
+				let orientation = cornerOrientation[$0]
 				switch orientation {
 				case .neutral:
 					return nil
@@ -72,7 +72,7 @@ extension CubeTransformation: TextOutputStreamable {
 				return "\($0.name) ← \(new.name)"
 			},
 			Edge.allCases.compactMap {
-				let orientation = edgeOrientations[$0]
+				let orientation = edgeOrientation[$0]
 				guard orientation != .neutral else { return nil }
 				return "\($0.name): flipped"
 			},
@@ -98,27 +98,27 @@ extension CubeTransformation {
 	
 	static let frontTurn = Self(
 		cornerPermutation: .init(urf: .ufl, ufl: .dlf, dfr: .urf, dlf: .dfr),
-		cornerOrientations: .init(urf: .twistedCW, ufl: .twistedCCW, dfr: .twistedCCW, dlf: .twistedCW),
+		cornerOrientation: .init(urf: .twistedCW, ufl: .twistedCCW, dfr: .twistedCCW, dlf: .twistedCW),
 		edgePermutation: .init(uf: .fl, df: .fr, fr: .uf, fl: .df),
-		edgeOrientations: .init(uf: .flipped, df: .flipped, fr: .flipped, fl: .flipped)
+		edgeOrientation: .init(uf: .flipped, df: .flipped, fr: .flipped, fl: .flipped)
 	)
 	
 	static let backTurn = Self(
 		cornerPermutation: .init(ulb: .ubr, ubr: .drb, dbl: .ulb, drb: .dbl),
-		cornerOrientations: .init(ulb: .twistedCW, ubr: .twistedCCW, dbl: .twistedCCW, drb: .twistedCW),
+		cornerOrientation: .init(ulb: .twistedCW, ubr: .twistedCCW, dbl: .twistedCCW, drb: .twistedCW),
 		edgePermutation: .init(ub: .br, db: .bl, bl: .ub, br: .db),
-		edgeOrientations: .init(ub: .flipped, db: .flipped, bl: .flipped, br: .flipped)
+		edgeOrientation: .init(ub: .flipped, db: .flipped, bl: .flipped, br: .flipped)
 	)
 	
 	static let rightTurn = Self(
 		cornerPermutation: .init(urf: .dfr, ubr: .urf, dfr: .drb, drb: .ubr),
-		cornerOrientations: .init(urf: .twistedCCW, ubr: .twistedCW, dfr: .twistedCW, drb: .twistedCCW),
+		cornerOrientation: .init(urf: .twistedCCW, ubr: .twistedCW, dfr: .twistedCW, drb: .twistedCCW),
 		edgePermutation: .init(ur: .fr, dr: .br, fr: .dr, br: .ur)
 	)
 	
 	static let leftTurn = Self(
 		cornerPermutation: .init(ufl: .ulb, ulb: .dbl, dlf: .ufl, dbl: .dlf),
-		cornerOrientations: .init(ufl: .twistedCW, ulb: .twistedCCW, dlf: .twistedCCW, dbl: .twistedCW),
+		cornerOrientation: .init(ufl: .twistedCW, ulb: .twistedCCW, dlf: .twistedCCW, dbl: .twistedCW),
 		edgePermutation: .init(ul: .bl, dl: .fl, fl: .ul, bl: .dl)
 	)
 	
@@ -144,7 +144,7 @@ extension CubeTransformation {
 			ufl: .dfr, ulb: .dlf, ubr: .ufl,
 			dfr: .ubr, dlf: .drb, drb: .ulb
 		),
-		cornerOrientations: .init(
+		cornerOrientation: .init(
 			urf: .twistedCW, ufl: .twistedCCW, ulb: .twistedCW, ubr: .twistedCCW,
 			dfr: .twistedCCW, dlf: .twistedCW, dbl: .twistedCCW, drb: .twistedCW
 		),
@@ -153,7 +153,7 @@ extension CubeTransformation {
 			dr: .ub, df: .br, dl: .db, db: .bl,
 			fr: .ur, fl: .dr, bl: .dl, br: .ul
 		),
-		edgeOrientations: .init(
+		edgeOrientation: .init(
 			ur: .flipped, ul: .flipped, dr: .flipped, dl: .flipped,
 			fr: .flipped, fl: .flipped, bl: .flipped, br: .flipped
 		)
@@ -181,7 +181,7 @@ extension CubeTransformation {
 			dr: .db, df: .dr, dl: .df, db: .dl,
 			fr: .br, fl: .fr, bl: .fl, br: .bl
 		),
-		edgeOrientations: .init(
+		edgeOrientation: .init(
 			fr: .flipped, fl: .flipped, bl: .flipped, br: .flipped
 		)
 	)
@@ -192,7 +192,7 @@ extension CubeTransformation {
 			urf: .ufl, ufl: .urf, ulb: .ubr, ubr: .ulb,
 			dfr: .dlf, dlf: .dfr, dbl: .drb, drb: .dbl
 		),
-		cornerOrientations: <#T##CornerOrientations#>, // not that simple—orientations need to be flipped
+		cornerOrientation: <#T##CornerOrientation#>, // not that simple—orientations need to be flipped
 		edgePermutation: .init(
 			ur: .ul, ul: .ur,
 			dr: .dl, dl: .dr,

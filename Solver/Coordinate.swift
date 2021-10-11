@@ -44,11 +44,11 @@ typealias CornerOrientationCoordinate = Coordinate<_CornerOrientationCoordinateS
 struct _CornerOrientationCoordinateSpace: CoordinateSpace {
 	static let count = 2187 // 3^7
 	
-	static func makeState(from coordinate: Coord) -> CornerOrientations {
+	static func makeState(from coordinate: Coord) -> CornerOrientation {
 		.init(coordinate)
 	}
 	
-	static func makeCoordinate(from state: CornerOrientations) -> Coord {
+	static func makeCoordinate(from state: CornerOrientation) -> Coord {
 		state.coordinate()
 	}
 }
@@ -59,11 +59,11 @@ struct _EdgeOrientationCoordinateSpace: CoordinateSpace {
 	
 	static let validSymmetries = Symmetry.edgeFlipPreservingSubgroup
 	
-	static func makeState(from coordinate: Coord) -> EdgeOrientations {
+	static func makeState(from coordinate: Coord) -> EdgeOrientation {
 		.init(coordinate)
 	}
 	
-	static func makeCoordinate(from state: EdgeOrientations) -> Coord {
+	static func makeCoordinate(from state: EdgeOrientation) -> Coord {
 		state.coordinate()
 	}
 }
@@ -117,12 +117,12 @@ struct _FlipUDSliceCoordinateSpace: CoordinateSpace {
 		let (udSlice, orientation) = coordinate.value.quotientAndRemainder(dividingBy: UInt(EdgeOrientationCoordinate.Space.count))
 		return .init(
 			edgePermutation: .init(UDSliceCoordinate(udSlice)),
-			edgeOrientations: .init(EdgeOrientationCoordinate(orientation))
+			edgeOrientation: .init(EdgeOrientationCoordinate(orientation))
 		)
 	}
 	
 	static func makeCoordinate(from state: CubeTransformation) -> Coord {
-		.init(state.edgePermutation, state.edgeOrientations)
+		.init(state.edgePermutation, state.edgeOrientation)
 	}
 }
 
@@ -135,8 +135,8 @@ extension FlipUDSliceCoordinate {
 		.init(value % UInt(EdgeOrientationCoordinate.Space.count))
 	}
 	
-	init(_ permutation: EdgePermutation, _ orientations: EdgeOrientations) {
-		self.init(permutation.udSliceCoordinate(), orientations.coordinate())
+	init(_ permutation: EdgePermutation, _ orientation: EdgeOrientation) {
+		self.init(permutation.udSliceCoordinate(), orientation.coordinate())
 	}
 	
 	init(_ udSlice: UDSliceCoordinate, _ orientation: EdgeOrientationCoordinate) {

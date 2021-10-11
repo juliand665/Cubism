@@ -1,10 +1,10 @@
 import Foundation
 
-protocol PieceOrientation: CaseIterable, AdditiveArithmeticWithNegation, RawRepresentable where RawValue == Int {
+protocol SinglePieceOrientation: CaseIterable, AdditiveArithmeticWithNegation, RawRepresentable where RawValue == Int {
 	associatedtype Piece: CubePiece
 }
 
-enum CornerOrientation: Int, PieceOrientation, CaseIterable {
+enum SingleCornerOrientation: Int, SinglePieceOrientation, CaseIterable {
 	typealias Piece = Corner
 	
 	case neutral
@@ -12,7 +12,7 @@ enum CornerOrientation: Int, PieceOrientation, CaseIterable {
 	case twistedCCW
 }
 
-extension CornerOrientation: AdditiveArithmeticWithNegation {
+extension SingleCornerOrientation: AdditiveArithmeticWithNegation {
 	static let zero = neutral
 	
 	static func + (lhs: Self, rhs: Self) -> Self {
@@ -53,14 +53,14 @@ extension CornerOrientation: AdditiveArithmeticWithNegation {
 	}
 }
 
-enum EdgeOrientation: Int, PieceOrientation, CaseIterable {
+enum SingleEdgeOrientation: Int, SinglePieceOrientation, CaseIterable {
 	typealias Piece = Edge
 	
 	case neutral
 	case flipped
 }
 
-extension EdgeOrientation: AdditiveArithmeticWithNegation {
+extension SingleEdgeOrientation: AdditiveArithmeticWithNegation {
 	static let zero = neutral
 	
 	static func + (lhs: Self, rhs: Self) -> Self {

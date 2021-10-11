@@ -1,7 +1,7 @@
 import Foundation
 
-protocol PieceOrientations: PartialCubeState {
-	associatedtype Orientation: PieceOrientation
+protocol PieceOrientation: PartialCubeState {
+	associatedtype Orientation: SinglePieceOrientation
 	typealias Piece = Orientation.Piece
 	associatedtype Space: CoordinateSpace
 	
@@ -15,7 +15,7 @@ protocol PieceOrientations: PartialCubeState {
 	func coordinate() -> Coordinate<Space>
 }
 
-extension PieceOrientations {
+extension PieceOrientation {
 	func coordinate() -> Coordinate<Space> {
 		.init(
 			asArray()
@@ -49,23 +49,23 @@ extension PieceOrientations {
 }
 
 /// defines for each spot which orientation its corner has relative to U/D
-struct CornerOrientations: Hashable, PieceOrientations, TaggedCorners {
-	typealias Tag = CornerOrientation
+struct CornerOrientation: Hashable, PieceOrientation, TaggedCorners {
+	typealias Tag = SingleCornerOrientation
 	typealias Space = CornerOrientationCoordinate.Space
 	
 	static let zero = Self()
 	
 	// TODO: flips?
 	
-	var urf = CornerOrientation.neutral
-	var ufl = CornerOrientation.neutral
-	var ulb = CornerOrientation.neutral
-	var ubr = CornerOrientation.neutral
+	var urf = SingleCornerOrientation.neutral
+	var ufl = SingleCornerOrientation.neutral
+	var ulb = SingleCornerOrientation.neutral
+	var ubr = SingleCornerOrientation.neutral
 	
-	var dfr = CornerOrientation.neutral
-	var dlf = CornerOrientation.neutral
-	var dbl = CornerOrientation.neutral
-	var drb = CornerOrientation.neutral
+	var dfr = SingleCornerOrientation.neutral
+	var dlf = SingleCornerOrientation.neutral
+	var dbl = SingleCornerOrientation.neutral
+	var drb = SingleCornerOrientation.neutral
 	
 	static func + (one: Self, two: Self) -> Self {
 		.init(
@@ -110,31 +110,31 @@ struct CornerOrientations: Hashable, PieceOrientations, TaggedCorners {
 	}
 	
 	static func + (state: Self, transform: CubeTransformation) -> Self {
-		state.applying(transform.cornerPermutation) + transform.cornerOrientations
+		state.applying(transform.cornerPermutation) + transform.cornerOrientation
 	}
 }
 
 /// defines for each spot which orientation its corner has relative to U/D
-struct EdgeOrientations: Hashable, PieceOrientations, TaggedEdges {
-	typealias Tag = EdgeOrientation
+struct EdgeOrientation: Hashable, PieceOrientation, TaggedEdges {
+	typealias Tag = SingleEdgeOrientation
 	typealias Space = EdgeOrientationCoordinate.Space
 	
 	static let zero = Self()
 	
-	var ur = EdgeOrientation.neutral
-	var uf = EdgeOrientation.neutral
-	var ul = EdgeOrientation.neutral
-	var ub = EdgeOrientation.neutral
+	var ur = SingleEdgeOrientation.neutral
+	var uf = SingleEdgeOrientation.neutral
+	var ul = SingleEdgeOrientation.neutral
+	var ub = SingleEdgeOrientation.neutral
 	
-	var dr = EdgeOrientation.neutral
-	var df = EdgeOrientation.neutral
-	var dl = EdgeOrientation.neutral
-	var db = EdgeOrientation.neutral
+	var dr = SingleEdgeOrientation.neutral
+	var df = SingleEdgeOrientation.neutral
+	var dl = SingleEdgeOrientation.neutral
+	var db = SingleEdgeOrientation.neutral
 	
-	var fr = EdgeOrientation.neutral
-	var fl = EdgeOrientation.neutral
-	var bl = EdgeOrientation.neutral
-	var br = EdgeOrientation.neutral
+	var fr = SingleEdgeOrientation.neutral
+	var fl = SingleEdgeOrientation.neutral
+	var bl = SingleEdgeOrientation.neutral
+	var br = SingleEdgeOrientation.neutral
 	
 	static func + (one: Self, two: Self) -> Self {
 		.init(
@@ -177,6 +177,6 @@ struct EdgeOrientations: Hashable, PieceOrientations, TaggedEdges {
 	}
 	
 	static func + (state: Self, transform: CubeTransformation) -> Self {
-		state.applying(transform.edgePermutation) + transform.edgeOrientations
+		state.applying(transform.edgePermutation) + transform.edgeOrientation
 	}
 }
