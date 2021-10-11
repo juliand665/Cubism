@@ -1,14 +1,14 @@
 import Foundation
-import AppKit
 
-protocol PieceOrientations: AdditiveArithmeticWithNegation {
+protocol PieceOrientations: PartialCubeState {
 	associatedtype Orientation: PieceOrientation
 	typealias Piece = Orientation.Piece
 	associatedtype Space: CoordinateSpace
 	
 	subscript(piece: Piece) -> Orientation { get set }
 	
-	init(coordinate: Coordinate<Space>)
+	init()
+	init(_ coordinate: Coordinate<Space>)
 	init(array: [Orientation])
 	
 	func asArray() -> [Orientation]
@@ -25,7 +25,12 @@ extension PieceOrientations {
 		)
 	}
 	
-	init(coordinate: Coordinate<Space>) {
+	init(_ coordinate: Coordinate<Space>) {
+		guard coordinate.value != 0 else {
+			self = .zero
+			return
+		}
+		
 		self.init(
 			array: Self.digits(of: coordinate)
 				.map { Orientation(rawValue: $0)! }
@@ -103,6 +108,10 @@ struct CornerOrientations: Hashable, PieceOrientations, TaggedCorners {
 			drb: self[perm.drb]
 		)
 	}
+	
+	static func + (state: Self, transform: CubeTransformation) -> Self {
+		state.applying(transform.cornerPermutation) + transform.cornerOrientations
+	}
 }
 
 /// defines for each spot which orientation its corner has relative to U/D
@@ -165,5 +174,9 @@ struct EdgeOrientations: Hashable, PieceOrientations, TaggedEdges {
 			bl: self[perm.bl],
 			br: self[perm.br]
 		)
+	}
+	
+	static func + (state: Self, transform: CubeTransformation) -> Self {
+		state.applying(transform.edgePermutation) + transform.edgeOrientations
 	}
 }

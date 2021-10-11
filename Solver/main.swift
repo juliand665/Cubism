@@ -55,17 +55,15 @@ func testSequences() {
 		let randomCombo = (1...10_000).map { _ in [u, r, f, l, b, d].randomElement()! }//.reduce(.zero, +)
 		//print(randomCombo)
 		let lessDumbSequence = repeatElement(randomCombo, count: .max).lazy.joined()
-		let dumbSequence = lessDumbSequence.reductions(.zero, +)
+		let dumbSequence = lessDumbSequence.reductions(+)
 		let prefixUntilLoop = dumbSequence
 			.enumerated()
-			.dropFirst()
 			.prefix { $0.element != .zero }
 		let uniques = Set(prefixUntilLoop.map(\.element))
 		print(uniques.count, "unique states")
 		print(
 			dumbSequence
 				.enumerated()
-				.dropFirst()
 				.first { $0.element == .zero }!
 		)
 	}
@@ -74,60 +72,73 @@ func testSequences() {
 
 // MARK: -
 
-func timeStuff() {
-	func measureTime(repetitions: Int = 1_000_000, for block: () -> Void) {
-		let start = Date()
-		for _ in 1...repetitions {
-			block()
-		}
-		print("done in", -start.timeIntervalSinceNow)
+func measureTime(as title: String? = nil, repetitions: Int = 1, for block: () -> Void) {
+	if let title = title {
+		print("measuring \(title)…")
 	}
+	
+	let start = Date()
+	for _ in 1...repetitions {
+		block()
+	}
+	let timeTaken = -start.timeIntervalSinceNow
+	let formatter = NumberFormatter() <- { $0.minimumFractionDigits = 6 }
+	print("done in \(formatter.string(from: timeTaken as NSNumber)!)s")
+	print()
+}
+
+func timeStuff() {
 	
 	let testSize = 20
 	let test = Array(0..<testSize).sumWithIncreasingBases()
 	
 	print("starting")
-	measureTime { _ = test.digitsWithIncreasingBases(count: testSize) }
+	measureTime(repetitions: 1_000_000) { _ = test.digitsWithIncreasingBases(count: testSize) }
 }
 //timeStuff()
 
 // MARK: -
 
 func testCoordCalculations() {
-	let testCornerOrientation = CornerOrientations(
-		urf: .twistedCCW, ufl: .neutral, ulb: .neutral, ubr: .twistedCW,
-		dfr: .twistedCW, dlf: .neutral, dbl: .neutral, drb: .twistedCCW
-	)
-	print(testCornerOrientation.coordinate())
-	
-	for rawCoord in 0..<CornerOrientationCoordinate.Space.count {
-		let coord = CornerOrientationCoordinate(rawCoord)
-		let orientation = CornerOrientations(coordinate: coord)
-		precondition(coord == orientation.coordinate())
+	func test<Space: CoordinateSpace>(_ coord: Coordinate<Space>.Type) {
+		print("Testing \(Space.self)…")
+		for rawCoord in 0..<Space.count {
+			if rawCoord & ((1 << 16) - 1) == 0 {
+				let progress = Double(rawCoord) / Double(Space.count)
+				print("\(100 * progress)%")
+			}
+			let coord = Space.Coord(rawCoord)
+			let state = coord.makeState()
+			precondition(coord == Space.Coord(state))
+		}
+		print("Test succeeded!")
 	}
 	
-	for rawCoord in 0..<CornerPermutationCoordinate.Space.count {
-		let coord = CornerPermutationCoordinate(rawCoord)
-		let orientation = CornerPermutation(coordinate: coord)
-		precondition(coord == orientation.coordinate())
-	}
+	test(UDSliceCoordinate.self)
+	test(CornerOrientationCoordinate.self)
+	test(CornerPermutationCoordinate.self)
+	test(EdgeOrientationCoordinate.self)
+	test(EdgePermutationCoordinate.self) /// 12! states takes forever zzz
 }
-testCoordCalculations()
+//testCoordCalculations()
 
 // MARK: -
 
-struct SolverMove {
-	static let all = Face.allCases.flatMap { face -> [Self] in
-		let transform = CubeTransformation.transform(for: face)
-		let variants = sequence(first: transform) { $0 + transform }
-		return zip(Move.Direction.inCWOrder, variants).map { direction, transform in
-			Self(
-				move: .init(target: .singleFace(face), direction: direction),
-				transform: transform
-			)
+let udSliceSymMoves = StandardSymmetryTable<UDSliceCoordinate.Space>()
+let edgeOriSymMoves = StandardSymmetryTable<EdgeOrientationCoordinate.Space>()
+
+let flipUDSliceRepresentants = FlipUDSliceCoordinate.allValues
+	.filter(state: Array(repeating: false, count: FlipUDSliceCoordinate.Space.count)) { seen, coord in
+		guard !seen[coord.intValue] else { return false }
+		
+		let udSliceSymmetries = udSliceSymMoves[coord.udSliceCoord].moves
+		let orientationSymmetries = edgeOriSymMoves[coord.edgeOrientationCoord].moves
+		for (udSlice, edgeOri) in zip(udSliceSymmetries, orientationSymmetries) {
+			let coord = FlipUDSliceCoordinate(udSlice, edgeOri)
+			seen[coord.intValue] = true
 		}
+		
+		return true
 	}
-	
-	var move: Move
-	var transform: CubeTransformation
-}
+
+print("found \(flipUDSliceRepresentants.count) equivalence classes")

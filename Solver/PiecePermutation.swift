@@ -2,7 +2,7 @@ import Foundation
 import HandyOperators
 import Algorithms
 
-protocol PiecePermutation: AdditiveArithmeticWithNegation {
+protocol PiecePermutation: PartialCubeState {
 	associatedtype Piece: Comparable, CaseIterable
 	where Piece.AllCases: RandomAccessCollection
 	associatedtype Space: CoordinateSpace
@@ -10,6 +10,7 @@ protocol PiecePermutation: AdditiveArithmeticWithNegation {
 	subscript(piece: Piece) -> Piece { get set }
 	
 	init()
+	init(_ coordinate: Coordinate<Space>)
 	init(array: [Piece])
 	
 	func asArray() -> [Piece]
@@ -21,7 +22,12 @@ extension PiecePermutation {
 		asArray().permutationCoordinate()
 	}
 	
-	init(coordinate: Coordinate<Space>) {
+	init(_ coordinate: Coordinate<Space>) {
+		guard coordinate.value != 0 else {
+			self = .zero
+			return
+		}
+		
 		self.init(array: Piece.allCases.reorderedToMatch(coordinate))
 	}
 	
@@ -63,6 +69,10 @@ struct CornerPermutation: Hashable, PiecePermutation, TaggedCorners {
 			dbl: one[two.dbl],
 			drb: one[two.drb]
 		)
+	}
+	
+	static func + (state: Self, transform: CubeTransformation) -> Self {
+		state + transform.cornerPermutation
 	}
 }
 
@@ -107,6 +117,10 @@ struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
 		)
 	}
 	
+	static func + (state: Self, transform: CubeTransformation) -> Self {
+		state + transform.edgePermutation
+	}
+	
 	func udSliceCoordinate() -> UDSliceCoordinate {
 		let state = asArray()
 			.enumerated()
@@ -147,6 +161,34 @@ struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
 		asArray()
 			.filter { !$0.isPartOfUDSlice }
 			.permutationCoordinate()
+	}
+}
+
+extension EdgePermutation {
+	private static let canonicalOrder = Self().asArray()
+	
+	init(_ coordinate: UDSliceCoordinate) {
+		var currentValue = UInt(UDSliceCoordinate.Space.count)
+		// avoid hard math by just trying all possible values until it works lol
+		for i1 in 3..<12 {
+			for i2 in 2..<i1 {
+				for i3 in 1..<i2 {
+					for i4 in 0..<i3 {
+						currentValue -= 1
+						guard currentValue == coordinate.value else { continue }
+						
+						self.init(array: Self.canonicalOrder <- {
+							$0.swapAt(i4, 8)
+							$0.swapAt(i3, 9)
+							$0.swapAt(i2, 10)
+							$0.swapAt(i1, 11)
+						})
+						return
+					}
+				}
+			}
+		}
+		fatalError("UD slice coordinate out of range")
 	}
 }
 

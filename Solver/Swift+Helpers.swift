@@ -12,6 +12,14 @@ extension Sequence {
 		var state = state
 		return try map { try transform(&state, $0) }
 	}
+	
+	func filter<State>(
+		state: State,
+		_ shouldInclude: (inout State, Element) throws -> Bool
+	) rethrows -> [Element] {
+		var state = state
+		return try filter { try shouldInclude(&state, $0) }
+	}
 }
 
 extension Sequence where Element: AdditiveArithmetic {

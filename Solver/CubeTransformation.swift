@@ -8,7 +8,7 @@ struct CubeTransformation: Hashable {
 	var edgeOrientations = EdgeOrientations()
 }
 
-extension CubeTransformation: AdditiveArithmeticWithNegation {
+extension CubeTransformation: PartialCubeState {
 	static let zero = Self()
 	
 	static func + (one: Self, two: Self) -> Self {
@@ -29,6 +29,14 @@ extension CubeTransformation: AdditiveArithmeticWithNegation {
 			edgePermutation: inverseEdges,
 			edgeOrientations: -t.edgeOrientations.applying(inverseEdges)
 		)
+	}
+	
+	func repeatedApplications(to start: Self? = nil) -> UnfoldSequence<Self, (Self?, Bool)> {
+		sequence(first: start ?? self) { $0 + self }
+	}
+	
+	func uniqueApplications() -> [Self] {
+		repeatedApplications(to: self).prefix { $0 != .zero }
 	}
 }
 
