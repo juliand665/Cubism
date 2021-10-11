@@ -1,6 +1,10 @@
 import Foundation
 
-enum Corner: Comparable, CaseIterable {
+protocol CubePiece: Comparable, CaseIterable {
+	var name: String { get }
+}
+
+enum Corner: CubePiece, Comparable, CaseIterable {
 	case urf, ufl, ulb, ubr
 	case dfr, dlf, dbl, drb
 	
@@ -9,7 +13,7 @@ enum Corner: Comparable, CaseIterable {
 	}
 }
 
-enum Edge: Comparable, CaseIterable {
+enum Edge: CubePiece, Comparable, CaseIterable {
 	case ur, uf, ul, ub
 	case dr, df, dl, db
 	case fr, fl, bl, br

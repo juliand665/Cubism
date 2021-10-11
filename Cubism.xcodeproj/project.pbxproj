@@ -11,6 +11,7 @@
 		B955EF9E26ED73C0008F65E3 /* AlgorithmDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */; };
 		B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */; };
 		B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
+		B96C57DB27133EE7006D4EEA /* TaggedPieces.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */; };
 		B96C709127088496001DAEF8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709027088496001DAEF8 /* main.swift */; };
 		B96C7095270884DB001DAEF8 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
 		B96C7098270885AB001DAEF8 /* ArrayBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = B96C7097270885AB001DAEF8 /* ArrayBuilder */; };
@@ -56,6 +57,7 @@
 		B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
 		B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */; };
 		B9DE914126F292F200DE0E29 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DE914026F292F200DE0E29 /* Colors.swift */; };
+		B9F3C920270CE9E7002FBEBD /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F3C91F270CE9E7002FBEBD /* Coordinate.swift */; };
 		B9F5E6B426EA4DA100652979 /* AlgorithmCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +77,7 @@
 		B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmDetailsView.swift; sourceTree = "<group>"; };
 		B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmsScreen.swift; sourceTree = "<group>"; };
 		B96AB4D026E3B358003E38E4 /* Algorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
+		B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedPieces.swift; sourceTree = "<group>"; };
 		B96C708E27088495001DAEF8 /* Solver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Solver; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96C709027088496001DAEF8 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B96C709B2708C46A001DAEF8 /* Pieces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pieces.swift; sourceTree = "<group>"; };
@@ -103,6 +106,7 @@
 		B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Helpers.swift"; sourceTree = "<group>"; };
 		B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfigurationDiagram.swift; sourceTree = "<group>"; };
 		B9DE914026F292F200DE0E29 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		B9F3C91F270CE9E7002FBEBD /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmCustomization.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,8 +163,10 @@
 				B96C709B2708C46A001DAEF8 /* Pieces.swift */,
 				B96C709D2708C4B6001DAEF8 /* Orientation.swift */,
 				B96C709F2708C4D9001DAEF8 /* PieceOrientations.swift */,
+				B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */,
 				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
 				B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */,
+				B9F3C91F270CE9E7002FBEBD /* Coordinate.swift */,
 			);
 			path = Solver;
 			sourceTree = "<group>";
@@ -398,7 +404,9 @@
 				B96C70AA270910D7001DAEF8 /* CubeTransformation.swift in Sources */,
 				B96C709127088496001DAEF8 /* main.swift in Sources */,
 				B96C7095270884DB001DAEF8 /* Algorithm.swift in Sources */,
+				B96C57DB27133EE7006D4EEA /* TaggedPieces.swift in Sources */,
 				B96C70A927090F6C001DAEF8 /* PiecePermutation.swift in Sources */,
+				B9F3C920270CE9E7002FBEBD /* Coordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

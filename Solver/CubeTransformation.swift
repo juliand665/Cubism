@@ -113,4 +113,83 @@ extension CubeTransformation {
 		cornerOrientations: .init(ufl: .twistedCW, ulb: .twistedCCW, dlf: .twistedCCW, dbl: .twistedCW),
 		edgePermutation: .init(ul: .bl, dl: .fl, fl: .ul, bl: .dl)
 	)
+	
+	static func transform(for face: Face) -> Self {
+		switch face {
+		case .front:
+			return .frontTurn
+		case .back:
+			return .backTurn
+		case .up:
+			return .upTurn
+		case .down:
+			return .downTurn
+		case .left:
+			return .leftTurn
+		case .right:
+			return .rightTurn
+		}
+	}
+	
+	static let symmetryURF3 = Self(
+		cornerPermutation: .init(
+			ufl: .dfr, ulb: .dlf, ubr: .ufl,
+			dfr: .ubr, dlf: .drb, drb: .ulb
+		),
+		cornerOrientations: .init(
+			urf: .twistedCW, ufl: .twistedCCW, ulb: .twistedCW, ubr: .twistedCCW,
+			dfr: .twistedCCW, dlf: .twistedCW, dbl: .twistedCCW, drb: .twistedCW
+		),
+		edgePermutation: .init(
+			ur: .uf, uf: .fr, ul: .df, ub: .fl,
+			dr: .ub, df: .br, dl: .db, db: .bl,
+			fr: .ur, fl: .dr, bl: .dl, br: .ul
+		),
+		edgeOrientations: .init(
+			ur: .flipped, ul: .flipped, dr: .flipped, dl: .flipped,
+			fr: .flipped, fl: .flipped, bl: .flipped, br: .flipped
+		)
+	)
+	
+	static let symmetryF2 = Self(
+		cornerPermutation: .init(
+			urf: .dlf, ufl: .dfr, ulb: .drb, ubr: .dbl,
+			dfr: .ufl, dlf: .urf, dbl: .ubr, drb: .ulb
+		),
+		edgePermutation: .init(
+			ur: .dl, uf: .df, ul: .dr, ub: .db,
+			dr: .ul, df: .uf, dl: .ur, db: .ub,
+			fr: .fl, fl: .fr, bl: .br, br: .bl
+		)
+	)
+	
+	static let symmetryU4 = Self(
+		cornerPermutation: .init(
+			urf: .ubr, ufl: .urf, ulb: .ufl, ubr: .ulb,
+			dfr: .drb, dlf: .dfr, dbl: .dlf, drb: .dbl
+		),
+		edgePermutation: .init(
+			ur: .ub, uf: .ur, ul: .uf, ub: .ul,
+			dr: .db, df: .dr, dl: .df, db: .dl,
+			fr: .br, fl: .fr, bl: .fl, br: .bl
+		),
+		edgeOrientations: .init(
+			fr: .flipped, fl: .flipped, bl: .flipped, br: .flipped
+		)
+	)
+	
+	/*
+	static let symmetryLR2 = Self(
+		cornerPermutation: .init(
+			urf: .ufl, ufl: .urf, ulb: .ubr, ubr: .ulb,
+			dfr: .dlf, dlf: .dfr, dbl: .drb, drb: .dbl
+		),
+		cornerOrientations: <#T##CornerOrientations#>, // not that simple—orientations need to be flipped
+		edgePermutation: .init(
+			ur: .ul, ul: .ur,
+			dr: .dl, dl: .dr,
+			fr: .fl, fl: .fr, bl: .br, br: .bl
+		)
+	)
+	 */
 }

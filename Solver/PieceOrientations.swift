@@ -1,25 +1,56 @@
 import Foundation
+import AppKit
 
 protocol PieceOrientations: AdditiveArithmeticWithNegation {
-	associatedtype Orientation: RawRepresentable, CaseIterable where Orientation.RawValue == Int
+	associatedtype Orientation: PieceOrientation
+	typealias Piece = Orientation.Piece
+	associatedtype Space: CoordinateSpace
+	
+	subscript(piece: Piece) -> Orientation { get set }
+	
+	init(coordinate: Coordinate<Space>)
+	init(array: [Orientation])
 	
 	func asArray() -> [Orientation]
-	func coordinate() -> Int
+	func coordinate() -> Coordinate<Space>
 }
 
 extension PieceOrientations {
-	func coordinate() -> Int {
-		asArray()
-			.map(\.rawValue)
-			.dropLast() // last is evident from the others
-			.reduce(0) { $0 * Orientation.allCases.count + $1 }
+	func coordinate() -> Coordinate<Space> {
+		.init(
+			asArray()
+				.map(\.rawValue)
+				.dropLast() // last is evident from the others
+				.reduce(0) { $0 * Orientation.allCases.count + $1 }
+		)
+	}
+	
+	init(coordinate: Coordinate<Space>) {
+		self.init(
+			array: Self.digits(of: coordinate)
+				.map { Orientation(rawValue: $0)! }
+		)
+	}
+	
+	private static func digits(of coordinate: Coordinate<Space>) -> [Int] {
+		let base = Orientation.allCases.count
+		let digits = coordinate.intValue.digits(withBase: base)
+		let parity = digits.sum() % base
+		let lastPiece = (base - parity) % base
+		let count = Piece.allCases.count
+		let leadingZeroes = repeatElement(0, count: count - digits.count - 1)
+		return leadingZeroes + digits + [lastPiece]
 	}
 }
 
 /// defines for each spot which orientation its corner has relative to U/D
-struct CornerOrientations: Hashable, PieceOrientations {
-	static let possibilities = 2187 // 3^7
+struct CornerOrientations: Hashable, PieceOrientations, TaggedCorners {
+	typealias Tag = CornerOrientation
+	typealias Space = CornerOrientationCoordinate.Space
+	
 	static let zero = Self()
+	
+	// TODO: flips?
 	
 	var urf = CornerOrientation.neutral
 	var ufl = CornerOrientation.neutral
@@ -30,20 +61,6 @@ struct CornerOrientations: Hashable, PieceOrientations {
 	var dlf = CornerOrientation.neutral
 	var dbl = CornerOrientation.neutral
 	var drb = CornerOrientation.neutral
-	
-	subscript(corner: Corner) -> CornerOrientation {
-		switch corner {
-		case .urf: return urf
-		case .ufl: return ufl
-		case .ulb: return ulb
-		case .ubr: return ubr
-			
-		case .dfr: return dfr
-		case .dlf: return dlf
-		case .dbl: return dbl
-		case .drb: return drb
-		}
-	}
 	
 	static func + (one: Self, two: Self) -> Self {
 		.init(
@@ -86,15 +103,13 @@ struct CornerOrientations: Hashable, PieceOrientations {
 			drb: self[perm.drb]
 		)
 	}
-	
-	func asArray() -> [CornerOrientation] {
-		[urf, ufl, ulb, ubr, dfr, dlf, dbl, drb]
-	}
 }
 
 /// defines for each spot which orientation its corner has relative to U/D
-struct EdgeOrientations: Hashable, PieceOrientations {
-	static let possibilities = 2048 // 2^11
+struct EdgeOrientations: Hashable, PieceOrientations, TaggedEdges {
+	typealias Tag = EdgeOrientation
+	typealias Space = EdgeOrientationCoordinate.Space
+	
 	static let zero = Self()
 	
 	var ur = EdgeOrientation.neutral
@@ -111,25 +126,6 @@ struct EdgeOrientations: Hashable, PieceOrientations {
 	var fl = EdgeOrientation.neutral
 	var bl = EdgeOrientation.neutral
 	var br = EdgeOrientation.neutral
-	
-	subscript(edge: Edge) -> EdgeOrientation {
-		switch edge {
-		case .ur: return ur
-		case .uf: return uf
-		case .ul: return ul
-		case .ub: return ub
-			
-		case .dr: return dr
-		case .df: return df
-		case .dl: return dl
-		case .db: return db
-			
-		case .fr: return fr
-		case .fl: return fl
-		case .bl: return bl
-		case .br: return br
-		}
-	}
 	
 	static func + (one: Self, two: Self) -> Self {
 		.init(
@@ -169,9 +165,5 @@ struct EdgeOrientations: Hashable, PieceOrientations {
 			bl: self[perm.bl],
 			br: self[perm.br]
 		)
-	}
-	
-	func asArray() -> [EdgeOrientation] {
-		[ur, uf, ul, ub, dr, df, dl, db, fr, fl, bl, br]
 	}
 }

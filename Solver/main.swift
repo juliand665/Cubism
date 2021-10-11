@@ -1,9 +1,18 @@
 import Foundation
 import Algorithms
+import HandyOperators
 
 extension Sequence {
 	func count(where isIncluded: (Element) throws -> Bool) rethrows -> Int {
 		try lazy.filter(isIncluded).count
+	}
+	
+	func map<State, T>(
+		state: State,
+		_ transform: (inout State, Element) throws -> T
+	) rethrows -> [T] {
+		var state = state
+		return try map { try transform(&state, $0) }
 	}
 }
 
@@ -18,14 +27,45 @@ extension Sequence where Element == Int {
 		reduce(1, *)
 	}
 	
-	func sumWithFactorialBases() -> Element {
+	func sumWithIncreasingBases() -> Element {
 		self
 			.enumerated()
-			.reduce(into: (sum: 0, base: 1)) { state, new in
-				state.sum += new.element * state.base
-				state.base *= new.offset + 1
+			.reversed()
+			.reduce(0) { sum, new in
+				let base = new.offset + 1
+				assert(new.element < base)
+				return sum * base + new.element
 			}
-			.sum
+	}
+}
+
+extension BinaryInteger where Stride: SignedInteger {
+	func digits(withBase base: Self) -> [Self] {
+		Array(sequence(state: self) { rest -> Self? in
+			guard rest > 0 else { return nil }
+			let remainder: Self
+			(rest, remainder) = rest.quotientAndRemainder(dividingBy: base)
+			return remainder
+		}).reversed()
+	}
+	
+	func digitsWithIncreasingBases(count: Self) -> [Self] {
+		var rest = self
+		return (1...count) // bases
+			.map { base in
+				let remainder: Self
+				(rest, remainder) = rest.quotientAndRemainder(dividingBy: base)
+				return remainder
+			}
+	}
+	
+	func digitsWithIncreasingBases2(count: Self) -> [Self] {
+		(1...count) // bases
+			.map(state: self) { rest, base in
+				let remainder: Self
+				(rest, remainder) = rest.quotientAndRemainder(dividingBy: base)
+				return remainder
+			}
 	}
 }
 

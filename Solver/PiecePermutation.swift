@@ -4,18 +4,27 @@ import Algorithms
 
 protocol PiecePermutation: AdditiveArithmeticWithNegation {
 	associatedtype Piece: Comparable, CaseIterable
+	where Piece.AllCases: RandomAccessCollection
+	associatedtype Space: CoordinateSpace
 	
 	subscript(piece: Piece) -> Piece { get set }
 	
 	init()
+	init(array: [Piece])
 	
 	func asArray() -> [Piece]
-	func coordinate() -> Int
+	func coordinate() -> Coordinate<Space>
 }
 
 extension PiecePermutation {
-	func coordinate() -> Int {
+	func coordinate() -> Coordinate<Space> {
 		asArray().permutationCoordinate()
+	}
+	
+	init(coordinate: Coordinate<Space>) {
+		self.init(
+			array: Piece.allCases.reorderedToMatch(coordinate)
+		)
 	}
 	
 	static prefix func - (perm: Self) -> Self {
@@ -28,8 +37,10 @@ extension PiecePermutation {
 }
 
 /// defines for each spot what corner it receives
-struct CornerPermutation: Hashable, PiecePermutation {
-	static let possibilities = 40_320 // 8!
+struct CornerPermutation: Hashable, PiecePermutation, TaggedCorners {
+	typealias Tag = Corner
+	typealias Space = CornerPermutationCoordinate.Space
+	
 	static let zero = Self()
 	
 	var urf = Corner.urf
@@ -41,35 +52,6 @@ struct CornerPermutation: Hashable, PiecePermutation {
 	var dlf = Corner.dlf
 	var dbl = Corner.dbl
 	var drb = Corner.drb
-	
-	subscript(corner: Corner) -> Corner {
-		get {
-			switch corner {
-			case .urf: return urf
-			case .ufl: return ufl
-			case .ulb: return ulb
-			case .ubr: return ubr
-				
-			case .dfr: return dfr
-			case .dlf: return dlf
-			case .dbl: return dbl
-			case .drb: return drb
-			}
-		}
-		set {
-			switch corner {
-			case .urf: urf = newValue
-			case .ufl: ufl = newValue
-			case .ulb: ulb = newValue
-			case .ubr: ubr = newValue
-				
-			case .dfr: dfr = newValue
-			case .dlf: dlf = newValue
-			case .dbl: dbl = newValue
-			case .drb: drb = newValue
-			}
-		}
-	}
 	
 	static func + (one: Self, two: Self) -> Self {
 		.init(
@@ -84,15 +66,13 @@ struct CornerPermutation: Hashable, PiecePermutation {
 			drb: one[two.drb]
 		)
 	}
-	
-	func asArray() -> [Corner] {
-		[urf, ufl, ulb, ubr, dfr, dlf, dbl, drb]
-	}
 }
 
 /// defines for each spot what edge it receives
-struct EdgePermutation: Hashable, PiecePermutation {
-	static let possibilities = 479_001_600 // 12!
+struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
+	typealias Tag = Edge
+	typealias Space = EdgePermutationCoordinate.Space
+	
 	static let zero = Self()
 	
 	var ur = Edge.ur
@@ -109,45 +89,6 @@ struct EdgePermutation: Hashable, PiecePermutation {
 	var fl = Edge.fl
 	var bl = Edge.bl
 	var br = Edge.br
-	
-	subscript(edge: Edge) -> Edge {
-		get {
-			switch edge {
-			case .ur: return ur
-			case .uf: return uf
-			case .ul: return ul
-			case .ub: return ub
-				
-			case .dr: return dr
-			case .df: return df
-			case .dl: return dl
-			case .db: return db
-				
-			case .fr: return fr
-			case .fl: return fl
-			case .bl: return bl
-			case .br: return br
-			}
-		}
-		set {
-			switch edge {
-			case .ur: ur = newValue
-			case .uf: uf = newValue
-			case .ul: ul = newValue
-			case .ub: ub = newValue
-				
-			case .dr: dr = newValue
-			case .df: df = newValue
-			case .dl: dl = newValue
-			case .db: db = newValue
-				
-			case .fr: fr = newValue
-			case .fl: fl = newValue
-			case .bl: bl = newValue
-			case .br: br = newValue
-			}
-		}
-	}
 	
 	static func + (one: Self, two: Self) -> Self {
 		.init(
@@ -168,12 +109,7 @@ struct EdgePermutation: Hashable, PiecePermutation {
 		)
 	}
 	
-	func asArray() -> [Edge] {
-		[ur, uf, ul, ub, dr, df, dl, db, fr, fl, bl, br]
-	}
-	
-	/// 495 possibilities (0-494)
-	func udSliceCoordinate() -> Int {
+	func udSliceCoordinate() -> UDSliceCoordinate {
 		let state = asArray()
 			.enumerated()
 			.reduce(into: (sum: 0, coefficient: 0, k: -1)) { state, new in
@@ -200,30 +136,40 @@ struct EdgePermutation: Hashable, PiecePermutation {
 		
 		assert(state.coefficient == 165) // nCr(11, 3)
 		assert(state.k == 3)
-		return state.sum
+		return .init(state.sum)
 	}
 	
-	func sliceEdgePermCoordinate() -> Int {
-		asArray()
-			.filter { !$0.isPartOfUDSlice }
-			.permutationCoordinate()
-	}
-	
-	func nonSliceEdgePermCoordinate() -> Int {
+	func sliceEdgePermCoordinate() -> SliceEdgePermutationCoordinate {
 		asArray()
 			.filter { $0.isPartOfUDSlice }
 			.permutationCoordinate()
 	}
+	
+	func nonSliceEdgePermCoordinate() -> NonSliceEdgePermutationCoordinate {
+		asArray()
+			.filter { !$0.isPartOfUDSlice }
+			.permutationCoordinate()
+	}
 }
 
-private extension Array where Element: Comparable {
-	func permutationCoordinate() -> Int {
-		self
-			.enumerated()
-			.map { (index, piece) in
-				prefix(upTo: index).count { $0 > piece }
-			}
-			.sumWithFactorialBases()
+extension RandomAccessCollection where Element: Comparable {
+	func permutationCoordinate<S: CoordinateSpace>() -> Coordinate<S> {
+		.init(
+			self
+				.indexed()
+				.map { (index, piece) in
+					prefix(upTo: index).count { $0 > piece }
+				}
+				.sumWithIncreasingBases()
+		)
+	}
+	
+	func reorderedToMatch<S: CoordinateSpace>(_ coordinate: Coordinate<S>) -> [Element] {
+		coordinate.intValue
+			.digitsWithIncreasingBases(count: count)
+			.reversed()
+			.map(state: reversed()) { $0.remove(at: $1) }
+			.reversed()
 	}
 }
 
