@@ -113,6 +113,8 @@ struct Move: Codable, Hashable, Identifiable {
 	}
 	
 	enum Direction: Codable, CaseIterable {
+		static let inCWOrder = [clockwise, double, counterclockwise]
+		
 		case clockwise
 		case counterclockwise
 		case double

@@ -22,9 +22,7 @@ extension PiecePermutation {
 	}
 	
 	init(coordinate: Coordinate<Space>) {
-		self.init(
-			array: Piece.allCases.reorderedToMatch(coordinate)
-		)
+		self.init(array: Piece.allCases.reorderedToMatch(coordinate))
 	}
 	
 	static prefix func - (perm: Self) -> Self {
