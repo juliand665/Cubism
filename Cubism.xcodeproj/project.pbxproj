@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B91526012715322A00E8B031 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B91526002715322A00E8B031 /* Collections */; };
+		B91526032715324A00E8B031 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B91526022715324A00E8B031 /* Collections */; };
 		B92A59D626E46B64002AC260 /* CGeometry in Frameworks */ = {isa = PBXBuildFile; productRef = B92A59D526E46B64002AC260 /* CGeometry */; };
 		B955EF9E26ED73C0008F65E3 /* AlgorithmDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */; };
 		B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */; };
@@ -121,6 +123,7 @@
 			files = (
 				B96C70AC27091CB2001DAEF8 /* Algorithms in Frameworks */,
 				B96C7098270885AB001DAEF8 /* ArrayBuilder in Frameworks */,
+				B91526032715324A00E8B031 /* Collections in Frameworks */,
 				B96C70A62708EAF3001DAEF8 /* HandyOperators in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B91526012715322A00E8B031 /* Collections in Frameworks */,
 				B9855C1F26EE2AB5006764BD /* Algorithms in Frameworks */,
 				B92A59D626E46B64002AC260 /* CGeometry in Frameworks */,
 				B96E9C0D26E2867800A46A3B /* ArrayBuilder in Frameworks */,
@@ -282,6 +286,7 @@
 				B96C7097270885AB001DAEF8 /* ArrayBuilder */,
 				B96C70A52708EAF3001DAEF8 /* HandyOperators */,
 				B96C70AB27091CB2001DAEF8 /* Algorithms */,
+				B91526022715324A00E8B031 /* Collections */,
 			);
 			productName = Solver;
 			productReference = B96C708E27088495001DAEF8 /* Solver */;
@@ -307,6 +312,7 @@
 				B92A59D526E46B64002AC260 /* CGeometry */,
 				B9855C1B26EE2848006764BD /* SwiftUIMissingPieces */,
 				B9855C1E26EE2AB5006764BD /* Algorithms */,
+				B91526002715322A00E8B031 /* Collections */,
 			);
 			productName = "Cubism (iOS)";
 			productReference = B96E9BF326E2755600A46A3B /* Cubism.app */;
@@ -366,6 +372,7 @@
 				B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */,
 				B9855C1A26EE2848006764BD /* XCRemoteSwiftPackageReference "SwifUI-Missing-Pieces" */,
 				B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+				B91525FF2715322A00E8B031 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = B96E9BF426E2755600A46A3B /* Products */;
 			projectDirPath = "";
@@ -767,6 +774,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B91525FF2715322A00E8B031 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/juliand665/CGeometry";
@@ -812,12 +827,22 @@
 			repositoryURL = "https://github.com/apple/swift-algorithms.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.1;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B91526002715322A00E8B031 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B91525FF2715322A00E8B031 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		B91526022715324A00E8B031 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B91525FF2715322A00E8B031 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
 		B92A59D526E46B64002AC260 /* CGeometry */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */;
