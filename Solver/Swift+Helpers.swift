@@ -45,6 +45,14 @@ extension Sequence where Element == Int {
 	}
 }
 
+extension RandomAccessCollection where Element: Comparable {
+	func binarySearch(for target: Element) -> Index? {
+		let candidate = partitioningIndex { $0 >= target }
+		guard candidate < endIndex, self[candidate] == target else { return nil }
+		return candidate
+	}
+}
+
 extension BinaryInteger where Stride: SignedInteger {
 	func digits(withBase base: Self) -> [Self] {
 		Array(sequence(state: self) { rest -> Self? in

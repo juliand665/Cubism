@@ -40,14 +40,20 @@ struct SolverMove {
 		let variants = sequence(first: transform) { $0 + transform }
 		return zip(Move.Direction.inCWOrder, variants).map { direction, transform in
 			Self(
-				move: .init(target: .singleFace(face), direction: direction),
+				face: face,
+				direction: direction,
 				transform: transform
 			)
 		}
 	}
 	
-	var move: Move
+	var face: Face
+	var direction: Move.Direction
 	var transform: CubeTransformation
+	
+	var move: Move {
+		.init(target: .singleFace(face), direction: direction)
+	}
 }
 
 struct Symmetry {

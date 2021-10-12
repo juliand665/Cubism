@@ -1,13 +1,14 @@
 import Foundation
+import HandyOperators
 
-struct Coordinate<Space: CoordinateSpace>: Hashable {
+struct Coordinate<Space: CoordinateSpace>: Hashable, Comparable {
 	typealias Space = Space // make generic arg accessible as member
 	
-	static var allValues: LazyMapSequence<Range<Int>, Coordinate<Space>> {
+	static var allValues: LazyMapSequence<Range<Space.Value>, Coordinate<Space>> {
 		(0..<Space.count).lazy.map(Self.init)
 	}
 	
-	var value: UInt
+	var value: Space.Value
 	
 	var intValue: Int { Int(value) }
 	
@@ -23,13 +24,24 @@ struct Coordinate<Space: CoordinateSpace>: Hashable {
 	func makeState() -> Space.CubeState {
 		Space.makeState(from: self)
 	}
+	
+	static func < (lhs: Self, rhs: Self) -> Bool {
+		lhs.value < rhs.value
+	}
+}
+
+extension Coordinate where Space: CoordinateSpaceWithSymmetryTable {
+	var standardSymmetries: [Self] {
+		Space.standardSymmetryTable[self].moves
+	}
 }
 
 protocol CoordinateSpace {
 	associatedtype CubeState: PartialCubeState
+	associatedtype Value: BinaryInteger where Value.Stride: SignedInteger
 	typealias Coord = Coordinate<Self>
 	
-	static var count: Int { get }
+	static var count: Value { get }
 	static var validSymmetries: [CubeTransformation] { get }
 	
 	static func makeState(from coordinate: Coord) -> CubeState
@@ -40,9 +52,35 @@ extension CoordinateSpace {
 	static var validSymmetries: [CubeTransformation] { Symmetry.standardSubgroup }
 }
 
+protocol CoordinateSpaceWithSymmetryTable: CoordinateSpace {
+	static var standardSymmetryTable: StandardSymmetryTable<Self> { get }
+}
+
+protocol CoordinateSpaceWithMoves: CoordinateSpace {
+	static func applyMove(_ move: SolverMove, to coord: Coord) -> Coord
+}
+
+extension Coordinate where Space: CoordinateSpaceWithMoves {
+	static func + (coord: Self, move: SolverMove) -> Self {
+		Space.applyMove(move, to: coord)
+	}
+}
+
+protocol CoordinateSpaceWithMoveTable: CoordinateSpaceWithMoves {
+	static var moveTable: FaceTurnMoveTable<Self> { get }
+}
+
+extension CoordinateSpaceWithMoveTable {
+	static func applyMove(_ move: SolverMove, to coord: Coord) -> Coord {
+		moveTable[coord][move]
+	}
+}
+
 typealias CornerOrientationCoordinate = Coordinate<_CornerOrientationCoordinateSpace>
-struct _CornerOrientationCoordinateSpace: CoordinateSpace {
-	static let count = 2187 // 3^7
+struct _CornerOrientationCoordinateSpace: CoordinateSpaceWithMoveTable {
+	static let count: UInt16 = 2187 // 3^7
+	
+	static let moveTable = FaceTurnMoveTable<Self>()
 	
 	static func makeState(from coordinate: Coord) -> CornerOrientation {
 		.init(coordinate)
@@ -54,10 +92,11 @@ struct _CornerOrientationCoordinateSpace: CoordinateSpace {
 }
 
 typealias EdgeOrientationCoordinate = Coordinate<_EdgeOrientationCoordinateSpace>
-struct _EdgeOrientationCoordinateSpace: CoordinateSpace {
-	static let count = 2048 // 2^11
+struct _EdgeOrientationCoordinateSpace: CoordinateSpaceWithSymmetryTable {
+	static let count: UInt16 = 2048 // 2^11
 	
 	static let validSymmetries = Symmetry.edgeFlipPreservingSubgroup
+	static let standardSymmetryTable = StandardSymmetryTable<Self>()
 	
 	static func makeState(from coordinate: Coord) -> EdgeOrientation {
 		.init(coordinate)
@@ -70,7 +109,7 @@ struct _EdgeOrientationCoordinateSpace: CoordinateSpace {
 
 typealias CornerPermutationCoordinate = Coordinate<_CornerPermutationCoordinateSpace>
 struct _CornerPermutationCoordinateSpace: CoordinateSpace {
-	static let count = 40_320 // 8!
+	static let count: UInt16 = 40_320 // 8!
 	
 	static func makeState(from coordinate: Coord) -> CornerPermutation {
 		.init(coordinate)
@@ -83,7 +122,7 @@ struct _CornerPermutationCoordinateSpace: CoordinateSpace {
 
 typealias EdgePermutationCoordinate = Coordinate<_EdgePermutationCoordinateSpace>
 struct _EdgePermutationCoordinateSpace: CoordinateSpace {
-	static let count = 479_001_600 // 12!
+	static let count: UInt32 = 479_001_600 // 12!
 	
 	static func makeState(from coordinate: Coord) -> EdgePermutation {
 		.init(coordinate)
@@ -96,8 +135,10 @@ struct _EdgePermutationCoordinateSpace: CoordinateSpace {
 
 /// Describes where the 4 edges belonging in the UD slice are currently, ignoring order.
 typealias UDSliceCoordinate = Coordinate<_UDSliceCoordinateSpace>
-struct _UDSliceCoordinateSpace: CoordinateSpace {
-	static let count = 495 // nCr(12, 8)
+struct _UDSliceCoordinateSpace: CoordinateSpaceWithSymmetryTable {
+	static let count: UInt16 = 495 // nCr(12, 8)
+	
+	static let standardSymmetryTable = StandardSymmetryTable<Self>()
 	
 	static func makeState(from coordinate: Coord) -> EdgePermutation {
 		.init(coordinate)
@@ -111,13 +152,13 @@ struct _UDSliceCoordinateSpace: CoordinateSpace {
 /// Combines the UD slice coordinate with the edge orientation (flip).
 typealias FlipUDSliceCoordinate = Coordinate<_FlipUDSliceCoordinateSpace>
 struct _FlipUDSliceCoordinateSpace: CoordinateSpace {
-	static let count = UDSliceCoordinate.Space.count * EdgeOrientationCoordinate.Space.count
+	static let count = UInt32(UDSliceCoordinate.Space.count) * UInt32(EdgeOrientationCoordinate.Space.count)
 	
 	static func makeState(from coordinate: Coord) -> CubeTransformation {
-		let (udSlice, orientation) = coordinate.value.quotientAndRemainder(dividingBy: UInt(EdgeOrientationCoordinate.Space.count))
+		let (udSlice, orientation) = coordinate.components
 		return .init(
-			edgePermutation: .init(UDSliceCoordinate(udSlice)),
-			edgeOrientation: .init(EdgeOrientationCoordinate(orientation))
+			edgePermutation: udSlice.makeState(),
+			edgeOrientation: orientation.makeState()
 		)
 	}
 	
@@ -127,12 +168,9 @@ struct _FlipUDSliceCoordinateSpace: CoordinateSpace {
 }
 
 extension FlipUDSliceCoordinate {
-	var udSliceCoord: UDSliceCoordinate {
-		.init(value / UInt(EdgeOrientationCoordinate.Space.count))
-	}
-	
-	var edgeOrientationCoord: EdgeOrientationCoordinate {
-		.init(value % UInt(EdgeOrientationCoordinate.Space.count))
+	var components: (udSlice: UDSliceCoordinate, orientation: EdgeOrientationCoordinate) {
+		let (udSlice, orientation) = value.quotientAndRemainder(dividingBy: .init(EdgeOrientationCoordinate.Space.count))
+		return (.init(udSlice), .init(orientation))
 	}
 	
 	init(_ permutation: EdgePermutation, _ orientation: EdgeOrientation) {
@@ -140,14 +178,89 @@ extension FlipUDSliceCoordinate {
 	}
 	
 	init(_ udSlice: UDSliceCoordinate, _ orientation: EdgeOrientationCoordinate) {
-		value = udSlice.value * UInt(EdgeOrientationCoordinate.Space.count) + orientation.value
+		value = .init(udSlice.value) * .init(EdgeOrientationCoordinate.Space.count) + .init(orientation.value)
+	}
+}
+
+/// Same as `FlipUDSliceCoordinate`, except that it's been reduced using symmetries.
+typealias ReducedFlipUDSliceCoordinate = Coordinate<_ReducedFlipUDSliceCoordinateSpace>
+struct _ReducedFlipUDSliceCoordinateSpace: CoordinateSpaceWithMoveTable {
+	typealias BaseCoord = FlipUDSliceCoordinate
+	
+	static let count = UInt32(representants.count) // TODO: could be 16-bit with LR flip symmetry
+	static let moveTable = FaceTurnMoveTable<Self>()
+	
+	static let representants: [BaseCoord] = computeRepresentants()
+	
+	private static func computeRepresentants() -> [BaseCoord] {
+		BaseCoord.allValues
+			.filter(state: Array(repeating: false, count: Int(BaseCoord.Space.count))) { seen, coord in
+				guard !seen[coord.intValue] else { return false }
+				
+				let (udSlice, orientation) = coord.components
+				let udSliceSymmetries = udSlice.standardSymmetries
+				let orientationSymmetries = orientation.standardSymmetries
+				for (udSlice, edgeOri) in zip(udSliceSymmetries, orientationSymmetries) {
+					let coord = BaseCoord(udSlice, edgeOri)
+					seen[coord.intValue] = true
+				}
+				
+				return true
+			}
+	}
+	
+	static func makeState(from coordinate: Coord) -> CubeTransformation {
+		representants[coordinate.intValue].makeState()
+	}
+	
+	static func makeCoordinate(from state: CubeTransformation) -> Coord {
+		let udSlice = state.edgePermutation.udSliceCoordinate()
+		let orientation = state.edgeOrientation.coordinate()
+		let representant = zip(udSlice.standardSymmetries, orientation.standardSymmetries)
+			.min { $0.0 < $1.0 || $0.0 == $1.0 && $0.1 < $1.1 }! // tuples aren't comparable yet zzz
+		let baseCoord = BaseCoord(representant.0, representant.1)
+		return .init(representants.binarySearch(for: baseCoord)!)
+	}
+}
+
+typealias Phase1Coordinate = Coordinate<_Phase1CoordinateSpace>
+struct _Phase1CoordinateSpace: CoordinateSpaceWithMoves {
+	static let count = UInt32(CornerOrientationCoordinate.Space.count)
+	* ReducedFlipUDSliceCoordinate.Space.count
+	
+	static func makeState(from coordinate: Coord) -> CubeTransformation {
+		let (reduced, corners) = coordinate.components
+		
+		return reduced.makeState() <- {
+			$0.cornerOrientation = corners.makeState()
+		}
+	}
+	
+	static func makeCoordinate(from state: CubeTransformation) -> Coord {
+		.init(.init(state), .init(state.cornerOrientation))
+	}
+	
+	static func applyMove(_ move: SolverMove, to coord: Coord) -> Coord {
+		let (reduced, corners) = coord.components
+		return .init(reduced + move, corners + move)
+	}
+}
+
+extension Phase1Coordinate {
+	var components: (reduced: ReducedFlipUDSliceCoordinate, corners: CornerOrientationCoordinate) {
+		let (reduced, corners) = value.quotientAndRemainder(dividingBy: .init(CornerOrientationCoordinate.Space.count))
+		return (.init(reduced), .init(corners))
+	}
+	
+	init(_ reduced: ReducedFlipUDSliceCoordinate, _ corners: CornerOrientationCoordinate) {
+		value = reduced.value * .init(CornerOrientationCoordinate.Space.count) + .init(corners.value)
 	}
 }
 
 /// For phase 2. Describes how the 4 UD slice edges are permuted, assuming they're within their slice.
 typealias SliceEdgePermutationCoordinate = Coordinate<_SliceEdgePermutationCoordinateSpace>
 struct _SliceEdgePermutationCoordinateSpace: CoordinateSpace {
-	static let count = 24 // 4!
+	static let count: UInt8 = 24 // 4!
 	
 	static func makeState(from coordinate: Coord) -> EdgePermutation {
 		fatalError("TODO")
@@ -161,7 +274,7 @@ struct _SliceEdgePermutationCoordinateSpace: CoordinateSpace {
 /// For phase 2. Describes how the 8 non-UD slice edges are permuted, assuming they're outside the slice.
 typealias NonSliceEdgePermutationCoordinate = Coordinate<_NonSliceEdgePermutationCoordinateSpace>
 struct _NonSliceEdgePermutationCoordinateSpace: CoordinateSpace {
-	static let count = 40_320 // 8!
+	static let count: UInt16 = 40_320 // 8!
 	
 	static func makeState(from coordinate: Coord) -> EdgePermutation {
 		fatalError("TODO")

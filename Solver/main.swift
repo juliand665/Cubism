@@ -72,28 +72,34 @@ func testSequences() {
 
 // MARK: -
 
-func measureTime(as title: String? = nil, repetitions: Int = 1, for block: () -> Void) {
+func measureTime<Result>(as title: String? = nil, for block: () throws -> Result) rethrows -> Result {
 	if let title = title {
 		print("measuring \(title)…")
 	}
 	
 	let start = Date()
-	for _ in 1...repetitions {
-		block()
-	}
+	let result = try block()
 	let timeTaken = -start.timeIntervalSinceNow
 	let formatter = NumberFormatter() <- { $0.minimumFractionDigits = 6 }
 	print("done in \(formatter.string(from: timeTaken as NSNumber)!)s")
 	print()
+	return result
+}
+
+func benchmark<T>(as title: String? = nil, repetitions: Int, for block: () -> T) -> Void {
+	measureTime(as: title.map { "\(repetitions)x \($0)" }) {
+		for _ in 1...repetitions {
+			_ = block()
+		}
+	}
 }
 
 func timeStuff() {
-	
 	let testSize = 20
 	let test = Array(0..<testSize).sumWithIncreasingBases()
 	
 	print("starting")
-	measureTime(repetitions: 1_000_000) { _ = test.digitsWithIncreasingBases(count: testSize) }
+	benchmark(repetitions: 1_000_000) { test.digitsWithIncreasingBases(count: testSize) }
 }
 //timeStuff()
 
@@ -103,7 +109,8 @@ func testCoordCalculations() {
 	func test<Space: CoordinateSpace>(_ coord: Coordinate<Space>.Type) {
 		print("Testing \(Space.self)…")
 		for rawCoord in 0..<Space.count {
-			if rawCoord & ((1 << 16) - 1) == 0 {
+			let bitsToCheck: Space.Value = (1 << 16) - 1
+			if rawCoord & bitsToCheck == 0 {
 				let progress = Double(rawCoord) / Double(Space.count)
 				print("\(100 * progress)%")
 			}
@@ -124,21 +131,32 @@ func testCoordCalculations() {
 
 // MARK: -
 
-let udSliceSymMoves = StandardSymmetryTable<UDSliceCoordinate.Space>()
-let edgeOriSymMoves = StandardSymmetryTable<EdgeOrientationCoordinate.Space>()
-
-let flipUDSliceRepresentants = FlipUDSliceCoordinate.allValues
-	.filter(state: Array(repeating: false, count: FlipUDSliceCoordinate.Space.count)) { seen, coord in
-		guard !seen[coord.intValue] else { return false }
+struct PruningTable<Space: CoordinateSpaceWithMoves> {
+	var distances: [UInt8]
+	
+	init() {
+		distances = .init(repeating: .max, count: Int(Space.count))
 		
-		let udSliceSymmetries = udSliceSymMoves[coord.udSliceCoord].moves
-		let orientationSymmetries = edgeOriSymMoves[coord.edgeOrientationCoord].moves
-		for (udSlice, edgeOri) in zip(udSliceSymmetries, orientationSymmetries) {
-			let coord = FlipUDSliceCoordinate(udSlice, edgeOri)
-			seen[coord.intValue] = true
+		print("setting up pruning table")
+		var distance: UInt8 = 0
+		var searching: Set<Space.Coord> = [.init(0)]
+		while !searching.isEmpty {
+			print("searching distance \(distance)")
+			
+			var nextUp: Set<Space.Coord> = []
+			for toSearch in searching {
+				guard distances[toSearch.intValue] > distance else { continue }
+				distances[toSearch.intValue] = distance
+				nextUp.formUnion(SolverMove.all.map { toSearch + $0 })
+			}
+			searching = nextUp
+			distance += 1
+			
+			if distance == 8 {
+				print("should switch to working from back now!")
+			}
 		}
-		
-		return true
 	}
+}
 
-print("found \(flipUDSliceRepresentants.count) equivalence classes")
+let table = PruningTable<Phase1Coordinate.Space>()

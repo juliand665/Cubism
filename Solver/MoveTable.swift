@@ -11,8 +11,12 @@ struct MoveTable<Entry: MoveTableEntry> {
 	}
 	
 	init() {
-		entries = (0..<Entry.Space.count).map {
-			Entry(state: Entry.Space.Coord($0).makeState())
+		entries = measureTime(
+			as: "setup of move table for \(Entry.Space.self) with \(Entry.Space.count) entries of size \(MemoryLayout<Entry>.size)"
+		) {
+			(0..<Entry.Space.count).map {
+				Entry(state: Entry.Space.Coord($0).makeState())
+			}
 		}
 	}
 }
@@ -31,6 +35,27 @@ struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
 	var front: FaceMoves
 	var back: FaceMoves
 	
+	subscript(move: SolverMove) -> Space.Coord {
+		self[move.face][move.direction]
+	}
+	
+	subscript(face: Face) -> FaceMoves {
+		switch face {
+		case .front:
+			return front
+		case .back:
+			return back
+		case .up:
+			return up
+		case .down:
+			return down
+		case .left:
+			return left
+		case .right:
+			return right
+		}
+	}
+	
 	init(state: Space.CubeState) {
 		up = .init(state: state, face: .up)
 		down = .init(state: state, face: .down)
@@ -44,6 +69,17 @@ struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
 		var clockwise: Space.Coord
 		var double: Space.Coord
 		var counterclockwise: Space.Coord
+		
+		subscript(direction: Move.Direction) -> Space.Coord {
+			switch direction {
+			case .clockwise:
+				return clockwise
+			case .double:
+				return double
+			case .counterclockwise:
+				return counterclockwise
+			}
+		}
 		
 		init(state: Space.CubeState, face: Face) {
 			let transform = CubeTransformation.transform(for: face)

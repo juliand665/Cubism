@@ -123,6 +123,7 @@ struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
 	
 	func udSliceCoordinate() -> UDSliceCoordinate {
 		let state = asArray()
+			.lazy
 			.enumerated()
 			.reduce(into: (sum: 0, coefficient: 0, k: -1)) { state, new in
 				// a complex-looking way to improve performance by avoiding lots of factorial calculations and counting occupied spots in the process

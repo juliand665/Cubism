@@ -19,8 +19,9 @@ extension PieceOrientation {
 	func coordinate() -> Coordinate<Space> {
 		.init(
 			asArray()
-				.map(\.rawValue)
+				.lazy
 				.dropLast() // last is evident from the others
+				.map(\.rawValue)
 				.reduce(0) { $0 * Orientation.allCases.count + $1 }
 		)
 	}
