@@ -138,22 +138,43 @@ struct PruningTable<Space: CoordinateSpaceWithMoves> {
 		distances = .init(repeating: .max, count: Int(Space.count))
 		
 		print("setting up pruning table")
-		var distance: UInt8 = 0
-		var searching: Set<Space.Coord> = [.init(0)]
-		while !searching.isEmpty {
-			print("searching distance \(distance)")
-			
-			var nextUp: Set<Space.Coord> = []
-			for toSearch in searching {
-				guard distances[toSearch.intValue] > distance else { continue }
-				distances[toSearch.intValue] = distance
-				nextUp.formUnion(SolverMove.all.map { toSearch + $0 })
-			}
-			searching = nextUp
-			distance += 1
-			
-			if distance == 8 {
-				print("should switch to working from back now!")
+		distances[0] = 0
+		var distance: UInt8 = 1
+		var statesReached = 1
+		//var searching: Set<Space.Coord> = [.init(0)]
+		while statesReached < distances.count {
+			measureTime(as: "search at distance \(distance)") {
+				let statesReachedBefore = statesReached
+				defer {
+					print("\(statesReached - statesReachedBefore) new states reached")
+				}
+				
+				let isSearchingForwards = statesReached < distances.count / 2
+				print(isSearchingForwards ? "searching forwards" : "searching backwards")
+				let distanceToSearch = isSearchingForwards ? distance - 1 : .max
+				
+				//var nextUp: Set<Space.Coord> = []
+				for index in distances.indices {
+					guard distances[index] == distanceToSearch else { continue }
+					
+					let coord = Space.Coord(index)
+					let neighbors = SolverMove.all.lazy.map { coord + $0 }
+					if isSearchingForwards {
+						for neighbor in neighbors where distances[neighbor.intValue] == .max {
+							distances[neighbor.intValue] = distance
+							statesReached += 1
+						}
+						//nextUp.formUnion(SolverMove.all.map { toSearch + $0 })
+					} else {
+						let isReachable = neighbors.contains { distances[$0.intValue] == distance - 1 }
+						guard isReachable else { continue }
+						distances[index] = distance
+						statesReached += 1
+					}
+				}
+				
+				//searching = nextUp
+				distance += 1
 			}
 		}
 	}
