@@ -59,6 +59,7 @@ extension Algorithm {
 		))
 	) {
 		"x (Ri U Ri) DD (R Ui Ri) DD RR"
+		"li U Ri DD R Ui Ri DD RR"
 		"yi x LL DD Li Ui L DD Li U Li"
 	}
 	
@@ -70,6 +71,7 @@ extension Algorithm {
 		))
 	) {
 		"xi (R Ui R) DD (Ri U R) DD RR"
+		"l Ui R DD Ri U R DD RR"
 		"y xi LL DD L U Li DD L Ui L"
 	}
 	
@@ -278,6 +280,7 @@ extension Algorithm {
 		"Ri U Ri di Ri Fi RR Ui Ri U Ri F R F"
 		"Ri U Ri Ui y Ri Fi RR Ui Ri U Ri F R F"
 		"y R Ui (R U Ri) D R Di R (Ui D) RR U RR Di RR"
+		"Ri U R Ui Ri fi Ui R UU Ri Ui R Ui Ri f R"
 	}
 	
 	static let yPerm = builtIn(

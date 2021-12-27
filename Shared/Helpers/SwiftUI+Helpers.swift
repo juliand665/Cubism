@@ -2,7 +2,7 @@ import SwiftUI
 
 extension Color {
 	static let groupedBackground = Color(uiColor: .systemGroupedBackground)
-	static let groupedContentBackground = Color(uiColor: .tertiarySystemBackground)
+	static let groupedContentBackground = Color(uiColor: .secondarySystemGroupedBackground)
 }
 
 extension ForEach where Content: View {
