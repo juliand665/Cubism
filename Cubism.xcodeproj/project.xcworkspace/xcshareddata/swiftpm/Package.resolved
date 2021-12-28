@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "SimpleParser",
+        "repositoryURL": "https://github.com/juliand665/SimpleParser.git",
+        "state": {
+          "branch": "main",
+          "revision": "785dce487377ac789c65aa5e7d9a85d4f45c54da",
+          "version": null
+        }
+      },
+      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms.git",
         "state": {

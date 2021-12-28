@@ -57,6 +57,8 @@
 		B9CF259A26E2DFDA00E14E94 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */; };
 		B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
 		B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */; };
+		B9D5CEF2277A833500A6DBE0 /* SimpleParser in Frameworks */ = {isa = PBXBuildFile; productRef = B9D5CEF1277A833500A6DBE0 /* SimpleParser */; };
+		B9D5CEF5277A857800A6DBE0 /* BigCubeAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D5CEF4277A857800A6DBE0 /* BigCubeAlgorithms.swift */; };
 		B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */; };
 		B9DE914126F292F200DE0E29 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DE914026F292F200DE0E29 /* Colors.swift */; };
 		B9EC07F42713CF2500CAC7BE /* Swift+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EC07F32713CF2500CAC7BE /* Swift+Helpers.swift */; };
@@ -108,6 +110,8 @@
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Helpers.swift"; sourceTree = "<group>"; };
+		B9D5CEF3277A838900A6DBE0 /* SimpleParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SimpleParser; path = "../ Packages/SimpleParser"; sourceTree = "<group>"; };
+		B9D5CEF4277A857800A6DBE0 /* BigCubeAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCubeAlgorithms.swift; sourceTree = "<group>"; };
 		B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfigurationDiagram.swift; sourceTree = "<group>"; };
 		B9DE914026F292F200DE0E29 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		B9EC07F32713CF2500CAC7BE /* Swift+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swift+Helpers.swift"; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				B91526012715322A00E8B031 /* Collections in Frameworks */,
 				B9855C1F26EE2AB5006764BD /* Algorithms in Frameworks */,
 				B92A59D626E46B64002AC260 /* CGeometry in Frameworks */,
+				B9D5CEF2277A833500A6DBE0 /* SimpleParser in Frameworks */,
 				B96E9C0D26E2867800A46A3B /* ArrayBuilder in Frameworks */,
 				B96E9C0A26E27A4C00A46A3B /* HandyOperators in Frameworks */,
 				B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */,
@@ -191,6 +196,7 @@
 		B96E9BE626E2755200A46A3B = {
 			isa = PBXGroup;
 			children = (
+				B9D5CEF3277A838900A6DBE0 /* SimpleParser */,
 				B96E9BEB26E2755300A46A3B /* Shared */,
 				B96C708F27088496001DAEF8 /* Solver */,
 				B96E9BF426E2755600A46A3B /* Products */,
@@ -239,6 +245,7 @@
 				B988476526E5732200E19911 /* OLLAlgorithms.swift */,
 				B988476726E5737500E19911 /* PLLAlgorithms.swift */,
 				B988476926E5738D00E19911 /* MiscAlgorithms.swift */,
+				B9D5CEF4277A857800A6DBE0 /* BigCubeAlgorithms.swift */,
 			);
 			path = "Base Algorithms";
 			sourceTree = "<group>";
@@ -313,6 +320,7 @@
 				B9855C1B26EE2848006764BD /* SwiftUIMissingPieces */,
 				B9855C1E26EE2AB5006764BD /* Algorithms */,
 				B91526002715322A00E8B031 /* Collections */,
+				B9D5CEF1277A833500A6DBE0 /* SimpleParser */,
 			);
 			productName = "Cubism (iOS)";
 			productReference = B96E9BF326E2755600A46A3B /* Cubism.app */;
@@ -343,7 +351,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					B96C708D27088495001DAEF8 = {
 						CreatedOnToolsVersion = 13.0;
@@ -373,6 +381,7 @@
 				B9855C1A26EE2848006764BD /* XCRemoteSwiftPackageReference "SwifUI-Missing-Pieces" */,
 				B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				B91525FF2715322A00E8B031 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				B9D5CEF0277A833500A6DBE0 /* XCRemoteSwiftPackageReference "SimpleParser" */,
 			);
 			productRefGroup = B96E9BF426E2755600A46A3B /* Products */;
 			projectDirPath = "";
@@ -451,6 +460,7 @@
 				B9F5E6B426EA4DA100652979 /* AlgorithmCustomization.swift in Sources */,
 				B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */,
 				B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */,
+				B9D5CEF5277A857800A6DBE0 /* BigCubeAlgorithms.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +485,7 @@
 		B96C709227088496001DAEF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V2EPDFA9PV;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -489,6 +500,7 @@
 		B96C709327088496001DAEF8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V2EPDFA9PV;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -679,6 +691,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -708,6 +721,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -830,6 +844,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		B9D5CEF0277A833500A6DBE0 /* XCRemoteSwiftPackageReference "SimpleParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/juliand665/SimpleParser.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -887,6 +909,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
+		};
+		B9D5CEF1277A833500A6DBE0 /* SimpleParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9D5CEF0277A833500A6DBE0 /* XCRemoteSwiftPackageReference "SimpleParser" */;
+			productName = SimpleParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

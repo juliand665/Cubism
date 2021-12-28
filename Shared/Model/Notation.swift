@@ -23,8 +23,12 @@ enum StandardNotation: Notation {
 			return face.rawValue.uppercased()
 		case .doubleFace(let face):
 			return face.rawValue.lowercased()
+		case .wideTurn(let face, let sliceCount):
+			return "\(sliceCount == 2 ? "" : "\(sliceCount)")\(face.rawValue)w"
 		case .slice(let slice):
 			return slice.rawValue.uppercased()
+		case .bigSlice(let face, let sliceNumber):
+			return "\(sliceNumber)\(face.rawValue)"
 		case .rotation(let rotation):
 			return rotation.rawValue.lowercased()
 		}
@@ -40,7 +44,7 @@ enum NaturalNotation: Notation {
 		case .counterclockwise:
 			return "\(target)i"
 		case .double:
-			return "\(target)\(target)"
+			return "\(target)\(target.suffix(1))"
 		}
 	}
 }

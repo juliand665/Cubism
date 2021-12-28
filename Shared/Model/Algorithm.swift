@@ -4,6 +4,7 @@ import ArrayBuilder
 struct Algorithm: Identifiable, Codable {
 	let id: ExtensibleID<Self>
 	var name: String
+	var description: String
 	var configuration: CubeConfiguration?
 	var variants: [Variant]
 	
@@ -22,12 +23,14 @@ extension Algorithm {
 	static func builtIn(
 		id: String,
 		name: String,
+		description: String = "",
 		configuration: CubeConfiguration? = nil,
 		@ArrayBuilder<MoveSequence> variants: () -> [MoveSequence]
 	) -> Self {
 		.init(
 			id: .builtIn(id),
 			name: name,
+			description: description,
 			configuration: configuration,
 			variants: variants().map { .init(id: .builtIn(rawID(for: $0)), moves: $0) }
 		)
@@ -108,7 +111,9 @@ struct Move: Codable, Hashable, Identifiable {
 	enum Target: Codable, Hashable {
 		case singleFace(Face)
 		case doubleFace(Face)
+		case wideTurn(Face, sliceCount: Int)
 		case slice(Slice)
+		case bigSlice(Face, sliceNumber: Int)
 		case rotation(FullCubeRotation)
 	}
 	

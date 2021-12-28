@@ -37,21 +37,24 @@ extension Algorithm {
 extension Algorithm {
 	static let centerRotation90UL = builtIn(
 		id: "center rotation 90 ul",
-		name: "Rotate 2 Centers 90° (U CW, L CCW)"
+		name: "Rotate 2 Centers 90°",
+		description: "Rotates U center clockwise, L center CCW."
 	) {
 		"U M E Mi Ui M Ei Mi"
 	}
 	
 	static let centerRotation90UF = builtIn(
 		id: "center rotation 90 uf",
-		name: "Rotate 2 Centers 90° (U CW, F CCW)"
+		name: "Rotate 2 Centers 90°",
+		description: "Rotates U CW, F CCW."
 	) {
 		"(Mi Ui M U) (Mi Ui M U) (Mi Ui M U) (Mi Ui M U) (Mi Ui M U)"
 	}
 	
 	static let centerRotation180 = builtIn(
 		id: "center rotation 180 u",
-		name: "Rotate Center 180° (U face)"
+		name: "Rotate Center 180°",
+		description: "Rotates U center 180°."
 	) {
 		"(U R L UU Li Ri) (U R L UU Li Ri)"
 		"(R U Ri U) (R U Ri U) (R U Ri U) (R U Ri U) (R U Ri U)"

@@ -1,4 +1,5 @@
 import Foundation
+import SimpleParser
 
 extension MoveSequence {
 	init(parsing raw: String) throws {
@@ -21,16 +22,17 @@ enum NotationParser {
 			.components(separatedBy: .whitespaces)
 		
 		return try rawMoves.compactMap { raw in
-			guard let rawTarget = raw.first else { return nil }
-			let target = try target(for: rawTarget)
+			guard !raw.isEmpty else { return nil }
+			var parser = Parser(reading: raw)
+			let target = try target(from: &parser)
 			
 			let direction: Move.Direction
-			switch raw.dropFirst() {
+			switch parser.consumeRest() {
 			case "":
 				direction = .clockwise
 			case "'", "i":
 				direction = .counterclockwise
-			case "2", String(rawTarget):
+			case "2", StandardNotation.description(for: target).suffix(1):
 				direction = .double
 			case let other:
 				throw ParseError.unknownDirection(String(other))
@@ -40,9 +42,29 @@ enum NotationParser {
 		}
 	}
 	
-	static func target(for raw: Character) throws -> Move.Target {
+	static func target(from parser: inout Parser) throws -> Move.Target {
+		if parser.next!.isNumber {
+			// wide turn with explicit slice count
+			let sliceCount = parser.readInt()
+			let raw = parser.consumeNext()
+			guard let face = Face(rawValue: raw) else {
+				throw ParseError.unknownTarget(raw)
+			}
+			if parser.next == "w" {
+				parser.consumeNext()
+				return .wideTurn(face, sliceCount: sliceCount)
+			} else {
+				return .bigSlice(face, sliceNumber: sliceCount)
+			}
+		}
+		let raw = parser.consumeNext()
 		if let face = Face(rawValue: raw) {
-			return .singleFace(face)
+			if parser.next == "w" {
+				parser.consumeNext()
+				return .wideTurn(face, sliceCount: 2)
+			} else {
+				return .singleFace(face)
+			}
 		} else if let uppercased = raw.uppercased().first, let face = Face(rawValue: uppercased) {
 			return .doubleFace(face)
 		} else if let slice = Slice(rawValue: raw) {

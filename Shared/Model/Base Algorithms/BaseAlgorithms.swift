@@ -6,5 +6,6 @@ extension AlgorithmCollection {
 		.simplifiedPLL,
 		.fullPLL,
 		.miscellaneous,
+		.bigCubes,
 	])
 }

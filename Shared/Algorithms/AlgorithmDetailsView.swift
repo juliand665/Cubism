@@ -11,6 +11,15 @@ struct AlgorithmDetailsView: View {
 					CubeConfigurationDiagram(configuration: configuration)
 				}
 				
+				if !algorithm.description.isEmpty {
+					GroupBox("Description") {
+						Text(algorithm.description)
+							.lineLimit(nil)
+							.frame(maxWidth: .infinity, alignment: .leading)
+							.padding()
+					}
+				}
+				
 				let variant = algorithm.preferredVariant(using: customization) ?? algorithm.variants.first!
 				MoveSequenceView(moves: variant.moves)
 				
@@ -127,7 +136,7 @@ struct FooGroupBoxStyle: GroupBoxStyle {
 struct AlgorithmDetailsView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationView {
-			AlgorithmDetailsView(algorithm: .uPermA, customization: .constant(.init()))
+			AlgorithmDetailsView(algorithm: .edgeEndSwap, customization: .constant(.init()))
 		}
 		
 		NavigationView {
