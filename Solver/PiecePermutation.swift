@@ -74,6 +74,10 @@ struct CornerPermutation: Hashable, PiecePermutation, TaggedCorners {
 	static func + (state: Self, transform: CubeTransformation) -> Self {
 		state + transform.cornerPermutation
 	}
+	
+	static func + (transform: CubeTransformation, state: Self) -> Self {
+		transform.cornerPermutation + state
+	}
 }
 
 /// defines for each spot what edge it receives
@@ -119,6 +123,10 @@ struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
 	
 	static func + (state: Self, transform: CubeTransformation) -> Self {
 		state + transform.edgePermutation
+	}
+	
+	static func + (transform: CubeTransformation, state: Self) -> Self {
+		transform.edgePermutation + state
 	}
 	
 	func udSliceCoordinate() -> UDSliceCoordinate {

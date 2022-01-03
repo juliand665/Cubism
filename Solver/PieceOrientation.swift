@@ -50,13 +50,11 @@ extension PieceOrientation {
 }
 
 /// defines for each spot which orientation its corner has relative to U/D
-struct CornerOrientation: Hashable, PieceOrientation, TaggedCorners {
+struct CornerOrientation: Hashable, PieceOrientation {
 	typealias Tag = SingleCornerOrientation
 	typealias Space = CornerOrientationCoordinate.Space
 	
 	static let zero = Self()
-	
-	// TODO: flips?
 	
 	var urf = SingleCornerOrientation.neutral
 	var ufl = SingleCornerOrientation.neutral
@@ -68,21 +66,42 @@ struct CornerOrientation: Hashable, PieceOrientation, TaggedCorners {
 	var dbl = SingleCornerOrientation.neutral
 	var drb = SingleCornerOrientation.neutral
 	
+	var isFlipped = false
+	
 	static func + (one: Self, two: Self) -> Self {
-		.init(
-			urf: one.urf + two.urf,
-			ufl: one.ufl + two.ufl,
-			ulb: one.ulb + two.ulb,
-			ubr: one.ubr + two.ubr,
-			
-			dfr: one.dfr + two.dfr,
-			dlf: one.dlf + two.dlf,
-			dbl: one.dbl + two.dbl,
-			drb: one.drb + two.drb
-		)
+		if one.isFlipped {
+			return .init(
+				urf: one.urf - two.urf,
+				ufl: one.ufl - two.ufl,
+				ulb: one.ulb - two.ulb,
+				ubr: one.ubr - two.ubr,
+				
+				dfr: one.dfr - two.dfr,
+				dlf: one.dlf - two.dlf,
+				dbl: one.dbl - two.dbl,
+				drb: one.drb - two.drb,
+				
+				isFlipped: !two.isFlipped
+			)
+		} else {
+			return .init(
+				urf: one.urf + two.urf,
+				ufl: one.ufl + two.ufl,
+				ulb: one.ulb + two.ulb,
+				ubr: one.ubr + two.ubr,
+				
+				dfr: one.dfr + two.dfr,
+				dlf: one.dlf + two.dlf,
+				dbl: one.dbl + two.dbl,
+				drb: one.drb + two.drb,
+				
+				isFlipped: two.isFlipped
+			)
+		}
 	}
 	
 	static prefix func - (o: Self) -> Self {
+		// TODO: different when flipped?
 		.init(
 			urf: -o.urf,
 			ufl: -o.ufl,
@@ -92,11 +111,14 @@ struct CornerOrientation: Hashable, PieceOrientation, TaggedCorners {
 			dfr: -o.dfr,
 			dlf: -o.dlf,
 			dbl: -o.dbl,
-			drb: -o.drb
+			drb: -o.drb,
+			
+			isFlipped: o.isFlipped
 		)
 	}
 	
 	func applying(_ perm: CornerPermutation) -> Self {
+		// TODO: different when flipped?
 		.init(
 			urf: self[perm.urf],
 			ufl: self[perm.ufl],
@@ -106,12 +128,40 @@ struct CornerOrientation: Hashable, PieceOrientation, TaggedCorners {
 			dfr: self[perm.dfr],
 			dlf: self[perm.dlf],
 			dbl: self[perm.dbl],
-			drb: self[perm.drb]
+			drb: self[perm.drb],
+			
+			isFlipped: isFlipped
 		)
 	}
 	
 	static func + (state: Self, transform: CubeTransformation) -> Self {
 		state.applying(transform.cornerPermutation) + transform.cornerOrientation
+	}
+	
+	static func + (transform: CubeTransformation, state: Self) -> Self {
+		transform.cornerOrientation + state
+	}
+}
+
+extension CornerOrientation: TaggedCorners {
+	@_disfavoredOverload
+	init(
+		urf: SingleCornerOrientation,
+		ufl: SingleCornerOrientation,
+		ulb: SingleCornerOrientation,
+		ubr: SingleCornerOrientation,
+		
+		dfr: SingleCornerOrientation,
+		dlf: SingleCornerOrientation,
+		dbl: SingleCornerOrientation,
+		drb: SingleCornerOrientation
+	) {
+		//fatalError("CornerOrientation cannot be initialized from array because it needs to know if it's flipped.")
+		self.init(
+			urf: urf, ufl: ufl, ulb: ulb, ubr: ubr,
+			dfr: dfr, dlf: dlf, dbl: dbl, drb: drb,
+			isFlipped: false
+		)
 	}
 }
 
@@ -179,5 +229,9 @@ struct EdgeOrientation: Hashable, PieceOrientation, TaggedEdges {
 	
 	static func + (state: Self, transform: CubeTransformation) -> Self {
 		state.applying(transform.edgePermutation) + transform.edgeOrientation
+	}
+	
+	static func + (transform: CubeTransformation, state: Self) -> Self {
+		transform.edgeOrientation + state
 	}
 }

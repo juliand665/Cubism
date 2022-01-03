@@ -4,7 +4,7 @@ import HandyOperators
 struct Coordinate<Space: CoordinateSpace>: Hashable, Comparable {
 	typealias Space = Space // make generic arg accessible as member
 	
-	static var allValues: LazyMapSequence<Range<Space.Value>, Coordinate<Space>> {
+	static var allValues: LazyMapSequence<Range<Space.Value>, Self> {
 		(0..<Space.count).lazy.map(Self.init)
 	}
 	
@@ -42,14 +42,14 @@ protocol CoordinateSpace {
 	typealias Coord = Coordinate<Self>
 	
 	static var count: Value { get }
-	static var validSymmetries: [CubeTransformation] { get }
+	static var validSymmetries: [Symmetry] { get }
 	
 	static func makeState(from coordinate: Coord) -> CubeState
 	static func makeCoordinate(from state: CubeState) -> Coord
 }
 
 extension CoordinateSpace {
-	static var validSymmetries: [CubeTransformation] { Symmetry.standardSubgroup }
+	static var validSymmetries: [Symmetry] { Symmetry.standardSubgroup }
 }
 
 protocol CoordinateSpaceWithSymmetryTable: CoordinateSpace {
@@ -77,10 +77,11 @@ extension CoordinateSpaceWithMoveTable {
 }
 
 typealias CornerOrientationCoordinate = Coordinate<_CornerOrientationCoordinateSpace>
-struct _CornerOrientationCoordinateSpace: CoordinateSpaceWithMoveTable {
+struct _CornerOrientationCoordinateSpace: CoordinateSpaceWithMoveTable, CoordinateSpaceWithSymmetryTable {
 	static let count: UInt16 = 2187 // 3^7
 	
 	static let moveTable = FaceTurnMoveTable<Self>()
+	static let standardSymmetryTable = StandardSymmetryTable<Self>()
 	
 	static func makeState(from coordinate: Coord) -> CornerOrientation {
 		.init(coordinate)
@@ -151,8 +152,10 @@ struct _UDSliceCoordinateSpace: CoordinateSpaceWithSymmetryTable {
 
 /// Combines the UD slice coordinate with the edge orientation (flip).
 typealias FlipUDSliceCoordinate = Coordinate<_FlipUDSliceCoordinateSpace>
-struct _FlipUDSliceCoordinateSpace: CoordinateSpace {
+struct _FlipUDSliceCoordinateSpace: CoordinateSpaceWithSymmetryTable {
 	static let count = UInt32(UDSliceCoordinate.Space.count) * UInt32(EdgeOrientationCoordinate.Space.count)
+	
+	static let standardSymmetryTable = StandardSymmetryTable<Self>()
 	
 	static func makeState(from coordinate: Coord) -> CubeTransformation {
 		let (udSlice, orientation) = coordinate.components
@@ -187,26 +190,32 @@ typealias ReducedFlipUDSliceCoordinate = Coordinate<_ReducedFlipUDSliceCoordinat
 struct _ReducedFlipUDSliceCoordinateSpace: CoordinateSpaceWithMoveTable {
 	typealias BaseCoord = FlipUDSliceCoordinate
 	
-	static let count = UInt32(representants.count) // TODO: could be 16-bit with LR flip symmetry
+	static let count = UInt32(representants.count)
 	static let moveTable = FaceTurnMoveTable<Self>()
 	
-	static let representants: [BaseCoord] = computeRepresentants()
+	// need to track symmetry index alongside equivalence class index, probably best to separate out notion of sym-coord from raw-coord
 	
-	private static func computeRepresentants() -> [BaseCoord] {
-		BaseCoord.allValues
-			.filter(state: Array(repeating: false, count: Int(BaseCoord.Space.count))) { seen, coord in
-				guard !seen[coord.intValue] else { return false }
+	static let (representants, symmetryToRepresentant) = computeRepresentants()
+	
+	private static func computeRepresentants() -> ([BaseCoord], [StandardSymmetry]) {
+		measureTime(as: "computeRepresentants") {
+			var representants: [BaseCoord] = []
+			let baseCount = Int(BaseCoord.Space.count)
+			representants.reserveCapacity(baseCount / Symmetry.standardSubgroup.count)
+			var symmetryToRepresentant: [StandardSymmetry?] = .init(repeating: nil, count: baseCount)
+			for coord in BaseCoord.allValues {
+				guard symmetryToRepresentant[coord.intValue] == nil else { continue }
 				
-				let (udSlice, orientation) = coord.components
-				let udSliceSymmetries = udSlice.standardSymmetries
-				let orientationSymmetries = orientation.standardSymmetries
-				for (udSlice, edgeOri) in zip(udSliceSymmetries, orientationSymmetries) {
-					let coord = BaseCoord(udSlice, edgeOri)
-					seen[coord.intValue] = true
+				// TODO: is there a way to just use the coords and their symmetry tables for this? probably not because permutation affects orientation…
+				let symmetries = coord.standardSymmetries
+				for (index, symmetry) in symmetries.enumerated() {
+					symmetryToRepresentant[symmetry.intValue] = .init(index: index)
 				}
 				
-				return true
+				representants.append(coord)
 			}
+			return (representants, symmetryToRepresentant.map { $0! })
+		}
 	}
 	
 	static func makeState(from coordinate: Coord) -> CubeTransformation {
@@ -214,11 +223,14 @@ struct _ReducedFlipUDSliceCoordinateSpace: CoordinateSpaceWithMoveTable {
 	}
 	
 	static func makeCoordinate(from state: CubeTransformation) -> Coord {
-		let udSlice = state.edgePermutation.udSliceCoordinate()
-		let orientation = state.edgeOrientation.coordinate()
-		let representant = zip(udSlice.standardSymmetries, orientation.standardSymmetries)
-			.min { $0.0 < $1.0 || $0.0 == $1.0 && $0.1 < $1.1 }! // tuples aren't comparable yet zzz
-		let baseCoord = BaseCoord(representant.0, representant.1)
+		//let udSlice = state.edgePermutation.udSliceCoordinate()
+		//let orientation = state.edgeOrientation.coordinate()
+		// apply all symmetries and find minimum coordinate
+		//let representant = zip(udSlice.standardSymmetries, orientation.standardSymmetries)
+		//	.min { $0.0 < $1.0 || $0.0 == $1.0 && $0.1 < $1.1 }! // tuples aren't comparable yet zzz
+		//let baseCoord = BaseCoord(representant.0, representant.1)
+		let coord = FlipUDSliceCoordinate(state)
+		let baseCoord = coord.standardSymmetries.min()!
 		return .init(representants.binarySearch(for: baseCoord)!)
 	}
 }
@@ -242,6 +254,8 @@ struct _Phase1CoordinateSpace: CoordinateSpaceWithMoves {
 	
 	static func applyMove(_ move: SolverMove, to coord: Coord) -> Coord {
 		let (reduced, corners) = coord.components
+		//let newReduced = reduced + move
+		//let oldSym = ReducedFlipUDSliceCoordinate.Space.symmetryToRepresentant[]
 		return .init(reduced + move, corners + move)
 	}
 }

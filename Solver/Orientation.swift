@@ -1,10 +1,10 @@
 import Foundation
 
-protocol SinglePieceOrientation: CaseIterable, AdditiveArithmeticWithNegation, RawRepresentable where RawValue == Int {
+protocol SinglePieceOrientation: Hashable, CaseIterable, AdditiveArithmeticWithNegation, RawRepresentable where RawValue == Int {
 	associatedtype Piece: CubePiece
 }
 
-enum SingleCornerOrientation: Int, SinglePieceOrientation, CaseIterable {
+enum SingleCornerOrientation: Int, SinglePieceOrientation {
 	typealias Piece = Corner
 	
 	case neutral
@@ -53,7 +53,7 @@ extension SingleCornerOrientation: AdditiveArithmeticWithNegation {
 	}
 }
 
-enum SingleEdgeOrientation: Int, SinglePieceOrientation, CaseIterable {
+enum SingleEdgeOrientation: Int, SinglePieceOrientation {
 	typealias Piece = Edge
 	
 	case neutral

@@ -39,6 +39,7 @@
 		B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */ = {isa = PBXBuildFile; productRef = B96E9C1226E2992D00A46A3B /* UserDefault */; };
 		B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
 		B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
+		B96FEAA5277E9526008AD165 /* PrettyPrinting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */; };
 		B9855C1926EDA53E006764BD /* MoveSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9855C1826EDA53E006764BD /* MoveSequenceView.swift */; };
 		B9855C1C26EE2848006764BD /* SwiftUIMissingPieces in Frameworks */ = {isa = PBXBuildFile; productRef = B9855C1B26EE2848006764BD /* SwiftUIMissingPieces */; };
 		B9855C1F26EE2AB5006764BD /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = B9855C1E26EE2AB5006764BD /* Algorithms */; };
@@ -98,6 +99,7 @@
 		B96E9BF926E2755600A46A3B /* Cubism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubism.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96E9C0E26E2883600A46A3B /* TimerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerScreen.swift; sourceTree = "<group>"; };
 		B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Previews.swift"; sourceTree = "<group>"; };
+		B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettyPrinting.swift; sourceTree = "<group>"; };
 		B9855C1826EDA53E006764BD /* MoveSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveSequenceView.swift; sourceTree = "<group>"; };
 		B988476526E5732200E19911 /* OLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLLAlgorithms.swift; sourceTree = "<group>"; };
 		B988476726E5737500E19911 /* PLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLAlgorithms.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				B96C709B2708C46A001DAEF8 /* Pieces.swift */,
 				B96C709D2708C4B6001DAEF8 /* Orientation.swift */,
 				B96C709F2708C4D9001DAEF8 /* PieceOrientation.swift */,
+				B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */,
 				B9EC07F62715022B00CAC7BE /* MoveTable.swift */,
 				B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */,
 				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
@@ -428,6 +431,7 @@
 				B96C709127088496001DAEF8 /* main.swift in Sources */,
 				B96C7095270884DB001DAEF8 /* Algorithm.swift in Sources */,
 				B96C57DB27133EE7006D4EEA /* TaggedPieces.swift in Sources */,
+				B96FEAA5277E9526008AD165 /* PrettyPrinting.swift in Sources */,
 				B9EC07F72715022B00CAC7BE /* MoveTable.swift in Sources */,
 				B96C70A927090F6C001DAEF8 /* PiecePermutation.swift in Sources */,
 				B9F3C920270CE9E7002FBEBD /* Coordinate.swift in Sources */,
@@ -490,7 +494,7 @@
 				DEVELOPMENT_TEAM = V2EPDFA9PV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-expression-type-checking=500 -Xfrontend -warn-long-function-bodies=500";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-expression-type-checking=1000 -Xfrontend -warn-long-function-bodies=1000";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;

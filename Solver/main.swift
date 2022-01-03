@@ -26,6 +26,46 @@ let tripleSexy = sexyMove + sexyMove + sexyMove
 let tPerm = sexyMove + ri + f + rr + ui + ri + ui + r + u + ri + fi
 let cubeInACube = f + l + f + ui + r + u + ff + ll + ui + li + b + di + bi + ll + u
 
+/*
+let f2 = CubeTransformation.symmetryF2
+let lr = CubeTransformation.symmetryLR2
+print(f2 - f2)
+print(f2 + f2)
+print(f2 + sexyMove + f2)
+print(lr - lr)
+print(lr + lr)
+print(lr + sexyMove + lr)
+print()
+*/
+
+func playWithSymmetries() {
+	//let simple = EdgeOrientation(uf: .flipped)
+	//let orientation = EdgeOrientation(uf: .flipped, dr: .flipped, fl: .flipped)
+	//let transform = CubeTransformation(edgeOrientation: orientation)
+	let transform = sexyMove
+	let orientation = transform.edgeOrientation
+	print(transform)
+	for symmetry in Symmetry.standardSubgroup {
+		print()
+		let full = symmetry.shift(transform).edgeOrientation
+		let small = symmetry.shift(orientation)
+		print(symmetry.shift(transform).edgePermutation)
+		print(symmetry.shift(transform).edgeOrientation)
+		print(small)
+		print(full == small)
+		print((symmetry.forward + transform).edgePermutation)
+		print((symmetry.forward + transform).edgeOrientation)
+		print(symmetry.forward + orientation)
+		print((transform + symmetry.backward).edgePermutation)
+		print((transform + symmetry.backward).edgeOrientation)
+		print(orientation + symmetry.backward)
+		print(symmetry.forward)
+		//print(symmetry.forward)
+		//print(CubeTransformation(edgeOrientation: symmetry.shift(simple)))
+	}
+}
+//playWithSymmetries()
+
 // MARK: -
 
 func testCoordinates() {
@@ -109,7 +149,8 @@ func testCoordCalculations() {
 	func test<Space: CoordinateSpace>(_ coord: Coordinate<Space>.Type) {
 		print("Testing \(Space.self)…")
 		for rawCoord in 0..<Space.count {
-			let bitsToCheck: Space.Value = (1 << 16) - 1
+			// print progress when these bits are zero:
+			let bitsToCheck = Space.Value((1 << 16) - 1)
 			if rawCoord & bitsToCheck == 0 {
 				let progress = Double(rawCoord) / Double(Space.count)
 				print("\(100 * progress)%")
@@ -180,4 +221,47 @@ struct PruningTable<Space: CoordinateSpaceWithMoves> {
 	}
 }
 
-let table = PruningTable<Phase1Coordinate.Space>()
+/*
+typealias BaseCoord = FlipUDSliceCoordinate
+let coord = BaseCoord(2048)
+let (udSlice, orientation) = coord.components
+let symmetries = zip(udSlice.standardSymmetries, orientation.standardSymmetries)
+let state = coord.makeState()
+print()
+print()
+print()
+print(coord)
+print(state)
+print()
+
+for ((index, (udSlice, edgeOri)), symmetry) in zip(symmetries.enumerated(), Symmetry.standardSubgroup) {
+	let slow = symmetry.shift(state)
+	print(index)
+	print("ground truth:", slow)
+	//let perm = udSlice.makeState()
+	let ori = state.edgeOrientation
+	//print(symmetry.shift(perm))
+	print("ori only:", symmetry.shift(ori))
+	print("ori wrapped:", symmetry.shift(CubeTransformation(edgeOrientation: ori)))
+	let coord = BaseCoord(udSlice, edgeOri)
+	//print("fast result:", coord.makeState())
+	let slowCoord = BaseCoord(slow)
+	
+	print(coord, slowCoord)
+	precondition(coord == slowCoord)
+}
+ */
+
+func setUpTables() {
+	_ = UDSliceCoordinate.Space.standardSymmetryTable
+	_ = EdgeOrientationCoordinate.Space.standardSymmetryTable
+	_ = FlipUDSliceCoordinate.Space.standardSymmetryTable
+	let representants = ReducedFlipUDSliceCoordinate.Space.representants
+	print(representants.count, "representants")
+	print()
+	_ = ReducedFlipUDSliceCoordinate.Space.moveTable
+	
+	let table = PruningTable<Phase1Coordinate.Space>()
+	_ = table
+}
+//setUpTables()

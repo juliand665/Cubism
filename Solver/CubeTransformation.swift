@@ -13,10 +13,10 @@ extension CubeTransformation: PartialCubeState {
 	
 	static func + (one: Self, two: Self) -> Self {
 		.init(
-			cornerPermutation: one.cornerPermutation + two.cornerPermutation,
-			cornerOrientation: one.cornerOrientation.applying(two.cornerPermutation) + two.cornerOrientation,
-			edgePermutation: one.edgePermutation + two.edgePermutation,
-			edgeOrientation: one.edgeOrientation.applying(two.edgePermutation) + two.edgeOrientation
+			cornerPermutation: one.cornerPermutation + two,
+			cornerOrientation: one.cornerOrientation + two,
+			edgePermutation: one.edgePermutation + two,
+			edgeOrientation: one.edgeOrientation + two
 		)
 	}
 	
@@ -37,51 +37,6 @@ extension CubeTransformation: PartialCubeState {
 	
 	func uniqueApplications() -> [Self] {
 		repeatedApplications(to: self).prefix { $0 != .zero }
-	}
-}
-
-extension CubeTransformation: TextOutputStreamable {
-	func write<Target: TextOutputStream>(to target: inout Target) {
-		guard self != .zero else {
-			print("CubeTransformation.zero", terminator: "", to: &target)
-			return
-		}
-		
-		print("CubeTransformation(", to: &target)
-		
-		let lists: [[String]] = [
-			Corner.allCases.compactMap {
-				let new = cornerPermutation[$0]
-				guard new != $0 else { return nil }
-				return "\($0.name) ← \(new.name)"
-			},
-			Corner.allCases.compactMap {
-				let orientation = cornerOrientation[$0]
-				switch orientation {
-				case .neutral:
-					return nil
-				case.twistedCW:
-					return "\($0.name): cw"
-				case.twistedCCW:
-					return "\($0.name): ccw"
-				}
-			},
-			Edge.allCases.compactMap {
-				let new = edgePermutation[$0]
-				guard new != $0 else { return nil }
-				return "\($0.name) ← \(new.name)"
-			},
-			Edge.allCases.compactMap {
-				let orientation = edgeOrientation[$0]
-				guard orientation != .neutral else { return nil }
-				return "\($0.name): flipped"
-			},
-		]
-		for list in lists where !list.isEmpty {
-			print("\t" + list.joined(separator: ", "), to: &target)
-		}
-		
-		print(")", terminator: "", to: &target)
 	}
 }
 
@@ -186,18 +141,16 @@ extension CubeTransformation {
 		)
 	)
 	
-	/*
 	static let symmetryLR2 = Self(
 		cornerPermutation: .init(
 			urf: .ufl, ufl: .urf, ulb: .ubr, ubr: .ulb,
 			dfr: .dlf, dlf: .dfr, dbl: .drb, drb: .dbl
 		),
-		cornerOrientation: <#T##CornerOrientation#>, // not that simple—orientations need to be flipped
+		cornerOrientation: .init(isFlipped: true),
 		edgePermutation: .init(
 			ur: .ul, ul: .ur,
 			dr: .dl, dl: .dr,
 			fr: .fl, fl: .fr, bl: .br, br: .bl
 		)
 	)
-	 */
 }

@@ -12,7 +12,7 @@ struct MoveTable<Entry: MoveTableEntry> {
 	
 	init() {
 		entries = measureTime(
-			as: "setup of move table for \(Entry.Space.self) with \(Entry.Space.count) entries of size \(MemoryLayout<Entry>.size)"
+			as: "setup of move table for \(Entry.Space.self) with \(Entry.Space.count) \(Entry.self) entries of size \(MemoryLayout<Entry>.size)"
 		) {
 			(0..<Entry.Space.count).map {
 				Entry(state: Entry.Space.Coord($0).makeState())
@@ -98,6 +98,6 @@ struct StandardSymmetryEntry<Space: CoordinateSpace>: MoveTableEntry {
 	var moves: [Space.Coord]
 	
 	init(state: Space.CubeState) {
-		moves = Symmetry.standardSubgroup.map { .init(state + $0) }
+		moves = Symmetry.standardSubgroup.map { .init($0.shift(state)) }
 	}
 }
