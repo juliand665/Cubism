@@ -2,27 +2,24 @@ import Foundation
 import HandyOperators
 import Algorithms
 
-protocol PiecePermutation: PartialCubeState {
+protocol PiecePermutation: SimplePartialCubeState {
 	associatedtype Piece: Comparable, CaseIterable
 	where Piece.AllCases: RandomAccessCollection
-	associatedtype Space: CoordinateSpace
 	
 	subscript(piece: Piece) -> Piece { get set }
 	
 	init()
-	init(_ coordinate: Coordinate<Space>)
 	init(array: [Piece])
 	
 	func asArray() -> [Piece]
-	func coordinate() -> Coordinate<Space>
 }
 
 extension PiecePermutation {
-	func coordinate() -> Coordinate<Space> {
+	func coordinate() -> Coord {
 		asArray().permutationCoordinate()
 	}
 	
-	init(_ coordinate: Coordinate<Space>) {
+	init(_ coordinate: Coord) {
 		guard coordinate.value != 0 else {
 			self = .zero
 			return
@@ -43,7 +40,7 @@ extension PiecePermutation {
 /// defines for each spot what corner it receives
 struct CornerPermutation: Hashable, PiecePermutation, TaggedCorners {
 	typealias Tag = Corner
-	typealias Space = CornerPermutationCoordinate.Space
+	typealias Coord = CornerPermutationCoordinate
 	
 	static let zero = Self()
 	
@@ -83,7 +80,7 @@ struct CornerPermutation: Hashable, PiecePermutation, TaggedCorners {
 /// defines for each spot what edge it receives
 struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
 	typealias Tag = Edge
-	typealias Space = EdgePermutationCoordinate.Space
+	typealias Coord = EdgePermutationCoordinate
 	
 	static let zero = Self()
 	
@@ -177,7 +174,7 @@ extension EdgePermutation {
 	private static let canonicalOrder = Self().asArray()
 	
 	init(_ coordinate: UDSliceCoordinate) {
-		var currentValue = UInt(UDSliceCoordinate.Space.count)
+		var currentValue = UInt(UDSliceCoordinate.count)
 		// avoid hard math by just trying all possible values until it works lol
 		for i1 in 3..<12 {
 			for i2 in 2..<i1 {
@@ -202,7 +199,7 @@ extension EdgePermutation {
 }
 
 extension RandomAccessCollection where Element: Comparable {
-	func permutationCoordinate<S: CoordinateSpace>() -> Coordinate<S> {
+	func permutationCoordinate<Coord: Coordinate>() -> Coord {
 		.init(
 			self
 				.indexed()
@@ -213,7 +210,7 @@ extension RandomAccessCollection where Element: Comparable {
 		)
 	}
 	
-	func reorderedToMatch<S: CoordinateSpace>(_ coordinate: Coordinate<S>) -> [Element] {
+	func reorderedToMatch<Coord: Coordinate>(_ coordinate: Coord) -> [Element] {
 		coordinate.intValue
 			.digitsWithIncreasingBases(count: count)
 			.reversed()

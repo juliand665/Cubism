@@ -146,18 +146,18 @@ func timeStuff() {
 // MARK: -
 
 func testCoordCalculations() {
-	func test<Space: CoordinateSpace>(_ coord: Coordinate<Space>.Type) {
-		print("Testing \(Space.self)…")
-		for rawCoord in 0..<Space.count {
+	func test<Coord: Coordinate>(_ coord: Coord.Type) {
+		print("Testing \(Coord.self)…")
+		for rawCoord in 0..<Coord.count {
 			// print progress when these bits are zero:
-			let bitsToCheck = Space.Value((1 << 16) - 1)
+			let bitsToCheck = Coord.Value((1 << 16) - 1)
 			if rawCoord & bitsToCheck == 0 {
-				let progress = Double(rawCoord) / Double(Space.count)
+				let progress = Double(rawCoord) / Double(Coord.count)
 				print("\(100 * progress)%")
 			}
-			let coord = Space.Coord(rawCoord)
+			let coord = Coord(rawCoord)
 			let state = coord.makeState()
-			precondition(coord == Space.Coord(state))
+			precondition(coord == Coord(state))
 		}
 		print("Test succeeded!")
 	}
@@ -172,11 +172,11 @@ func testCoordCalculations() {
 
 // MARK: -
 
-struct PruningTable<Space: CoordinateSpaceWithMoves> {
+struct PruningTable<Coord: CoordinateWithMoves> {
 	var distances: [UInt8]
 	
 	init() {
-		distances = .init(repeating: .max, count: Int(Space.count))
+		distances = .init(repeating: .max, count: Int(Coord.count))
 		
 		print("setting up pruning table")
 		distances[0] = 0
@@ -198,7 +198,7 @@ struct PruningTable<Space: CoordinateSpaceWithMoves> {
 				for index in distances.indices {
 					guard distances[index] == distanceToSearch else { continue }
 					
-					let coord = Space.Coord(index)
+					let coord = Coord(index)
 					let neighbors = SolverMove.all.lazy.map { coord + $0 }
 					if isSearchingForwards {
 						for neighbor in neighbors where distances[neighbor.intValue] == .max {
@@ -253,15 +253,15 @@ for ((index, (udSlice, edgeOri)), symmetry) in zip(symmetries.enumerated(), Symm
  */
 
 func setUpTables() {
-	_ = UDSliceCoordinate.Space.standardSymmetryTable
-	_ = EdgeOrientationCoordinate.Space.standardSymmetryTable
-	_ = FlipUDSliceCoordinate.Space.standardSymmetryTable
-	let representants = ReducedFlipUDSliceCoordinate.Space.representants
+	_ = UDSliceCoordinate.standardSymmetryTable
+	_ = EdgeOrientationCoordinate.standardSymmetryTable
+	_ = FlipUDSliceCoordinate.standardSymmetryTable
+	let representants = ReducedFlipUDSliceCoordinate.representants
 	print(representants.count, "representants")
 	print()
-	_ = ReducedFlipUDSliceCoordinate.Space.moveTable
+	_ = ReducedFlipUDSliceCoordinate.moveTable
 	
-	let table = PruningTable<Phase1Coordinate.Space>()
+	let table = PruningTable<Phase1Coordinate>()
 	_ = table
 }
 //setUpTables()

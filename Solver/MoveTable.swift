@@ -1,33 +1,33 @@
 import Foundation
 
-typealias FaceTurnMoveTable<Space: CoordinateSpace> = MoveTable<FaceTurnEntry<Space>>
-typealias StandardSymmetryTable<Space: CoordinateSpace> = MoveTable<StandardSymmetryEntry<Space>>
+typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<FaceTurnEntry<Coord>>
+typealias StandardSymmetryTable<Coord: Coordinate> = MoveTable<StandardSymmetryEntry<Coord>>
 
 struct MoveTable<Entry: MoveTableEntry> {
 	var entries: [Entry]
 	
-	subscript(coord: Entry.Space.Coord) -> Entry {
+	subscript(coord: Entry.Coord) -> Entry {
 		entries[coord.intValue]
 	}
 	
 	init() {
 		entries = measureTime(
-			as: "setup of move table for \(Entry.Space.self) with \(Entry.Space.count) \(Entry.self) entries of size \(MemoryLayout<Entry>.size)"
+			as: "setup of move table for \(Entry.Coord.self) with \(Entry.Coord.count) \(Entry.self) entries of size \(MemoryLayout<Entry>.size)"
 		) {
-			(0..<Entry.Space.count).map {
-				Entry(state: Entry.Space.Coord($0).makeState())
+			(0..<Entry.Coord.count).map {
+				Entry(state: Entry.Coord($0).makeState())
 			}
 		}
 	}
 }
 
 protocol MoveTableEntry {
-	associatedtype Space: CoordinateSpace
+	associatedtype Coord: Coordinate
 	
-	init(state: Space.CubeState)
+	init(state: Coord.CubeState)
 }
 
-struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
+struct FaceTurnEntry<Coord: Coordinate>: MoveTableEntry {
 	var up: FaceMoves
 	var down: FaceMoves
 	var right: FaceMoves
@@ -35,7 +35,7 @@ struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
 	var front: FaceMoves
 	var back: FaceMoves
 	
-	subscript(move: SolverMove) -> Space.Coord {
+	subscript(move: SolverMove) -> Coord {
 		self[move.face][move.direction]
 	}
 	
@@ -56,7 +56,7 @@ struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
 		}
 	}
 	
-	init(state: Space.CubeState) {
+	init(state: Coord.CubeState) {
 		up = .init(state: state, face: .up)
 		down = .init(state: state, face: .down)
 		right = .init(state: state, face: .right)
@@ -66,11 +66,11 @@ struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
 	}
 	
 	struct FaceMoves {
-		var clockwise: Space.Coord
-		var double: Space.Coord
-		var counterclockwise: Space.Coord
+		var clockwise: Coord
+		var double: Coord
+		var counterclockwise: Coord
 		
-		subscript(direction: Move.Direction) -> Space.Coord {
+		subscript(direction: Move.Direction) -> Coord {
 			switch direction {
 			case .clockwise:
 				return clockwise
@@ -81,7 +81,7 @@ struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
 			}
 		}
 		
-		init(state: Space.CubeState, face: Face) {
+		init(state: Coord.CubeState, face: Face) {
 			let transform = CubeTransformation.transform(for: face)
 			var state = state
 			state += transform
@@ -94,10 +94,10 @@ struct FaceTurnEntry<Space: CoordinateSpace>: MoveTableEntry {
 	}
 }
 
-struct StandardSymmetryEntry<Space: CoordinateSpace>: MoveTableEntry {
-	var moves: [Space.Coord]
+struct StandardSymmetryEntry<Coord: Coordinate>: MoveTableEntry {
+	var moves: [Coord]
 	
-	init(state: Space.CubeState) {
+	init(state: Coord.CubeState) {
 		moves = Symmetry.standardSubgroup.map { .init($0.shift(state)) }
 	}
 }

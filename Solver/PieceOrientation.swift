@@ -1,22 +1,19 @@
 import Foundation
 
-protocol PieceOrientation: PartialCubeState {
+protocol PieceOrientation: SimplePartialCubeState {
 	associatedtype Orientation: SinglePieceOrientation
 	typealias Piece = Orientation.Piece
-	associatedtype Space: CoordinateSpace
 	
 	subscript(piece: Piece) -> Orientation { get set }
 	
 	init()
-	init(_ coordinate: Coordinate<Space>)
 	init(array: [Orientation])
 	
 	func asArray() -> [Orientation]
-	func coordinate() -> Coordinate<Space>
 }
 
 extension PieceOrientation {
-	func coordinate() -> Coordinate<Space> {
+	func coordinate() -> Coord {
 		.init(
 			asArray()
 				.lazy
@@ -26,7 +23,7 @@ extension PieceOrientation {
 		)
 	}
 	
-	init(_ coordinate: Coordinate<Space>) {
+	init(_ coordinate: Coord) {
 		guard coordinate.value != 0 else {
 			self = .zero
 			return
@@ -38,7 +35,7 @@ extension PieceOrientation {
 		)
 	}
 	
-	private static func digits(of coordinate: Coordinate<Space>) -> [Int] {
+	private static func digits(of coordinate: Coord) -> [Int] {
 		let base = Orientation.allCases.count
 		let digits = coordinate.intValue.digits(withBase: base)
 		let parity = digits.sum() % base
@@ -52,7 +49,7 @@ extension PieceOrientation {
 /// defines for each spot which orientation its corner has relative to U/D
 struct CornerOrientation: Hashable, PieceOrientation {
 	typealias Tag = SingleCornerOrientation
-	typealias Space = CornerOrientationCoordinate.Space
+	typealias Coord = CornerOrientationCoordinate
 	
 	static let zero = Self()
 	
@@ -168,7 +165,7 @@ extension CornerOrientation: TaggedCorners {
 /// defines for each spot which orientation its corner has relative to U/D
 struct EdgeOrientation: Hashable, PieceOrientation, TaggedEdges {
 	typealias Tag = SingleEdgeOrientation
-	typealias Space = EdgeOrientationCoordinate.Space
+	typealias Coord = EdgeOrientationCoordinate
 	
 	static let zero = Self()
 	

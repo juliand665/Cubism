@@ -35,6 +35,13 @@ extension PartialCubeState {
 	}
 }
 
+protocol SimplePartialCubeState: PartialCubeState {
+	associatedtype Coord: Coordinate
+	
+	init(_ coordinate: Coord)
+	func coordinate() -> Coord
+}
+
 struct SolverMove {
 	static let all = Face.allCases.flatMap { face -> [Self] in
 		let transform = CubeTransformation.transform(for: face)
