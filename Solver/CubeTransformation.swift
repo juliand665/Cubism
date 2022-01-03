@@ -1,5 +1,3 @@
-import Foundation
-
 /// Expresses anything you can do to the cube. Either interpreted as a transformation of the cube relative to another state, or as a state (a transformation relative to the solved state).
 struct CubeTransformation: Hashable {
 	var cornerPermutation = CornerPermutation()

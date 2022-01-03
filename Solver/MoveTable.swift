@@ -1,5 +1,3 @@
-import Foundation
-
 typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<FaceTurnEntry<Coord>>
 typealias StandardSymmetryTable<Coord: Coordinate> = MoveTable<StandardSymmetryEntry<Coord>>
 

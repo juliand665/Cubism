@@ -1,5 +1,3 @@
-import Foundation
-
 protocol CubePiece: Comparable, CaseIterable {
 	var name: String { get }
 }
@@ -33,13 +31,6 @@ extension PartialCubeState {
 	static func += (state: inout Self, transform: CubeTransformation) {
 		state = state + transform
 	}
-}
-
-protocol SimplePartialCubeState: PartialCubeState {
-	associatedtype Coord: Coordinate
-	
-	init(_ coordinate: Coord)
-	func coordinate() -> Coord
 }
 
 struct SolverMove {

@@ -1,8 +1,7 @@
-import Foundation
 import HandyOperators
 import Algorithms
 
-protocol PiecePermutation: SimplePartialCubeState {
+protocol PiecePermutation: PartialCubeStateWithCoord {
 	associatedtype Piece: Comparable, CaseIterable
 	where Piece.AllCases: RandomAccessCollection
 	

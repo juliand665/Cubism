@@ -1,5 +1,3 @@
-import Foundation
-
 protocol TaggedPieces {
 	associatedtype Tag
 	associatedtype Piece

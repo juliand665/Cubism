@@ -1,5 +1,3 @@
-import Foundation
-
 protocol SinglePieceOrientation: Hashable, CaseIterable, AdditiveArithmeticWithNegation, RawRepresentable where RawValue == Int {
 	associatedtype Piece: CubePiece
 }

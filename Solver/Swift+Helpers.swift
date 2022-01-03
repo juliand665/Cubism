@@ -1,5 +1,3 @@
-import Foundation
-
 extension Sequence {
 	func count(where isIncluded: (Element) throws -> Bool) rethrows -> Int {
 		try lazy.filter(isIncluded).count

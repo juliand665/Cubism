@@ -1,6 +1,4 @@
-import Foundation
-
-protocol PieceOrientation: SimplePartialCubeState {
+protocol PieceOrientation: PartialCubeStateWithCoord {
 	associatedtype Orientation: SinglePieceOrientation
 	typealias Piece = Orientation.Piece
 	
