@@ -37,11 +37,12 @@ struct MoveSequenceView: View {
 		
 		VStack(spacing: 0) {
 			let targetBar = VStack(spacing: 1) {
-				if case .doubleFace = move.target {
-					VStack(spacing: 3) {
-						color
-						color
-					}
+				if move.target.hasMultipleLayers {
+					color
+					color
+				} else if case .bigSlice = move.target {
+					Color.clear
+					color
 				} else {
 					color
 				}
@@ -55,8 +56,9 @@ struct MoveSequenceView: View {
 				.fontWeight(.medium)
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 				.foregroundColor(color)
+				.padding(.horizontal, -2) // e.g. 3Bw2 is a valid move that's just too long otherwise
 			
-			targetBar.opacity(move.direction == .clockwise ? 0 : 1)
+			targetBar.opacity(move.direction == .clockwise ? 0 : 1).scaleEffect(y: -1)
 		}
 		.background(color.opacity(0.25))
 		.frame(width: boxSize, height: boxSize)
@@ -67,7 +69,7 @@ struct MoveSequenceView: View {
 
 struct MoveSequenceView_Previews: PreviewProvider {
     static var previews: some View {
-		MoveSequenceView(moves: "R U Ri Ui x ri F R Fi y RR d Ri UU R Di Ri uu Ri z L u BB Li xx M EE Si MM Ei S")
+		MoveSequenceView(moves: "R U Ri Ui x ri F R Fi y RR d Ri UU R Di Ri uu Ri z L u BB Li xx M EE Si MM Ei S Rw 3Fw2 4L 2DD")
 			.inEachColorScheme()
 			.previewLayout(.fixed(width: 420, height: 320))
 			.padding()

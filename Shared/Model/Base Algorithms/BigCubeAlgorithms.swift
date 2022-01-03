@@ -51,6 +51,7 @@ extension Algorithm {
 		description: "Flips middle part of UF edge."
 	) {
 		"Rww BB UU Lw UU Rwi UU Rw UU FF Rw FF Lwi BB Rww"
+		"Rw UU Rw UU Rwi UU Rw UU Lwi UU Rw UU Rwi UU xi Rwi UU Rwi UU Mi"
 	}
 	
 	static let edgeEndSwap = builtIn(

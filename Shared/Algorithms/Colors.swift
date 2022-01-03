@@ -3,12 +3,21 @@ import SwiftUI
 extension Move.Target {
 	var color: Color {
 		switch self {
-		case .singleFace(let face), .doubleFace(let face):
+		case .singleFace(let face), .doubleFace(let face), .wideTurn(let face, _), .bigSlice(let face, _):
 			return face.color
 		case .slice(let slice):
 			return slice.color
-		default:
+		case .rotation:
 			return .gray
+		}
+	}
+	
+	var hasMultipleLayers: Bool {
+		switch self {
+		case .doubleFace, .wideTurn:
+			return true
+		case .singleFace, .slice, .bigSlice, .rotation:
+			return false
 		}
 	}
 }
