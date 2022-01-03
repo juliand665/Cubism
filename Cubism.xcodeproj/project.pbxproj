@@ -16,6 +16,7 @@
 		B93F8C112783A63C00909080 /* ReducedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93F8C102783A63C00909080 /* ReducedCoordinates.swift */; };
 		B93F8C142783AA8800909080 /* UDSliceCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93F8C132783AA8800909080 /* UDSliceCoordinate.swift */; };
 		B93F8C162783AB0E00909080 /* EdgePermutationCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93F8C152783AB0E00909080 /* EdgePermutationCoordinates.swift */; };
+		B93F8C182783B81200909080 /* Symmetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93F8C172783B81200909080 /* Symmetry.swift */; };
 		B955EF9E26ED73C0008F65E3 /* AlgorithmDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */; };
 		B96AB4CF26E3B32D003E38E4 /* AlgorithmsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */; };
 		B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
@@ -93,6 +94,7 @@
 		B93F8C102783A63C00909080 /* ReducedCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReducedCoordinates.swift; sourceTree = "<group>"; };
 		B93F8C132783AA8800909080 /* UDSliceCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDSliceCoordinate.swift; sourceTree = "<group>"; };
 		B93F8C152783AB0E00909080 /* EdgePermutationCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgePermutationCoordinates.swift; sourceTree = "<group>"; };
+		B93F8C172783B81200909080 /* Symmetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symmetry.swift; sourceTree = "<group>"; };
 		B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmDetailsView.swift; sourceTree = "<group>"; };
 		B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmsScreen.swift; sourceTree = "<group>"; };
 		B96AB4D026E3B358003E38E4 /* Algorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				B9EC07F32713CF2500CAC7BE /* Swift+Helpers.swift */,
 				B93F8C0A2783A42700909080 /* Timing.swift */,
 				B96C709B2708C46A001DAEF8 /* Pieces.swift */,
+				B93F8C172783B81200909080 /* Symmetry.swift */,
 				B96C709D2708C4B6001DAEF8 /* Orientation.swift */,
 				B96C709F2708C4D9001DAEF8 /* PieceOrientation.swift */,
 				B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */,
@@ -457,6 +460,7 @@
 				B96C70A827090EE3001DAEF8 /* PieceOrientation.swift in Sources */,
 				B96C70AA270910D7001DAEF8 /* CubeTransformation.swift in Sources */,
 				B96C709127088496001DAEF8 /* main.swift in Sources */,
+				B93F8C182783B81200909080 /* Symmetry.swift in Sources */,
 				B96C7095270884DB001DAEF8 /* Algorithm.swift in Sources */,
 				B96C57DB27133EE7006D4EEA /* TaggedPieces.swift in Sources */,
 				B96FEAA5277E9526008AD165 /* PrettyPrinting.swift in Sources */,

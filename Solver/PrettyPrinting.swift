@@ -7,15 +7,15 @@ extension CubeTransformation: TextOutputStreamable {
 		
 		print("CubeTransformation(", to: &target)
 		
-		if cornerOrientation.isFlipped {
+		if corners.orientation.isFlipped {
 			print("\tL-R flipped", to: &target)
 		}
 		
 		let lines = [
-			cornerPermutation.contentDescription,
-			cornerOrientation.contentDescription,
-			edgePermutation.contentDescription,
-			edgeOrientation.contentDescription,
+			corners.permutation.contentDescription,
+			corners.orientation.contentDescription,
+			edges.permutation.contentDescription,
+			edges.orientation.contentDescription,
 		]
 		for line in lines where !line.isEmpty {
 			print("\t" + line, to: &target)

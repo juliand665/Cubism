@@ -42,25 +42,25 @@ func playWithSymmetries() {
 	//let orientation = EdgeOrientation(uf: .flipped, dr: .flipped, fl: .flipped)
 	//let transform = CubeTransformation(edgeOrientation: orientation)
 	let transform = sexyMove
-	let orientation = transform.edgeOrientation
+	let orientation = transform.edges.orientation
 	print(transform)
 	for symmetry in Symmetry.standardSubgroup {
 		print()
-		let full = symmetry.shift(transform).edgeOrientation
+		let full = symmetry.shift(transform).edges.orientation
 		let small = symmetry.shift(orientation)
-		print(symmetry.shift(transform).edgePermutation)
-		print(symmetry.shift(transform).edgeOrientation)
+		print(symmetry.shift(transform).edges.permutation)
+		print(symmetry.shift(transform).edges.orientation)
 		print(small)
 		print(full == small)
-		print((symmetry.forward + transform).edgePermutation)
-		print((symmetry.forward + transform).edgeOrientation)
+		print((symmetry.forward + transform).edges.permutation)
+		print((symmetry.forward + transform).edges.orientation)
 		print(symmetry.forward + orientation)
-		print((transform + symmetry.backward).edgePermutation)
-		print((transform + symmetry.backward).edgeOrientation)
+		print((transform + symmetry.backward).edges.permutation)
+		print((transform + symmetry.backward).edges.orientation)
 		print(orientation + symmetry.backward)
 		print(symmetry.forward)
 		//print(symmetry.forward)
-		//print(CubeTransformation(edgeOrientation: symmetry.shift(simple)))
+		//print(CubeTransformation(edges.orientation: symmetry.shift(simple)))
 	}
 }
 //playWithSymmetries()
@@ -241,4 +241,4 @@ func setUpTables() {
 	let table = PruningTable<Phase1Coordinate>()
 	_ = table
 }
-//setUpTables()
+setUpTables()

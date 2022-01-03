@@ -25,15 +25,15 @@ extension FlipUDSliceCoordinate {
 		value = .init(udSlice.value) * .init(EdgeOrientationCoordinate.count) + .init(orientation.value)
 	}
 	
-	init(_ state: CubeTransformation) {
-		self.init(state.edgePermutation, state.edgeOrientation)
+	init(_ state: CubeTransformation.Edges) {
+		self.init(state.permutation, state.orientation)
 	}
 	
-	func makeState() -> CubeTransformation {
+	func makeState() -> CubeTransformation.Edges {
 		let (udSlice, orientation) = components
 		return .init(
-			edgePermutation: udSlice.makeState(),
-			edgeOrientation: orientation.makeState()
+			permutation: udSlice.makeState(),
+			orientation: orientation.makeState()
 		)
 	}
 }
@@ -62,14 +62,15 @@ extension Phase1Coordinate {
 	}
 	
 	init(_ state: CubeTransformation) {
-		self.init(.init(state), .init(state.cornerOrientation))
+		self.init(.init(state.edges), .init(state.corners.orientation))
 	}
 	
 	func makeState() -> CubeTransformation {
 		let (reduced, corners) = components
 		
-		return reduced.makeState() <- {
-			$0.cornerOrientation = corners.makeState()
-		}
+		return .init(
+			corners: .init(orientation: corners.makeState()),
+			edges: reduced.makeState()
+		)
 	}
 }

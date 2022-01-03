@@ -129,12 +129,12 @@ struct CornerOrientation: Hashable, PieceOrientation {
 		)
 	}
 	
-	static func + (state: Self, transform: CubeTransformation) -> Self {
-		state.applying(transform.cornerPermutation) + transform.cornerOrientation
+	static func + (state: Self, transform: CubeTransformation.Corners) -> Self {
+		state.applying(transform.permutation) + transform.orientation
 	}
 	
-	static func + (transform: CubeTransformation, state: Self) -> Self {
-		transform.cornerOrientation + state
+	static func + (transform: CubeTransformation.Corners, state: Self) -> Self {
+		transform.orientation + state
 	}
 }
 
@@ -222,11 +222,11 @@ struct EdgeOrientation: Hashable, PieceOrientation, TaggedEdges {
 		)
 	}
 	
-	static func + (state: Self, transform: CubeTransformation) -> Self {
-		state.applying(transform.edgePermutation) + transform.edgeOrientation
+	static func + (state: Self, transform: CubeTransformation.Edges) -> Self {
+		state.applying(transform.permutation) + transform.orientation
 	}
 	
-	static func + (transform: CubeTransformation, state: Self) -> Self {
-		transform.edgeOrientation + state
+	static func + (transform: CubeTransformation.Edges, state: Self) -> Self {
+		transform.orientation + state
 	}
 }

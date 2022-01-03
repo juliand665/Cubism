@@ -36,7 +36,7 @@ struct ReducedFlipUDSliceCoordinate: CoordinateWithMoveTable {
 }
 
 extension ReducedFlipUDSliceCoordinate {
-	init(_ state: CubeTransformation) {
+	init(_ state: CubeTransformation.Edges) {
 		//let udSlice = state.edgePermutation.udSliceCoordinate()
 		//let orientation = state.edgeOrientation.coordinate()
 		// apply all symmetries and find minimum coordinate
@@ -48,7 +48,7 @@ extension ReducedFlipUDSliceCoordinate {
 		self.init(Self.representants.binarySearch(for: baseCoord)!)
 	}
 	
-	func makeState() -> CubeTransformation {
+	func makeState() -> CubeTransformation.Edges {
 		Self.representants[intValue].makeState()
 	}
 }

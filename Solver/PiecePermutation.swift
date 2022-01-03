@@ -67,12 +67,12 @@ struct CornerPermutation: Hashable, PiecePermutation, TaggedCorners {
 		)
 	}
 	
-	static func + (state: Self, transform: CubeTransformation) -> Self {
-		state + transform.cornerPermutation
+	static func + (state: Self, corners: CubeTransformation.Corners) -> Self {
+		state + corners.permutation
 	}
 	
-	static func + (transform: CubeTransformation, state: Self) -> Self {
-		transform.cornerPermutation + state
+	static func + (corners: CubeTransformation.Corners, state: Self) -> Self {
+		corners.permutation + state
 	}
 }
 
@@ -117,12 +117,12 @@ struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
 		)
 	}
 	
-	static func + (state: Self, transform: CubeTransformation) -> Self {
-		state + transform.edgePermutation
+	static func + (state: Self, edges: CubeTransformation.Edges) -> Self {
+		state + edges.permutation
 	}
 	
-	static func + (transform: CubeTransformation, state: Self) -> Self {
-		transform.edgePermutation + state
+	static func + (edges: CubeTransformation.Edges, state: Self) -> Self {
+		edges.permutation + state
 	}
 }
 

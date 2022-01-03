@@ -8,7 +8,7 @@ protocol TaggedPieces {
 	func asArray() -> [Tag]
 }
 
-protocol TaggedCorners: TaggedPieces where Piece == Corner {
+protocol TaggedCorners: TaggedPieces, PartialCornerState where Piece == Corner {
 	var urf: Tag { get set }
 	var ufl: Tag { get set }
 	var ulb: Tag { get set }
@@ -82,7 +82,7 @@ extension TaggedCorners {
 	}
 }
 
-protocol TaggedEdges: TaggedPieces where Piece == Edge {
+protocol TaggedEdges: TaggedPieces, PartialEdgeState where Piece == Edge {
 	var ur: Tag { get set }
 	var uf: Tag { get set }
 	var ul: Tag { get set }
