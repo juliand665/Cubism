@@ -34,14 +34,10 @@ extension NonSliceEdgePermutationCoordinate {
 
 extension EdgePermutation {
 	func sliceEdgePermCoordinate() -> SliceEdgePermutationCoordinate {
-		asArray()
-			.filter { $0.isPartOfUDSlice }
-			.permutationCoordinate()
+		filter { $0.isPartOfUDSlice }.permutationCoordinate()
 	}
 	
 	func nonSliceEdgePermCoordinate() -> NonSliceEdgePermutationCoordinate {
-		asArray()
-			.filter { !$0.isPartOfUDSlice }
-			.permutationCoordinate()
+		filter { !$0.isPartOfUDSlice }.permutationCoordinate()
 	}
 }

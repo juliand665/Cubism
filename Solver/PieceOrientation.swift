@@ -1,23 +1,17 @@
-protocol PieceOrientation: PartialCubeStateWithCoord {
-	associatedtype Orientation: SinglePieceOrientation
-	typealias Piece = Orientation.Piece
+protocol PieceOrientation: PartialCubeStateWithCoord, TaggedPieces {
+	associatedtype Orientation: SinglePieceOrientation where Tag == Orientation
 	
 	subscript(piece: Piece) -> Orientation { get set }
 	
 	init()
 	init(array: [Orientation])
-	
-	func asArray() -> [Orientation]
 }
 
-extension PieceOrientation {
+extension PieceOrientation where Tag == Orientation /* this constraint is redundant but somehow required */ {
 	func coordinate() -> Coord {
 		.init(
-			asArray()
-				.lazy
-				.dropLast() // last is evident from the others
-				.map(\.rawValue)
-				.reduce(0) { $0 * Orientation.allCases.count + $1 }
+			self.dropLast() // last is evident from the others
+				.reduce(0) { $0 * Orientation.allCases.count + $1.rawValue }
 		)
 	}
 	

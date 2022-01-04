@@ -1,11 +1,11 @@
-protocol TaggedPieces {
+protocol TaggedPieces: RandomAccessCollection where Element == Tag {
 	associatedtype Tag
-	associatedtype Piece
+	associatedtype Piece: CubePiece
+	where Piece.AllCases: RandomAccessCollection
 	
 	subscript(piece: Piece) -> Tag { get set }
 	
 	init(array: [Tag])
-	func asArray() -> [Tag]
 }
 
 protocol TaggedCorners: TaggedPieces, PartialCornerState where Piece == Corner {
@@ -48,10 +48,6 @@ extension TaggedCorners {
 		)
 	}
 	
-	func asArray() -> [Tag] {
-		[urf, ufl, ulb, ubr, dfr, dlf, dbl, drb]
-	}
-	
 	subscript(corner: Corner) -> Tag {
 		get {
 			switch corner {
@@ -78,6 +74,59 @@ extension TaggedCorners {
 			case .dbl: dbl = newValue
 			case .drb: drb = newValue
 			}
+		}
+	}
+}
+
+extension Collection where Self: TaggedPieces, Index == Int {
+	var startIndex: Int { 0 }
+	
+	func index(after i: Int) -> Int {
+		i + 1
+	}
+}
+
+extension Collection where Self: TaggedCorners, Index == Int {
+	var endIndex: Int { 8 }
+	
+	subscript(position: Int) -> Tag {
+		switch position { // gotta go fast
+		case 00: return urf
+		case 01: return ufl
+		case 02: return ulb
+		case 03: return ubr
+			
+		case 04: return dfr
+		case 05: return dlf
+		case 06: return dbl
+		case 07: return drb
+			
+		default: fatalError()
+		}
+	}
+}
+
+extension Collection where Self: TaggedEdges, Index == Int {
+	var endIndex: Int { 12 }
+	
+	subscript(position: Int) -> Tag {
+		switch position { // gotta go fast
+		case 00: return ur
+		case 01: return uf
+		case 02: return ul
+		case 03: return ub
+			
+		case 04: return dr
+		case 05: return df
+		case 06: return dl
+		case 07: return db
+			
+		case 08: return fr
+		case 09: return fl
+		case 10: return bl
+		case 11: return br
+			
+		default: fatalError()
 		}
 	}
 }
@@ -135,10 +184,6 @@ extension TaggedEdges {
 			bl: array[10],
 			br: array[11]
 		)
-	}
-	
-	func asArray() -> [Tag] {
-		[ur, uf, ul, ub, dr, df, dl, db, fr, fl, bl, br]
 	}
 	
 	subscript(edge: Edge) -> Tag {

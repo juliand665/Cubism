@@ -22,12 +22,12 @@ extension UDSliceCoordinate {
 }
 
 extension EdgePermutation {
-	private static let canonicalOrder = Self().asArray()
+	private static let canonicalOrder = Array(Self())
 	
 	init(_ coordinate: UDSliceCoordinate) {
 		var currentValue = UInt(UDSliceCoordinate.count)
 		// avoid hard math by just trying all possible values until it works lol
-		// TODO: make sure this is not called in performance-critical sections…
+		// TODO: probably a good idea to make this faster, even if it seems plenty fast rn
 		for i1 in 3..<12 {
 			for i2 in 2..<i1 {
 				for i3 in 1..<i2 {
@@ -50,33 +50,30 @@ extension EdgePermutation {
 	}
 	
 	func udSliceCoordinate() -> UDSliceCoordinate {
-		let reduced = asArray()
-			.lazy
-			.enumerated()
-			.reduce(into: (sum: 0, coefficient: 0, k: -1)) { state, new in
-				// a complex-looking way to improve performance by avoiding lots of factorial calculations and counting occupied spots in the process
-				let edge = new.element
-				let n = new.offset
-				
-				state.coefficient *= n
-				if edge.isPartOfUDSlice {
-					state.k += 1
-					if state.k == 0 {
-						state.coefficient = 1
-					} else {
-						state.coefficient /= state.k
-					}
+		var sum = 0
+		var coefficient = 0
+		var k = -1
+		// a complex-looking way to improve performance by avoiding lots of factorial calculations and counting occupied spots in the process
+		for (n, edge) in enumerated() {
+			coefficient *= n
+			if edge.isPartOfUDSlice {
+				k += 1
+				if k == 0 {
+					coefficient = 1
 				} else {
-					state.coefficient /= n - state.k
-					
-					if state.k >= 0 {
-						state.sum += state.coefficient
-					}
+					coefficient /= k
+				}
+			} else {
+				coefficient /= n - k
+				
+				if k >= 0 {
+					sum += coefficient
 				}
 			}
+		}
+		assert(coefficient == 165) // nCr(11, 3)
+		assert(k == 3)
 		
-		assert(reduced.coefficient == 165) // nCr(11, 3)
-		assert(reduced.k == 3)
-		return .init(reduced.sum)
+		return .init(sum)
 	}
 }

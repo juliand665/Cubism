@@ -1,21 +1,15 @@
 import HandyOperators
-import Algorithms
 
-protocol PiecePermutation: PartialCubeStateWithCoord {
-	associatedtype Piece: Comparable, CaseIterable
-	where Piece.AllCases: RandomAccessCollection
-	
+protocol PiecePermutation: PartialCubeStateWithCoord, TaggedPieces {
 	subscript(piece: Piece) -> Piece { get set }
 	
 	init()
 	init(array: [Piece])
-	
-	func asArray() -> [Piece]
 }
 
-extension PiecePermutation {
+extension PiecePermutation where Tag: Comparable /* this constraint is redundant but somehow required */ {
 	func coordinate() -> Coord {
-		asArray().permutationCoordinate()
+		permutationCoordinate()
 	}
 	
 	init(_ coordinate: Coord) {
