@@ -1,7 +1,6 @@
-protocol TaggedPieces: RandomAccessCollection where Element == Tag {
-	associatedtype Tag
+protocol TaggedPieces: RandomAccessCollection {
+	typealias Tag = Element
 	associatedtype Piece: CubePiece
-	where Piece.AllCases: RandomAccessCollection
 	
 	subscript(piece: Piece) -> Tag { get set }
 	

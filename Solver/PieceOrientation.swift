@@ -1,5 +1,5 @@
-protocol PieceOrientation: PartialCubeStateWithCoord, TaggedPieces {
-	associatedtype Orientation: SinglePieceOrientation where Tag == Orientation
+protocol PieceOrientation: PartialCubeStateWithCoord, TaggedPieces where Tag: SinglePieceOrientation {
+	typealias Orientation = Tag
 	
 	subscript(piece: Piece) -> Orientation { get set }
 	
@@ -7,7 +7,7 @@ protocol PieceOrientation: PartialCubeStateWithCoord, TaggedPieces {
 	init(array: [Orientation])
 }
 
-extension PieceOrientation where Tag == Orientation /* this constraint is redundant but somehow required */ {
+extension PieceOrientation {
 	func coordinate() -> Coord {
 		.init(
 			self.dropLast() // last is evident from the others

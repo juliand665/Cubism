@@ -1,13 +1,13 @@
 import HandyOperators
 
-protocol PiecePermutation: PartialCubeStateWithCoord, TaggedPieces {
+protocol PiecePermutation: PartialCubeStateWithCoord, TaggedPieces where Tag == Piece {
 	subscript(piece: Piece) -> Piece { get set }
 	
 	init()
 	init(array: [Piece])
 }
 
-extension PiecePermutation where Tag: Comparable /* this constraint is redundant but somehow required */ {
+extension PiecePermutation {
 	func coordinate() -> Coord {
 		permutationCoordinate()
 	}

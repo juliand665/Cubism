@@ -1,4 +1,4 @@
-protocol CubePiece: Comparable, CaseIterable {
+protocol CubePiece: Comparable, CaseIterable where AllCases: RandomAccessCollection {
 	var name: String { get }
 }
 
