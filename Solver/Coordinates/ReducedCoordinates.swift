@@ -4,14 +4,14 @@
 struct ReducedFlipUDSliceCoordinate: CoordinateWithMoveTable {
 	typealias BaseCoord = FlipUDSliceCoordinate
 	
-	static let count = UInt32(representants.count)
+	static let count = UInt16(representants.count)
 	static let moveTable = FaceTurnMoveTable<Self>()
 	
 	// need to track symmetry index alongside equivalence class index, probably best to separate out notion of sym-coord from raw-coord
 	
 	static let (representants, symmetryToRepresentant) = computeRepresentants()
 	
-	var value: UInt32
+	var value: UInt16
 	
 	private static func computeRepresentants() -> ([BaseCoord], [StandardSymmetry]) {
 		measureTime(as: "computeRepresentants") {

@@ -39,7 +39,7 @@ extension FlipUDSliceCoordinate {
 }
 
 struct Phase1Coordinate: CoordinateWithMoves {
-	static let count = UInt32(CornerOrientationCoordinate.count) * ReducedFlipUDSliceCoordinate.count
+	static let count = UInt32(CornerOrientationCoordinate.count) * UInt32(ReducedFlipUDSliceCoordinate.count)
 	
 	var value: UInt32
 	
@@ -58,7 +58,7 @@ extension Phase1Coordinate {
 	}
 	
 	init(_ reduced: ReducedFlipUDSliceCoordinate, _ corners: CornerOrientationCoordinate) {
-		value = reduced.value * .init(CornerOrientationCoordinate.count) + .init(corners.value)
+		value = .init(reduced.value) * .init(CornerOrientationCoordinate.count) + .init(corners.value)
 	}
 	
 	init(_ state: CubeTransformation) {
