@@ -8,7 +8,7 @@ protocol PiecePermutation: PartialCubeStateWithCoord, TaggedPieces where Tag == 
 }
 
 extension PiecePermutation {
-	func coordinate() -> Coord {
+	func coordinate() -> Coord where Element: Comparable /* this shouldn't be necessary but it seems the constraint resolver is, well… imperfect */ {
 		permutationCoordinate()
 	}
 	

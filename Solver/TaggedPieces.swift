@@ -1,5 +1,8 @@
 protocol TaggedPieces: RandomAccessCollection {
-	typealias Tag = Element
+	associatedtype Tag where Tag == Element
+	// would like to declare it like this instead but that breaks the compiler…
+	//typealias Tag = Element
+	
 	associatedtype Piece: CubePiece
 	
 	subscript(piece: Piece) -> Tag { get set }
