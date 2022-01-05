@@ -31,6 +31,40 @@ protocol TaggedCorners: TaggedPieces, PartialCornerState where Piece == Corner {
 	)
 }
 
+protocol TaggedEdges: TaggedPieces, PartialEdgeState where Piece == Edge {
+	var ur: Tag { get set }
+	var uf: Tag { get set }
+	var ul: Tag { get set }
+	var ub: Tag { get set }
+	
+	var dr: Tag { get set }
+	var df: Tag { get set }
+	var dl: Tag { get set }
+	var db: Tag { get set }
+	
+	var fr: Tag { get set }
+	var fl: Tag { get set }
+	var bl: Tag { get set }
+	var br: Tag { get set }
+	
+	init(
+		ur: Tag,
+		uf: Tag,
+		ul: Tag,
+		ub: Tag,
+		
+		dr: Tag,
+		df: Tag,
+		dl: Tag,
+		db: Tag,
+		
+		fr: Tag,
+		fl: Tag,
+		bl: Tag,
+		br: Tag
+	)
+}
+
 extension TaggedCorners {
 	init(array: [Tag]) {
 		precondition(array.count == Piece.allCases.count)
@@ -75,93 +109,6 @@ extension TaggedCorners {
 			}
 		}
 	}
-}
-
-extension Collection where Self: TaggedPieces, Index == Int {
-	var startIndex: Int { 0 }
-	
-	func index(after i: Int) -> Int {
-		i + 1
-	}
-}
-
-extension Collection where Self: TaggedCorners, Index == Int {
-	var endIndex: Int { 8 }
-	
-	subscript(position: Int) -> Tag {
-		switch position { // gotta go fast
-		case 00: return urf
-		case 01: return ufl
-		case 02: return ulb
-		case 03: return ubr
-			
-		case 04: return dfr
-		case 05: return dlf
-		case 06: return dbl
-		case 07: return drb
-			
-		default: fatalError()
-		}
-	}
-}
-
-extension Collection where Self: TaggedEdges, Index == Int {
-	var endIndex: Int { 12 }
-	
-	subscript(position: Int) -> Tag {
-		switch position { // gotta go fast
-		case 00: return ur
-		case 01: return uf
-		case 02: return ul
-		case 03: return ub
-			
-		case 04: return dr
-		case 05: return df
-		case 06: return dl
-		case 07: return db
-			
-		case 08: return fr
-		case 09: return fl
-		case 10: return bl
-		case 11: return br
-			
-		default: fatalError()
-		}
-	}
-}
-
-protocol TaggedEdges: TaggedPieces, PartialEdgeState where Piece == Edge {
-	var ur: Tag { get set }
-	var uf: Tag { get set }
-	var ul: Tag { get set }
-	var ub: Tag { get set }
-	
-	var dr: Tag { get set }
-	var df: Tag { get set }
-	var dl: Tag { get set }
-	var db: Tag { get set }
-	
-	var fr: Tag { get set }
-	var fl: Tag { get set }
-	var bl: Tag { get set }
-	var br: Tag { get set }
-	
-	init(
-		ur: Tag,
-		uf: Tag,
-		ul: Tag,
-		ub: Tag,
-		
-		dr: Tag,
-		df: Tag,
-		dl: Tag,
-		db: Tag,
-		
-		fr: Tag,
-		fl: Tag,
-		bl: Tag,
-		br: Tag
-	)
 }
 
 extension TaggedEdges {
@@ -221,6 +168,59 @@ extension TaggedEdges {
 			case .bl: bl = newValue
 			case .br: br = newValue
 			}
+		}
+	}
+}
+
+extension Collection where Self: TaggedPieces, Index == Int {
+	var startIndex: Int { 0 }
+	
+	func index(after i: Int) -> Int {
+		i + 1
+	}
+}
+
+extension Collection where Self: TaggedCorners, Index == Int {
+	var endIndex: Int { 8 }
+	
+	subscript(position: Int) -> Tag {
+		switch position { // gotta go fast
+		case 00: return urf
+		case 01: return ufl
+		case 02: return ulb
+		case 03: return ubr
+			
+		case 04: return dfr
+		case 05: return dlf
+		case 06: return dbl
+		case 07: return drb
+			
+		default: fatalError()
+		}
+	}
+}
+
+extension Collection where Self: TaggedEdges, Index == Int {
+	var endIndex: Int { 12 }
+	
+	subscript(position: Int) -> Tag {
+		switch position { // gotta go fast
+		case 00: return ur
+		case 01: return uf
+		case 02: return ul
+		case 03: return ub
+			
+		case 04: return dr
+		case 05: return df
+		case 06: return dl
+		case 07: return db
+			
+		case 08: return fr
+		case 09: return fl
+		case 10: return bl
+		case 11: return br
+			
+		default: fatalError()
 		}
 	}
 }
