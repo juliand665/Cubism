@@ -1,31 +1,35 @@
-typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<FaceTurnEntry<Coord>>
-typealias StandardSymmetryTable<Coord: Coordinate> = MoveTable<StandardSymmetryEntry<Coord>>
+typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<Coord, FaceTurnEntry<Coord>>
+typealias StandardSymmetryTable<Coord: Coordinate> = MoveTable<Coord, StandardSymmetryEntry<Coord>>
 
-struct MoveTable<Entry: MoveTableEntry> {
+struct MoveTable<Coord: Coordinate, Entry> {
 	var entries: [Entry]
 	
-	subscript(coord: Entry.Coord) -> Entry {
+	subscript(coord: Coord) -> Entry {
 		entries[coord.intValue]
 	}
 	
-	init() {
+	init(computeEntry: (Coord) -> Entry) {
 		entries = measureTime(
-			as: "setup of move table for \(Entry.Coord.self) with \(Entry.Coord.count) \(Entry.self) entries of size \(MemoryLayout<Entry>.size)"
+			as: "setup of move table for \(Coord.self) with \(Coord.count) \(Entry.self) entries of size \(MemoryLayout<Entry>.size)"
 		) {
-			(0..<Entry.Coord.count).map {
-				Entry(state: Entry.Coord($0).makeState())
-			}
+			Coord.allValues.map(computeEntry)
 		}
+	}
+	
+	init(for coord: Coord.Type, computeEntry: (Coord.CubeState) -> Entry) {
+		self.init { computeEntry($0.makeState()) }
+	}
+	
+	init() where Entry == FaceTurnEntry<Coord> {
+		self.init { Entry(state: $0.makeState()) }
+	}
+	
+	init() where Entry == StandardSymmetryEntry<Coord> {
+		self.init { Entry(state: $0.makeState()) }
 	}
 }
 
-protocol MoveTableEntry {
-	associatedtype Coord: Coordinate
-	
-	init(state: Coord.CubeState)
-}
-
-struct FaceTurnEntry<Coord: Coordinate>: MoveTableEntry {
+struct FaceTurnEntry<Coord: Coordinate> {
 	var up: FaceMoves
 	var down: FaceMoves
 	var right: FaceMoves
@@ -92,9 +96,11 @@ struct FaceTurnEntry<Coord: Coordinate>: MoveTableEntry {
 	}
 }
 
-struct StandardSymmetryEntry<Coord: Coordinate>: MoveTableEntry {
+struct StandardSymmetryEntry<Coord: Coordinate> {
 	var moves: [Coord]
-	
+}
+
+extension StandardSymmetryEntry {
 	init(state: Coord.CubeState) {
 		moves = Symmetry.standardSubgroup.map { .init($0.shift(state)) }
 	}
