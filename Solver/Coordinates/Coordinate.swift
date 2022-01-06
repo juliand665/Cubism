@@ -12,9 +12,6 @@ protocol Coordinate: Hashable, Comparable {
 	
 	var intValue: Int { get }
 	init<I: BinaryInteger>(_ value: I)
-	
-	static var zero: Self { get }
-	var isZero: Bool { get }
 }
 
 extension Coordinate {
@@ -44,9 +41,6 @@ extension SimpleCoordinate {
 		assert(value < Self.count)
 		self.init(value: .init(value))
 	}
-	
-	static var zero: Self { .init(value: 0) }
-	var isZero: Bool { value == 0 }
 	
 	static func < (lhs: Self, rhs: Self) -> Bool {
 		lhs.value < rhs.value
@@ -78,11 +72,6 @@ extension ComposedCoordinate {
 	init<I: BinaryInteger>(_ value: I) {
 		let (outer, inner) = value.quotientAndRemainder(dividingBy: .init(InnerCoord.count))
 		self.init(.init(outer), .init(inner))
-	}
-	
-	static var zero: Self { .init(.zero, .zero) }
-	var isZero: Bool {
-		outerCoord.isZero && innerCoord.isZero
 	}
 }
 

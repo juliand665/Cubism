@@ -36,7 +36,7 @@ extension FlipUDSliceCoordinate {
 	
 	private static func computeSymmetryTable() -> StandardSymmetryTable<Self> {
 		/**
-		 # we can compute the symmetry table much faster with some clever math to avoid computing stuff multiple times
+		 - **we can compute the symmetry table much faster with some clever math to avoid computing stuff multiple times**
 		 
 		 we want to calculate `(symmetry.forward + flipUDSlice + symmetry.backward).edges.orientation`
 		 (for readability, we'll shorten `edges.orientation` to `eo` and `edges.permutation` to `ep`, as well as taking some formal liberties)
@@ -71,7 +71,7 @@ extension FlipUDSliceCoordinate {
 			let flipParts = zip(udSlicePart[coord.udSlice], flipPart[coord.flip])
 			return StandardSymmetryEntry(
 				moves: zip(coord.udSlice.standardSymmetries, flipParts)
-					.map { Self($0, $1.0 + $1.1) } // could use pointfree notation but this outperforms that by ~20%
+					.map { Self($0, $1.0 + $1.1) } // could use pointfree notation but this outperforms that by ~10%
 			)
 		}/* <- { fast in
 			let slow = StandardSymmetryTable<Self>()
