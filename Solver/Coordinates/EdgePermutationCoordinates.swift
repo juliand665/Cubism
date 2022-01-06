@@ -1,6 +1,6 @@
 /// For phase 2. Describes how the 4 UD slice edges are permuted, assuming they're within their slice.
-struct SliceEdgePermutationCoordinate: Coordinate {
-	static let count: UInt8 = 24 // 4!
+struct SliceEdgePermutationCoordinate: SimpleCoordinate {
+	static let count = 24 // 4!
 	
 	var value: UInt8
 }
@@ -16,8 +16,8 @@ extension SliceEdgePermutationCoordinate {
 }
 
 /// For phase 2. Describes how the 8 non-UD slice edges are permuted, assuming they're outside the slice.
-struct NonSliceEdgePermutationCoordinate: Coordinate {
-	static let count: UInt16 = 40_320 // 8!
+struct NonSliceEdgePermutationCoordinate: SimpleCoordinate {
+	static let count = 40_320 // 8!
 	
 	var value: UInt16
 }

@@ -2,29 +2,25 @@ import HandyOperators
 
 // these coordinates compose two underlying coords into one
 
-// TODO: maybe just store the separate coordinates (perhaps not even numerically) and multiply only when needed? for phase 1 i'm pretty sure this takes no more space. should shadow allValues though
-
 /// Combines the UD slice coordinate with the edge orientation (flip).
-struct FlipUDSliceCoordinate: CoordinateWithSymmetryTable {
-	static let count = UInt32(UDSliceCoordinate.count) * UInt32(EdgeOrientationCoordinate.count)
-	
+struct FlipUDSliceCoordinate: ComposedCoordinate, CoordinateWithSymmetryTable {
 	static let standardSymmetryTable = computeSymmetryTable()
 	
-	var value: UInt32
+	var flip: EdgeOrientationCoordinate
+	var udSlice: UDSliceCoordinate
+	
+	var outerCoord: UDSliceCoordinate { udSlice }
+	var innerCoord: EdgeOrientationCoordinate { flip }
 }
 
 extension FlipUDSliceCoordinate {
-	var components: (udSlice: UDSliceCoordinate, orientation: EdgeOrientationCoordinate) {
-		let (udSlice, orientation) = value.quotientAndRemainder(dividingBy: .init(EdgeOrientationCoordinate.count))
-		return (.init(udSlice), .init(orientation))
-	}
-	
 	init(_ permutation: EdgePermutation, _ orientation: EdgeOrientation) {
 		self.init(permutation.udSliceCoordinate(), orientation.coordinate())
 	}
 	
-	init(_ udSlice: UDSliceCoordinate, _ orientation: EdgeOrientationCoordinate) {
-		value = .init(udSlice.value) * .init(EdgeOrientationCoordinate.count) + .init(orientation.value)
+	init(_ udSlice: UDSliceCoordinate, _ flip: EdgeOrientationCoordinate) {
+		self.udSlice = udSlice
+		self.flip = flip
 	}
 	
 	init(_ state: CubeTransformation.Edges) {
@@ -32,10 +28,9 @@ extension FlipUDSliceCoordinate {
 	}
 	
 	func makeState() -> CubeTransformation.Edges {
-		let (udSlice, orientation) = components
 		return .init(
 			permutation: udSlice.makeState(),
-			orientation: orientation.makeState()
+			orientation: flip.makeState()
 		)
 	}
 	
@@ -73,10 +68,9 @@ extension FlipUDSliceCoordinate {
 		// note that the move table lets us reference arrays of the symmetries for ease of use
 		// i profiled it and it looks like it's all just allocations and such, so that would probably be a whole lot better
 		return .init { coord in
-			let (udSlice, flip) = coord.components
-			let flipParts = zip(udSlicePart[udSlice], flipPart[flip])
+			let flipParts = zip(udSlicePart[coord.udSlice], flipPart[coord.flip])
 			return StandardSymmetryEntry(
-				moves: zip(udSlice.standardSymmetries, flipParts)
+				moves: zip(coord.udSlice.standardSymmetries, flipParts)
 					.map { Self($0, $1.0 + $1.1) } // could use pointfree notation but this outperforms that by ~20%
 			)
 		}/* <- { fast in
@@ -94,27 +88,24 @@ extension EdgeOrientationCoordinate {
 	}
 }
 
-struct Phase1Coordinate: CoordinateWithMoves {
-	static let count = UInt32(CornerOrientationCoordinate.count) * UInt32(ReducedFlipUDSliceCoordinate.count)
+struct Phase1Coordinate: ComposedCoordinate, CoordinateWithMoves {
+	var corners: CornerOrientationCoordinate
+	var reduced: ReducedFlipUDSliceCoordinate
 	
-	var value: UInt32
+	var outerCoord: ReducedFlipUDSliceCoordinate { reduced }
+	var innerCoord: CornerOrientationCoordinate { corners }
 	
 	static func + (coord: Self, _ move: SolverMove) -> Self {
-		let (reduced, corners) = coord.components
 		//let newReduced = reduced + move
 		//let oldSym = ReducedFlipUDSliceCoordinate.Space.symmetryToRepresentant[]
-		return .init(reduced + move, corners + move)
+		return .init(coord.reduced + move, coord.corners + move)
 	}
 }
 
 extension Phase1Coordinate {
-	var components: (reduced: ReducedFlipUDSliceCoordinate, corners: CornerOrientationCoordinate) {
-		let (reduced, corners) = value.quotientAndRemainder(dividingBy: .init(CornerOrientationCoordinate.count))
-		return (.init(reduced), .init(corners))
-	}
-	
 	init(_ reduced: ReducedFlipUDSliceCoordinate, _ corners: CornerOrientationCoordinate) {
-		value = .init(reduced.value) * .init(CornerOrientationCoordinate.count) + .init(corners.value)
+		self.reduced = reduced
+		self.corners = corners
 	}
 	
 	init(_ state: CubeTransformation) {
@@ -122,8 +113,6 @@ extension Phase1Coordinate {
 	}
 	
 	func makeState() -> CubeTransformation {
-		let (reduced, corners) = components
-		
 		return .init(
 			corners: .init(orientation: corners.makeState()),
 			edges: reduced.makeState()

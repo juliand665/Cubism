@@ -1,10 +1,10 @@
 import HandyOperators
 
 /// Describes where the 4 edges belonging in the UD slice are currently, ignoring order.
-struct UDSliceCoordinate: CoordinateWithSymmetryTable {
+struct UDSliceCoordinate: SimpleCoordinate, CoordinateWithSymmetryTable {
 	typealias CubeState = EdgePermutation
 	
-	static let count: UInt16 = 495 // nCr(12, 8)
+	static let count = 495 // nCr(12, 8)
 	
 	static let standardSymmetryTable = StandardSymmetryTable<Self>()
 	

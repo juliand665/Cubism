@@ -123,9 +123,9 @@ func timeStuff() {
 // MARK: -
 
 func testCoordCalculations() {
-	func test<Coord: Coordinate>(_ coord: Coord.Type) {
+	func test<Coord: SimpleCoordinate>(_ coord: Coord.Type) {
 		print("Testing \(Coord.self)…")
-		for rawCoord in 0..<Coord.count {
+		for rawCoord in 0..<Coord.countAsValue {
 			// print progress when these bits are zero:
 			let bitsToCheck = Coord.Value((1 << 16) - 1)
 			if rawCoord & bitsToCheck == 0 {

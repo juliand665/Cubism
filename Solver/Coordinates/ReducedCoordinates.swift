@@ -1,10 +1,10 @@
 // these coordinates take a base coord and reduce it into (less) equivalence classes through symmetries
 
 /// Same as `FlipUDSliceCoordinate`, except that it's been reduced using symmetries.
-struct ReducedFlipUDSliceCoordinate: CoordinateWithMoveTable {
+struct ReducedFlipUDSliceCoordinate: SimpleCoordinate, CoordinateWithMoveTable {
 	typealias BaseCoord = FlipUDSliceCoordinate
 	
-	static let count = UInt16(representants.count)
+	static let count = representants.count
 	static let moveTable = FaceTurnMoveTable<Self>()
 	
 	// need to track symmetry index alongside equivalence class index, probably best to separate out notion of sym-coord from raw-coord
