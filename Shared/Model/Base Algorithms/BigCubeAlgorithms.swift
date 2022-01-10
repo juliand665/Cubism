@@ -5,12 +5,12 @@ extension AlgorithmFolder {
 		name: "Big Cubes",
 		description: "Algorithms for dealing with big cubes (4x4 and up), especially parity.",
 		sections: [
-			.init(name: "even-numbered", algorithms: [
+			.init(name: "4x4x4", algorithms: [
 				.edgeHalfSwap,
 				.ollParity,
 				.pllParity,
 			]),
-			.init(name: "odd-numbered", algorithms: [
+			.init(name: "5x5x5", algorithms: [
 				.edgeMiddleFlip,
 				.edgeEndSwap,
 			]),
@@ -32,7 +32,7 @@ extension Algorithm {
 		name: "OLL Parity",
 		description: "Flips UF edge."
 	) {
-		"Rww BB UU Lw UU Rwi UU Rw UU FF Rw FF Lwi BB Rw"
+		"Rww BB UU Lw UU Rwi UU Rw UU FF Rw FF Lwi BB Rww"
 	}
 	
 	static let pllParity = builtIn(
