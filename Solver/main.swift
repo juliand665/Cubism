@@ -25,6 +25,53 @@ let tripleSexy = sexyMove + sexyMove + sexyMove
 let tPerm = sexyMove + ri + f + rr + ui + ri + ui + r + u + ri + fi
 let cubeInACube = f + l + f + ui + r + u + ff + ll + ui + li + b + di + bi + ll + u
 
+func runTests(on start: CubeTransformation) {
+	_ = ReducedFlipUDSliceCoordinate.moveTable
+	print(start.edges)
+	let startCoord = ReducedFlipUDSliceCoordinate(start.edges)
+	print(startCoord, startCoord.symmetry.inverse)
+	print(startCoord.makeState())
+	print(FlipUDSliceCoordinate(start.edges))
+	let representant = ReducedFlipUDSliceCoordinate.representants[Int(startCoord.index)]
+	print(representant)
+	
+	print()
+	//print(FlipUDSliceCoordinate(start.edges))
+	//print(FlipUDSliceCoordinate(startCoord.makeState()))
+	//print(startCoord.makeState())
+	//print(start.edges)
+	let move = SolverMove.resolving(face: .right, direction: .clockwise)
+	let shiftedMove = startCoord.symmetry.shift(move)
+	print("shifted:", shiftedMove)
+	let fromTable = ReducedFlipUDSliceCoordinate.moveTable[startCoord][shiftedMove]
+	print("from table:", fromTable)
+	print(startCoord.symmetry + fromTable.symmetry, fromTable.symmetry + startCoord.symmetry)
+	let endCoord = startCoord + move
+	
+	let end = start + move.transform
+	let groundTruth = ReducedFlipUDSliceCoordinate(end.edges)
+	print("are equal: ", endCoord == groundTruth)
+	print("computed:  ", endCoord)
+	print("gt:        ", groundTruth)
+	let fromCoord = FlipUDSliceCoordinate(startCoord.makeState() + move.transform)
+	print("from coord:", fromCoord)
+	print("reduced:   ", ReducedFlipUDSliceCoordinate(fromCoord))
+	print("representant:", ReducedFlipUDSliceCoordinate.representants[Int(endCoord.index)])
+	print("recreated:   ", FlipUDSliceCoordinate(endCoord.makeState()))
+	print("raw gt:      ", FlipUDSliceCoordinate(end.edges))
+	print()
+	print()
+}
+/*
+runTests(on: CubeTransformation.zero)
+print("ri")
+runTests(on: ri)
+print("fi")
+runTests(on: fi)
+print("sexy")
+runTests(on: sexyMove)
+*/
+
 /*
 let f2 = CubeTransformation.symmetryF2
 let lr = CubeTransformation.symmetryLR2

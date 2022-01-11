@@ -48,8 +48,8 @@ extension SimpleCoordinate {
 }
 
 protocol ComposedCoordinate {
-	associatedtype OuterCoord: SimpleCoordinate
-	associatedtype InnerCoord: SimpleCoordinate
+	associatedtype OuterCoord: Coordinate
+	associatedtype InnerCoord: Coordinate
 	
 	var outerCoord: OuterCoord { get }
 	var innerCoord: InnerCoord { get }

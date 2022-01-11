@@ -96,9 +96,10 @@ struct Phase1Coordinate: ComposedCoordinate, CoordinateWithMoves {
 	var innerCoord: CornerOrientationCoordinate { corners }
 	
 	static func + (coord: Self, _ move: SolverMove) -> Self {
-		//let newReduced = reduced + move
-		//let oldSym = ReducedFlipUDSliceCoordinate.Space.symmetryToRepresentant[]
-		return .init(coord.reduced + move, coord.corners + move)
+		// FIXME: pretty sure this isn't quite right yet…
+		let reduced = coord.reduced + move
+		let corners = (coord.corners + move).standardSymmetries[reduced.symmetry.index]
+		return .init(reduced, corners)
 	}
 }
 

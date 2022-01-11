@@ -1,17 +1,29 @@
+import HandyOperators
+
 // these coordinates take a base coord and reduce it into (less) equivalence classes through symmetries
 
 /// Same as `FlipUDSliceCoordinate`, except that it's been reduced using symmetries.
-struct ReducedFlipUDSliceCoordinate: SimpleCoordinate, CoordinateWithMoveTable {
+struct ReducedFlipUDSliceCoordinate: Coordinate, CoordinateWithMoveTable {
 	typealias BaseCoord = FlipUDSliceCoordinate
 	
 	static let count = representants.count
 	static let moveTable = FaceTurnMoveTable<Self>()
 	
-	// need to track symmetry index alongside equivalence class index, probably best to separate out notion of sym-coord from raw-coord
-	
 	static let (representants, symmetryToRepresentant) = computeRepresentants()
 	
-	var value: UInt16
+	var index: UInt16
+	var symmetry: StandardSymmetry
+	
+	static func < (lhs: Self, rhs: Self) -> Bool {
+		(lhs.index, lhs.symmetry.storedIndex) < (rhs.index, rhs.symmetry.storedIndex)
+	}
+	
+	static func + (coord: Self, _ move: SolverMove) -> Self {
+		moveTable[coord][coord.symmetry.shift(move)] <- {
+			// TODO: make sure this is correct by comparing to unreduced versions
+			$0.symmetry = coord.symmetry + $0.symmetry
+		}
+	}
 	
 	private static func computeRepresentants() -> ([BaseCoord], [StandardSymmetry]) {
 		measureTime(as: "computeRepresentants") {
@@ -36,19 +48,30 @@ struct ReducedFlipUDSliceCoordinate: SimpleCoordinate, CoordinateWithMoveTable {
 }
 
 extension ReducedFlipUDSliceCoordinate {
+	init(index: Int, symmetryIndex: Int) {
+		self.init(index: .init(index), symmetry: .init(index: symmetryIndex))
+	}
+	
+	init<I>(_ value: I) where I : BinaryInteger {
+		self.init(index: .init(value), symmetry: StandardSymmetry.zero)
+	}
+	
+	var intValue: Int {
+		Int(index)
+	}
+	
+	init(_ baseCoord: BaseCoord) {
+		let (symIndex, baseCoord) = baseCoord.standardSymmetries.indexed().min { $0.element < $1.element }!
+		self.init(index: Self.representants.binarySearch(for: baseCoord)!, symmetryIndex: symIndex)
+	}
+	
 	init(_ state: CubeTransformation.Edges) {
-		//let udSlice = state.edgePermutation.udSliceCoordinate()
-		//let orientation = state.edgeOrientation.coordinate()
-		// apply all symmetries and find minimum coordinate
-		//let representant = zip(udSlice.standardSymmetries, orientation.standardSymmetries)
-		//	.min { $0.0 < $1.0 || $0.0 == $1.0 && $0.1 < $1.1 }! // tuples aren't comparable yet zzz
-		//let baseCoord = BaseCoord(representant.0, representant.1)
-		let coord = FlipUDSliceCoordinate(state)
-		let baseCoord = coord.standardSymmetries.min()!
-		self.init(Self.representants.binarySearch(for: baseCoord)!)
+		self.init(BaseCoord(state))
 	}
 	
 	func makeState() -> CubeTransformation.Edges {
-		Self.representants[intValue].makeState()
+		Self.representants[intValue]
+			.standardSymmetries[symmetry.inverse.index]
+			.makeState()
 	}
 }
