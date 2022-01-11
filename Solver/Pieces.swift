@@ -63,24 +63,53 @@ extension PartialEdgeState {
 	}
 }
 
-struct SolverMove {
-	static let all = Face.allCases.flatMap { face -> [Self] in
-		let transform = CubeTransformation.transform(for: face)
-		let variants = sequence(first: transform) { $0 + transform }
-		return zip(Move.Direction.inCWOrder, variants).map { direction, transform in
-			Self(
-				face: face,
-				direction: direction,
-				transform: transform
-			)
-		}
+struct SolverMove: CustomStringConvertible {
+	static let all = Action.all.map { Self(action: $0, transform: transforms[$0]) }
+	static let transforms = SolverMoveMap<CubeTransformation> { (face: Face) in
+		let clockwise = CubeTransformation.transform(for: face)
+		let double = clockwise + clockwise
+		let counterclockwise = double + clockwise
+		return .init(
+			clockwise: clockwise,
+			double: double,
+			counterclockwise: counterclockwise
+		)
 	}
+	static let byTransform = Dictionary(
+		uniqueKeysWithValues: all.map { ($0.transform, $0) }
+	)
 	
-	var face: Face
-	var direction: Move.Direction
+	var action: Action
 	var transform: CubeTransformation
 	
-	var move: Move {
-		.init(target: .singleFace(face), direction: direction)
+	var description: String {
+		"SolverMove(\(action))"
+	}
+	
+	struct Action: Hashable, CustomStringConvertible {
+		static let all = Face.allCases.flatMap { face in
+			Move.Direction.allCases.map { Self(face: face, direction: $0) }
+		}
+		
+		var face: Face
+		var direction: Move.Direction
+		
+		var move: Move {
+			.init(target: .singleFace(face), direction: direction)
+		}
+		
+		var resolved: SolverMove {
+			.init(action: self, transform: SolverMove.transforms[self])
+		}
+		
+		var description: String {
+			StandardNotation.description(for: move)
+		}
+	}
+}
+
+extension SolverMove {
+	static func resolving(face: Face, direction: Move.Direction) -> Self {
+		Action(face: face, direction: direction).resolved
 	}
 }

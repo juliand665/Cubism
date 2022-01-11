@@ -1,4 +1,4 @@
-typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<Coord, FaceTurnEntry<Coord>>
+typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<Coord, SolverMoveMap<Coord>>
 typealias StandardSymmetryTable<Coord: Coordinate> = MoveTable<Coord, StandardSymmetryEntry<Coord>>
 
 struct MoveTable<Coord: Coordinate, Entry> {
@@ -20,7 +20,7 @@ struct MoveTable<Coord: Coordinate, Entry> {
 		self.init { computeEntry($0.makeState()) }
 	}
 	
-	init() where Entry == FaceTurnEntry<Coord> {
+	init() where Entry == SolverMoveMap<Coord> {
 		self.init { Entry(state: $0.makeState()) }
 	}
 	
@@ -29,7 +29,7 @@ struct MoveTable<Coord: Coordinate, Entry> {
 	}
 }
 
-struct FaceTurnEntry<Coord: Coordinate> {
+struct SolverMoveMap<Value> {
 	var up: FaceMoves
 	var down: FaceMoves
 	var right: FaceMoves
@@ -37,8 +37,12 @@ struct FaceTurnEntry<Coord: Coordinate> {
 	var front: FaceMoves
 	var back: FaceMoves
 	
-	subscript(move: SolverMove) -> Coord {
-		self[move.face][move.direction]
+	subscript(move: SolverMove) -> Value {
+		self[move.action]
+	}
+	
+	subscript(action: SolverMove.Action) -> Value {
+		self[action.face][action.direction]
 	}
 	
 	subscript(face: Face) -> FaceMoves {
@@ -58,21 +62,31 @@ struct FaceTurnEntry<Coord: Coordinate> {
 		}
 	}
 	
-	init(state: Coord.CubeState) {
-		up = .init(state: state, face: .up)
-		down = .init(state: state, face: .down)
-		right = .init(state: state, face: .right)
-		left = .init(state: state, face: .left)
-		front = .init(state: state, face: .front)
-		back = .init(state: state, face: .back)
+	init(computing mapForFace: (Face) -> FaceMoves) {
+		up = mapForFace(.up)
+		down = mapForFace(.down)
+		right = mapForFace(.right)
+		left = mapForFace(.left)
+		front = mapForFace(.front)
+		back = mapForFace(.back)
+	}
+	
+	init(computing valueForMove: (SolverMove.Action) -> Value) {
+		self.init { face in
+			FaceMoves { valueForMove(.init(face: face, direction: $0)) }
+		}
+	}
+	
+	init(state: Value.CubeState) where Value: Coordinate {
+		self.init { .init(state: state, face: $0) }
 	}
 	
 	struct FaceMoves {
-		var clockwise: Coord
-		var double: Coord
-		var counterclockwise: Coord
+		var clockwise: Value
+		var double: Value
+		var counterclockwise: Value
 		
-		subscript(direction: Move.Direction) -> Coord {
+		subscript(direction: Move.Direction) -> Value {
 			switch direction {
 			case .clockwise:
 				return clockwise
@@ -82,17 +96,25 @@ struct FaceTurnEntry<Coord: Coordinate> {
 				return counterclockwise
 			}
 		}
-		
-		init(state: Coord.CubeState, face: Face) {
-			let transform = CubeTransformation.transform(for: face)
-			var state = state
-			state += transform
-			clockwise = .init(state)
-			state += transform
-			double = .init(state)
-			state += transform
-			counterclockwise = .init(state)
-		}
+	}
+}
+
+extension SolverMoveMap.FaceMoves {
+	init(computing valueForDirection: (Move.Direction) -> Value) {
+		clockwise = valueForDirection(.clockwise)
+		double = valueForDirection(.double)
+		counterclockwise = valueForDirection(.counterclockwise)
+	}
+	
+	init(state: Value.CubeState, face: Face) where Value: Coordinate {
+		let transform = CubeTransformation.transform(for: face)
+		var state = state
+		state += transform
+		clockwise = .init(state)
+		state += transform
+		double = .init(state)
+		state += transform
+		counterclockwise = .init(state)
 	}
 }
 
