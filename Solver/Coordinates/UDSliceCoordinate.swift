@@ -25,7 +25,7 @@ extension EdgePermutation {
 	private static let canonicalOrder = Array(Self())
 	
 	init(_ coordinate: UDSliceCoordinate) {
-		var currentValue = UInt(UDSliceCoordinate.count)
+		var currentValue = UInt16(UDSliceCoordinate.count)
 		// avoid hard math by just trying all possible values until it works lol
 		// TODO: probably a good idea to make this faster, even if it seems plenty fast rn
 		for i1 in 3..<12 {

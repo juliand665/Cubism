@@ -200,7 +200,7 @@ struct PruningTable<Coord: CoordinateWithMoves> {
 	var distances: [UInt8]
 	
 	init() {
-		distances = .init(repeating: .max, count: Int(Coord.count))
+		distances = .init(repeating: .max, count: Coord.count)
 		
 		print("setting up pruning table")
 		distances[0] = 0
