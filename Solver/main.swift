@@ -279,7 +279,6 @@ for ((index, (udSlice, edgeOri)), symmetry) in zip(symmetries.enumerated(), Symm
 func setUpTables() {
 	_ = UDSliceCoordinate.standardSymmetryTable
 	_ = EdgeOrientationCoordinate.standardSymmetryTable
-	_ = FlipUDSliceCoordinate.standardSymmetryTable
 	let representants = ReducedFlipUDSliceCoordinate.representants
 	print(representants.count, "representants")
 	print()

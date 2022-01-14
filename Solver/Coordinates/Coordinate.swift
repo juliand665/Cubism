@@ -75,13 +75,17 @@ extension ComposedCoordinate {
 	}
 }
 
+protocol CoordinateWithSymmetries: Coordinate {
+	func shifted(with symmetry: StandardSymmetry) -> Self
+}
+
 protocol CoordinateWithSymmetryTable: Coordinate {
 	static var standardSymmetryTable: StandardSymmetryTable<Self> { get }
 }
 
 extension CoordinateWithSymmetryTable {
-	var standardSymmetries: [Self] {
-		Self.standardSymmetryTable[self].moves
+	func shifted(with symmetry: StandardSymmetry) -> Self {
+		Self.standardSymmetryTable[self].moves[symmetry.index]
 	}
 }
 

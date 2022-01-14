@@ -34,9 +34,8 @@ struct ReducedFlipUDSliceCoordinate: Coordinate, CoordinateWithMoveTable {
 				guard classIndices[coord.intValue] == .max else { continue }
 				
 				// TODO: is there a way to just use the composing coords and their symmetry tables for this? probably not because permutation affects orientation…
-				let symmetries = coord.standardSymmetries
-				for (index, symmetry) in symmetries.enumerated() {
-					classIndices[symmetry.intValue] = .init(representants.endIndex)
+				for symmetry in StandardSymmetry.all {
+					classIndices[coord.shifted(with: symmetry).intValue] = .init(representants.endIndex)
 				}
 				
 				representants.append(coord)
@@ -60,8 +59,12 @@ extension ReducedFlipUDSliceCoordinate {
 	}
 	
 	init(_ baseCoord: BaseCoord) {
-		let (symIndex, baseCoord) = baseCoord.standardSymmetries.indexed().min { $0.element < $1.element }!
-		self.init(index: Self.classIndices[baseCoord.intValue], symmetryIndex: symIndex)
+		let (symmetry, representant) = StandardSymmetry.all
+			.lazy
+			.map { ($0, coord: baseCoord.shifted(with: $0)) }
+			.min { $0.coord < $1.coord }!
+		let index = Self.classIndices[representant.intValue]
+		self.init(index: .init(index), symmetry: symmetry)
 	}
 	
 	init(_ state: CubeTransformation.Edges) {

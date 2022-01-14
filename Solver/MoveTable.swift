@@ -16,7 +16,7 @@ struct MoveTable<Coord: Coordinate, Entry> {
 		}
 	}
 	
-	init(for coord: Coord.Type, computeEntry: (Coord.CubeState) -> Entry) {
+	init(for coord: Coord.Type = Coord.self, computeEntry: (Coord.CubeState) -> Entry) {
 		self.init { computeEntry($0.makeState()) }
 	}
 	
@@ -120,10 +120,18 @@ extension SolverMoveMap.FaceMoves {
 
 struct StandardSymmetryEntry<Coord: Coordinate> {
 	var moves: [Coord]
+	
+	subscript(symmetry: StandardSymmetry) -> Coord {
+		moves[symmetry.index]
+	}
 }
 
 extension StandardSymmetryEntry {
 	init(state: Coord.CubeState) {
-		moves = Symmetry.standardSubgroup.map { .init($0.shift(state)) }
+		self.init { .init($0.shift(state)) }
+	}
+	
+	init(computing valueForSymmetry: (Symmetry) -> Coord) {
+		moves = Symmetry.standardSubgroup.map(valueForSymmetry)
 	}
 }
