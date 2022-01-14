@@ -9,7 +9,7 @@ struct ReducedFlipUDSliceCoordinate: Coordinate, CoordinateWithMoveTable {
 	static let count = representants.count
 	static let moveTable = FaceTurnMoveTable<Self>()
 	
-	static let (representants, symmetryToRepresentant) = computeRepresentants()
+	static let (representants, classIndices) = computeRepresentants()
 	
 	var index: UInt16
 	var symmetry: StandardSymmetry
@@ -25,24 +25,23 @@ struct ReducedFlipUDSliceCoordinate: Coordinate, CoordinateWithMoveTable {
 		}
 	}
 	
-	private static func computeRepresentants() -> ([BaseCoord], [StandardSymmetry]) {
+	private static func computeRepresentants() -> ([BaseCoord], [UInt16]) {
 		measureTime(as: "computeRepresentants") {
 			var representants: [BaseCoord] = []
-			let baseCount = Int(BaseCoord.count)
-			representants.reserveCapacity(baseCount / Symmetry.standardSubgroup.count)
-			var symmetryToRepresentant: [StandardSymmetry?] = .init(repeating: nil, count: baseCount)
+			representants.reserveCapacity(BaseCoord.count / Symmetry.standardSubgroup.count)
+			var classIndices: [UInt16] = .init(repeating: .max, count: BaseCoord.count)
 			for coord in BaseCoord.allValues {
-				guard symmetryToRepresentant[coord.intValue] == nil else { continue }
+				guard classIndices[coord.intValue] == .max else { continue }
 				
-				// TODO: is there a way to just use the coords and their symmetry tables for this? probably not because permutation affects orientation…
+				// TODO: is there a way to just use the composing coords and their symmetry tables for this? probably not because permutation affects orientation…
 				let symmetries = coord.standardSymmetries
 				for (index, symmetry) in symmetries.enumerated() {
-					symmetryToRepresentant[symmetry.intValue] = .init(index: index)
+					classIndices[symmetry.intValue] = .init(representants.endIndex)
 				}
 				
 				representants.append(coord)
 			}
-			return (representants, symmetryToRepresentant.map { $0! })
+			return (representants, classIndices)
 		}
 	}
 }
@@ -62,7 +61,7 @@ extension ReducedFlipUDSliceCoordinate {
 	
 	init(_ baseCoord: BaseCoord) {
 		let (symIndex, baseCoord) = baseCoord.standardSymmetries.indexed().min { $0.element < $1.element }!
-		self.init(index: Self.representants.binarySearch(for: baseCoord)!, symmetryIndex: symIndex)
+		self.init(index: Self.classIndices[baseCoord.intValue], symmetryIndex: symIndex)
 	}
 	
 	init(_ state: CubeTransformation.Edges) {
@@ -71,7 +70,7 @@ extension ReducedFlipUDSliceCoordinate {
 	
 	func makeState() -> CubeTransformation.Edges {
 		Self.representants[intValue]
-			.standardSymmetries[symmetry.inverse.index]
+			.shifted(with: symmetry.inverse)
 			.makeState()
 	}
 }
