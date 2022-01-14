@@ -224,3 +224,28 @@ struct EdgeOrientation: Hashable, PieceOrientation, TaggedEdges {
 		transform.orientation + state
 	}
 }
+
+
+extension EdgeOrientation {
+	init(_ coordinate: Coord) {
+		// unfortunately the optimizer isn't quite able to inline all this from the general code above, so writing it out manually is faster. still, not that bad tbh
+		func orientation(at offset: Int) -> SingleEdgeOrientation {
+			coordinate.value & 1 << offset == 0 ? .neutral : .flipped
+		}
+		
+		self.init(
+			ur: orientation(at: 10),
+			uf: orientation(at: 9),
+			ul: orientation(at: 8),
+			ub: orientation(at: 7),
+			dr: orientation(at: 6),
+			df: orientation(at: 5),
+			dl: orientation(at: 4),
+			db: orientation(at: 3),
+			fr: orientation(at: 2),
+			fl: orientation(at: 1),
+			bl: orientation(at: 0),
+			br: coordinate.value.nonzeroBitCount % 2 == 0 ? .neutral : .flipped
+		)
+	}
+}
