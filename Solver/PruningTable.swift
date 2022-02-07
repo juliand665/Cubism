@@ -7,12 +7,26 @@ struct PruningTable<Coord: PruningCoordinate> {
 	var distances: [UInt8]
 	
 	init() {
-		// make sure underlying move/symmetry tables are initialized
-		print("initializing underlying tables")
-		_ = Coord(0) + SolverMove.all.first!
+		let filename = "\(Self.self).dat"
+		let url = tablesFolder.appendingPathComponent(filename)
+		try! FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
 		
-		print("setting up pruning table")
-		self.distances = Initializer.run()
+		print("initializing \(Self.self)")
+		
+		if FileManager.default.fileExists(atPath: url.path) {
+			self.distances = .init(try! Data(contentsOf: url))
+			precondition(distances.count == Coord.count)
+			print("loaded from \(url.path)!")
+		} else {
+			// make sure underlying move/symmetry tables are initialized
+			print("initializing underlying tables")
+			_ = Coord(0) + SolverMove.all.first!
+			
+			print("setting up pruning table")
+			self.distances = Initializer.run()
+			try! Data(distances).write(to: url)
+			print("saved to \(url.path)!")
+		}
 	}
 	
 	private final class Initializer {
@@ -97,3 +111,11 @@ struct PruningTable<Coord: PruningCoordinate> {
 		}
 	}
 }
+
+private let tablesFolder = try! FileManager.default.url(
+	for: .applicationSupportDirectory,
+	in: .userDomainMask,
+	appropriateFor: nil,
+	create: true
+)
+.appendingPathComponent("Tables", isDirectory: true)
