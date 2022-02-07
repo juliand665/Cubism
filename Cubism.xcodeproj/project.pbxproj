@@ -126,7 +126,6 @@
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Helpers.swift"; sourceTree = "<group>"; };
-		B9D5CEF3277A838900A6DBE0 /* SimpleParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SimpleParser; path = "../ Packages/SimpleParser"; sourceTree = "<group>"; };
 		B9D5CEF4277A857800A6DBE0 /* BigCubeAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCubeAlgorithms.swift; sourceTree = "<group>"; };
 		B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfigurationDiagram.swift; sourceTree = "<group>"; };
 		B9DE914026F292F200DE0E29 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -228,7 +227,6 @@
 		B96E9BE626E2755200A46A3B = {
 			isa = PBXGroup;
 			children = (
-				B9D5CEF3277A838900A6DBE0 /* SimpleParser */,
 				B96E9BEB26E2755300A46A3B /* Shared */,
 				B96C708F27088496001DAEF8 /* Solver */,
 				B96E9BF426E2755600A46A3B /* Products */,
