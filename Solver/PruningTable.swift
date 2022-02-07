@@ -1,7 +1,15 @@
 import Foundation
 
 protocol PruningCoordinate: ComposedCoordinate, CoordinateWithMoves
-where OuterCoord: ReducedCoordinate, InnerCoord: CoordinateWithSymmetries {}
+where OuterCoord: ReducedCoordinate, InnerCoord: CoordinateWithSymmetries {
+	static var pruningTable: PruningTable<Self> { get }
+}
+
+extension PruningCoordinate {
+	var pruningValue: UInt8 {
+		Self.pruningTable.distances[intValue]
+	}
+}
 
 struct PruningTable<Coord: PruningCoordinate> {
 	var distances: [UInt8]

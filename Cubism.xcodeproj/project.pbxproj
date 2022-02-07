@@ -94,6 +94,7 @@
 		B9AEB7FC27B17CDF0090A203 /* ComposedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93F8C0C2783A4F300909080 /* ComposedCoordinates.swift */; };
 		B9AEB7FD27B17CDF0090A203 /* Pieces.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709B2708C46A001DAEF8 /* Pieces.swift */; };
 		B9AEB7FE27B17CDF0090A203 /* PiecePermutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C70A12708C524001DAEF8 /* PiecePermutation.swift */; };
+		B9AEB80227B1BD990090A203 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AEB80127B1BD990090A203 /* Solver.swift */; };
 		B9CF259326E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
 		B9CF259426E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
 		B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */; };
@@ -162,6 +163,7 @@
 		B9AEB7D927B17C950090A203 /* PruningTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PruningTable.swift; sourceTree = "<group>"; };
 		B9AEB7FF27B1B7500090A203 /* Solver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solver.entitlements; sourceTree = "<group>"; };
 		B9AEB80027B1B7C70090A203 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9AEB80127B1BD990090A203 /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
 		B9CF259226E2DF6C00E14E94 /* TimerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerResult.swift; sourceTree = "<group>"; };
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
@@ -240,7 +242,6 @@
 		B96C708F27088496001DAEF8 /* Solver */ = {
 			isa = PBXGroup;
 			children = (
-				B9AEB7FF27B1B7500090A203 /* Solver.entitlements */,
 				B96C709027088496001DAEF8 /* main.swift */,
 				B9EC07F32713CF2500CAC7BE /* Swift+Helpers.swift */,
 				B93F8C0A2783A42700909080 /* Timing.swift */,
@@ -251,11 +252,13 @@
 				B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */,
 				B9EC07F62715022B00CAC7BE /* MoveTable.swift */,
 				B9AEB7D927B17C950090A203 /* PruningTable.swift */,
+				B9AEB80127B1BD990090A203 /* Solver.swift */,
 				B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */,
 				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
 				B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */,
 				B93F8C122783A68300909080 /* Coordinates */,
 				B9AEB80027B1B7C70090A203 /* Info.plist */,
+				B9AEB7FF27B1B7500090A203 /* Solver.entitlements */,
 			);
 			path = Solver;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				B96C70A927090F6C001DAEF8 /* PiecePermutation.swift in Sources */,
 				B93F8C092783A39500909080 /* DirectCoordinates.swift in Sources */,
 				B9F3C920270CE9E7002FBEBD /* Coordinate.swift in Sources */,
+				B9AEB80227B1BD990090A203 /* Solver.swift in Sources */,
 				B93F8C0B2783A42700909080 /* Timing.swift in Sources */,
 				B93F8C142783AA8800909080 /* UDSliceCoordinate.swift in Sources */,
 			);

@@ -233,8 +233,17 @@ func setUpTables() {
 	print(ReducedFlipUDSliceCoordinate.count, "representants")
 	print()
 	_ = ReducedFlipUDSliceCoordinate.moveTable
-	
-	let table = PruningTable<Phase1Coordinate>()
-	_ = table
+	_ = Phase1Coordinate.pruningTable
 }
-setUpTables()
+//setUpTables()
+
+measureTime {
+	let shortScramble = f + r + uu + ri + f
+	let moves = PhaseSolver.solvePhase1(from: shortScramble)
+	print("solution found!", moves)
+}
+measureTime {
+	let scramble = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
+	let moves = PhaseSolver.solvePhase1(from: scramble)
+	print("solution found!", moves)
+}

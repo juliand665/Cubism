@@ -77,6 +77,8 @@ extension EdgeOrientationCoordinate {
 }
 
 struct Phase1Coordinate: PruningCoordinate {
+	static let pruningTable = PruningTable<Self>()
+	
 	var reduced: ReducedFlipUDSliceCoordinate
 	var corners: CornerOrientationCoordinate
 	
