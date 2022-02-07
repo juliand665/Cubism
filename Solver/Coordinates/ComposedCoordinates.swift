@@ -34,7 +34,7 @@ extension FlipUDSliceCoordinate {
 }
 
 /**
- - **we can compute the symmetry table much faster with some clever math to avoid computing stuff multiple times**
+ - **we can compute the symmetries much faster with some clever math to avoid computing stuff multiple times**
  
  we want to calculate `(symmetry.forward + flipUDSlice + symmetry.backward).edges.orientation`
  (for readability, we'll shorten `edges.orientation` to `eo` and `edges.permutation` to `ep`, as well as taking some formal liberties)
@@ -76,17 +76,18 @@ extension EdgeOrientationCoordinate {
 	}
 }
 
-struct Phase1Coordinate: ComposedCoordinate, CoordinateWithMoves {
-	var corners: CornerOrientationCoordinate
+struct Phase1Coordinate: PruningCoordinate {
 	var reduced: ReducedFlipUDSliceCoordinate
+	var corners: CornerOrientationCoordinate
 	
 	var outerCoord: ReducedFlipUDSliceCoordinate { reduced }
 	var innerCoord: CornerOrientationCoordinate { corners }
 	
 	static func + (coord: Self, _ move: SolverMove) -> Self {
 		// FIXME: pretty sure this isn't quite right yet…
+		let shiftedMove = coord.reduced.symmetry.shift(move)
 		let reduced = coord.reduced + move
-		let corners = (coord.corners + move).shifted(with: reduced.symmetry)
+		let corners = (coord.corners + shiftedMove).shifted(with: reduced.symmetry)
 		return .init(reduced, corners)
 	}
 }
@@ -98,12 +99,13 @@ extension Phase1Coordinate {
 	}
 	
 	init(_ state: CubeTransformation) {
-		self.init(.init(state.edges), .init(state.corners.orientation))
+		let reduced = ReducedFlipUDSliceCoordinate(state.edges)
+		self.init(reduced, .init(state.corners.orientation).shifted(with: reduced.symmetry))
 	}
 	
 	func makeState() -> CubeTransformation {
 		return .init(
-			corners: .init(orientation: corners.makeState()),
+			corners: .init(orientation: corners.shifted(with: reduced.symmetry).makeState()),
 			edges: reduced.makeState()
 		)
 	}

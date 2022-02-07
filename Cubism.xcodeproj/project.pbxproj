@@ -122,6 +122,7 @@
 		B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfiguration.swift; sourceTree = "<group>"; };
 		B9A2962E26E43495005C59D1 /* Notation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notation.swift; sourceTree = "<group>"; };
 		B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAlgorithms.swift; sourceTree = "<group>"; };
+		B9AEB7D927B17C950090A203 /* PruningTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PruningTable.swift; sourceTree = "<group>"; };
 		B9CF259226E2DF6C00E14E94 /* TimerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerResult.swift; sourceTree = "<group>"; };
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
@@ -209,6 +210,7 @@
 				B96C709F2708C4D9001DAEF8 /* PieceOrientation.swift */,
 				B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */,
 				B9EC07F62715022B00CAC7BE /* MoveTable.swift */,
+				B9AEB7D927B17C950090A203 /* PruningTable.swift */,
 				B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */,
 				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
 				B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */,
@@ -456,6 +458,7 @@
 				B96C7099270885BA001DAEF8 /* CubeConfiguration.swift in Sources */,
 				B96C709A270885CC001DAEF8 /* Notation.swift in Sources */,
 				B96C70A827090EE3001DAEF8 /* PieceOrientation.swift in Sources */,
+				B9AEB7DA27B17C950090A203 /* PruningTable.swift in Sources */,
 				B96C70AA270910D7001DAEF8 /* CubeTransformation.swift in Sources */,
 				B96C709127088496001DAEF8 /* main.swift in Sources */,
 				B93F8C182783B81200909080 /* Symmetry.swift in Sources */,

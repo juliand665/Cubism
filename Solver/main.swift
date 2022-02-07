@@ -32,7 +32,7 @@ func runTests(on start: CubeTransformation) {
 	print(startCoord, startCoord.symmetry.inverse)
 	print(startCoord.makeState())
 	print(FlipUDSliceCoordinate(start.edges))
-	let representant = ReducedFlipUDSliceCoordinate.representants[Int(startCoord.index)]
+	let representant = startCoord.representant
 	print(representant)
 	
 	print()
@@ -56,7 +56,7 @@ func runTests(on start: CubeTransformation) {
 	let fromCoord = FlipUDSliceCoordinate(startCoord.makeState() + move.transform)
 	print("from coord:", fromCoord)
 	print("reduced:   ", ReducedFlipUDSliceCoordinate(fromCoord))
-	print("representant:", ReducedFlipUDSliceCoordinate.representants[Int(endCoord.index)])
+	print("representant:", endCoord.representant)
 	print("recreated:   ", FlipUDSliceCoordinate(endCoord.makeState()))
 	print("raw gt:      ", FlipUDSliceCoordinate(end.edges))
 	print()
@@ -196,55 +196,6 @@ func testCoordCalculations() {
 
 // MARK: -
 
-struct PruningTable<Coord: CoordinateWithMoves> {
-	var distances: [UInt8]
-	
-	init() {
-		distances = .init(repeating: .max, count: Coord.count)
-		
-		print("setting up pruning table")
-		distances[0] = 0
-		var distance: UInt8 = 1
-		var statesReached = 1
-		//var searching: Set<Space.Coord> = [.init(0)]
-		while statesReached < distances.count {
-			measureTime(as: "search at distance \(distance)") {
-				let statesReachedBefore = statesReached
-				defer {
-					print("\(statesReached - statesReachedBefore) new states reached")
-				}
-				
-				let isSearchingForwards = statesReached < distances.count / 2
-				print(isSearchingForwards ? "searching forwards" : "searching backwards")
-				let distanceToSearch = isSearchingForwards ? distance - 1 : .max
-				
-				//var nextUp: Set<Space.Coord> = []
-				for index in distances.indices {
-					guard distances[index] == distanceToSearch else { continue }
-					
-					let coord = Coord(index)
-					let neighbors = SolverMove.all.lazy.map { coord + $0 }
-					if isSearchingForwards {
-						for neighbor in neighbors where distances[neighbor.intValue] == .max {
-							distances[neighbor.intValue] = distance
-							statesReached += 1
-						}
-						//nextUp.formUnion(SolverMove.all.map { toSearch + $0 })
-					} else {
-						let isReachable = neighbors.contains { distances[$0.intValue] == distance - 1 }
-						guard isReachable else { continue }
-						distances[index] = distance
-						statesReached += 1
-					}
-				}
-				
-				//searching = nextUp
-				distance += 1
-			}
-		}
-	}
-}
-
 /*
 typealias BaseCoord = FlipUDSliceCoordinate
 let coord = BaseCoord(2048)
@@ -279,8 +230,7 @@ for ((index, (udSlice, edgeOri)), symmetry) in zip(symmetries.enumerated(), Symm
 func setUpTables() {
 	_ = UDSliceCoordinate.standardSymmetryTable
 	_ = EdgeOrientationCoordinate.standardSymmetryTable
-	let representants = ReducedFlipUDSliceCoordinate.representants
-	print(representants.count, "representants")
+	print(ReducedFlipUDSliceCoordinate.count, "representants")
 	print()
 	_ = ReducedFlipUDSliceCoordinate.moveTable
 	

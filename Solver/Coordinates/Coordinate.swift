@@ -1,4 +1,4 @@
-protocol Coordinate: Hashable, Comparable {
+protocol Coordinate: Hashable, Comparable, CustomStringConvertible {
 	associatedtype CubeState: PartialCubeState
 	associatedtype AllValues: Collection where AllValues.Element == Self // collection so map knows how many to allocate
 	
@@ -45,6 +45,10 @@ extension SimpleCoordinate {
 	static func < (lhs: Self, rhs: Self) -> Bool {
 		lhs.value < rhs.value
 	}
+	
+	var description: String {
+		"\(Self.self)(\(value))"
+	}
 }
 
 protocol ComposedCoordinate {
@@ -73,13 +77,17 @@ extension ComposedCoordinate {
 		let (outer, inner) = value.quotientAndRemainder(dividingBy: .init(InnerCoord.count))
 		self.init(.init(outer), .init(inner))
 	}
+	
+	var description: String {
+		"\(Self.self)(\(outerCoord), \(innerCoord))"
+	}
 }
 
 protocol CoordinateWithSymmetries: Coordinate {
 	func shifted(with symmetry: StandardSymmetry) -> Self
 }
 
-protocol CoordinateWithSymmetryTable: Coordinate {
+protocol CoordinateWithSymmetryTable: CoordinateWithSymmetries {
 	static var standardSymmetryTable: StandardSymmetryTable<Self> { get }
 }
 
