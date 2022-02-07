@@ -22,9 +22,12 @@ struct TestScreen: View {
 	@State var timeTaken: TimeInterval?
 	
 	var body: some View {
-		Button("Time Stuff", action: testPruningTable)
-		if let timeTaken = timeTaken {
-			Text("Time taken: \(timeTaken) seconds")
+		VStack(spacing: 8) {
+			Button("Time Stuff", action: testPruningTable)
+			
+			if let timeTaken = timeTaken {
+				Text("Time taken: \(timeTaken) seconds")
+			}
 		}
 	}
 	
@@ -37,7 +40,6 @@ struct TestScreen: View {
 		
 		let start = Date.now
 		let table = PruningTable<Phase1Coordinate>()
-		_ = table
 		timeTaken = -start.timeIntervalSinceNow
 		print("done!", table.distances.count, "entries")
 	}
