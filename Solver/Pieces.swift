@@ -63,8 +63,16 @@ extension PartialEdgeState {
 	}
 }
 
+extension Array where Element == SolverMove {
+	static var all: Self { SolverMove.all }
+	static var phase1Preserving: Self { SolverMove.phase1Preserving }
+}
+
 struct SolverMove: CustomStringConvertible {
-	static let all = Action.all.map { Self(action: $0, transform: transforms[$0]) }
+	static let all = Action.all
+		.map { Self(action: $0, transform: transforms[$0]) }
+	static let phase1Preserving = Action.phase1Preserving
+		.map { Self(action: $0, transform: transforms[$0]) }
 	static let transforms = SolverMoveMap<CubeTransformation> { (face: Face) in
 		let clockwise = CubeTransformation.transform(for: face)
 		let double = clockwise + clockwise
@@ -89,6 +97,15 @@ struct SolverMove: CustomStringConvertible {
 	struct Action: Hashable, CustomStringConvertible {
 		static let all = Face.allCases.flatMap { face in
 			Move.Direction.allCases.map { Self(face: face, direction: $0) }
+		}
+		
+		static let phase1Preserving = all.filter {
+			switch $0.face {
+			case .up, .down:
+				return true
+			case .front, .right, .back, .left:
+				return $0.direction == .double
+			}
 		}
 		
 		var face: Face

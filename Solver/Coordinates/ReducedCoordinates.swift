@@ -14,6 +14,18 @@ struct ReducedFlipUDSliceCoordinate: ReducedCoordinate, CoordinateWithMoveTable 
 	var symmetry: StandardSymmetry
 }
 
+/// Same as `CornerOrientationCoordinate`, except that it's been reduced using symmetries.
+struct ReducedCornerPermutationCoordinate: ReducedCoordinate, CoordinateWithMoveTable {
+	typealias BaseCoord = CornerPermutationCoordinate
+	
+	static let moveTable = FaceTurnMoveTable<Self>()
+	
+	static let (representants, classIndices) = computeRepresentants()
+	
+	var index: UInt16
+	var symmetry: StandardSymmetry
+}
+
 protocol ReducedCoordinate: CoordinateWithMoveTable {
 	associatedtype BaseCoord: CoordinateWithSymmetries where CubeState == BaseCoord.CubeState
 	associatedtype ClassIndex: FixedWidthInteger

@@ -77,7 +77,7 @@ extension EdgeOrientationCoordinate {
 }
 
 struct Phase1Coordinate: PruningCoordinate {
-	static let pruningTable = PruningTable<Self>()
+	static let pruningTable = PruningTable<Self>(allowedMoves: .all)
 	
 	var reduced: ReducedFlipUDSliceCoordinate
 	var corners: CornerOrientationCoordinate
@@ -102,13 +102,55 @@ extension Phase1Coordinate {
 	
 	init(_ state: CubeTransformation) {
 		let reduced = ReducedFlipUDSliceCoordinate(state.edges)
-		self.init(reduced, .init(state.corners.orientation).shifted(with: reduced.symmetry))
+		self.init(
+			reduced: reduced,
+			corners: .init(state.corners.orientation).shifted(with: reduced.symmetry)
+		)
 	}
 	
 	func makeState() -> CubeTransformation {
-		return .init(
+		.init(
 			corners: .init(orientation: corners.shifted(with: reduced.symmetry).makeState()),
 			edges: reduced.makeState()
+		)
+	}
+}
+
+struct Phase2Coordinate: PruningCoordinate {
+	static let pruningTable = PruningTable<Self>(allowedMoves: .phase1Preserving)
+	
+	var reduced: ReducedCornerPermutationCoordinate
+	var edges: NonSliceEdgePermutationCoordinate
+	
+	var outerCoord: ReducedCornerPermutationCoordinate { reduced }
+	var innerCoord: NonSliceEdgePermutationCoordinate { edges }
+	
+	static func + (coord: Self, _ move: SolverMove) -> Self {
+		let shiftedMove = coord.reduced.symmetry.shift(move)
+		let reduced = coord.reduced + move
+		let corners = (coord.edges + shiftedMove).shifted(with: reduced.symmetry)
+		return .init(reduced, corners)
+	}
+}
+
+extension Phase2Coordinate {
+	init(_ reduced: ReducedCornerPermutationCoordinate, _ edges: NonSliceEdgePermutationCoordinate) {
+		self.reduced = reduced
+		self.edges = edges
+	}
+	
+	init(_ state: CubeTransformation) {
+		let reduced = ReducedCornerPermutationCoordinate(state.corners.permutation)
+		self.init(
+			reduced: reduced,
+			edges: .init(state.edges.permutation).shifted(with: reduced.symmetry)
+		)
+	}
+	
+	func makeState() -> CubeTransformation {
+		.init(
+			cornerPermutation: reduced.makeState(),
+			edgePermutation: edges.shifted(with: reduced.symmetry).makeState()
 		)
 	}
 }

@@ -29,10 +29,12 @@ struct EdgeOrientationCoordinate: SimpleCoordinate, CoordinateWithSymmetryTable 
 	var value: UInt16
 }
 
-struct CornerPermutationCoordinate: SimpleCoordinate {
+struct CornerPermutationCoordinate: SimpleCoordinate, CoordinateWithSymmetryTable {
 	typealias CubeState = CornerPermutation
 	
 	static let count = 40_320 // 8!
+	
+	static let standardSymmetryTable = StandardSymmetryTable<Self>()
 	
 	var value: UInt16
 }

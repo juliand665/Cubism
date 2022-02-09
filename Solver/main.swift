@@ -228,22 +228,38 @@ for ((index, (udSlice, edgeOri)), symmetry) in zip(symmetries.enumerated(), Symm
  */
 
 func setUpTables() {
+	print(ReducedCornerPermutationCoordinate.count, "CornerPermutation representants")
+	print()
+	
+	_ = Phase2Coordinate.pruningTable
+	
 	_ = UDSliceCoordinate.standardSymmetryTable
 	_ = EdgeOrientationCoordinate.standardSymmetryTable
-	print(ReducedFlipUDSliceCoordinate.count, "representants")
+	print(ReducedFlipUDSliceCoordinate.count, "FlipUDSlice representants")
 	print()
 	_ = ReducedFlipUDSliceCoordinate.moveTable
 	_ = Phase1Coordinate.pruningTable
 }
 //setUpTables()
 
-measureTime {
-	let shortScramble = f + r + uu + ri + f
-	let moves = PhaseSolver.solvePhase1(from: shortScramble)
-	print("solution found!", moves)
+let scramble = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
+
+_ = Phase1Coordinate.pruningTable
+_ = Phase2Coordinate.pruningTable
+_ = PhaseSolver.solvePhase1(from: .zero)
+_ = PhaseSolver.solvePhase2(from: .zero)
+
+let phase1Moves = PhaseSolver.solvePhase1(from: scramble)
+print("phase 1 solved:", phase1Moves)
+let phase1Result = phase1Moves.map(\.transform).reduce(scramble, +)
+print(phase1Result)
+
+let phase2Moves: [SolverMove] = measureTime(as: "phase 2") {
+	let phase2Moves = PhaseSolver.solvePhase2(from: phase1Result)
+	print("phase 2 solved:", phase2Moves)
+	let phase2Result = phase2Moves.map(\.transform).reduce(phase1Result, +)
+	print(phase2Result)
+	return phase2Moves
 }
-measureTime {
-	let scramble = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
-	let moves = PhaseSolver.solvePhase1(from: scramble)
-	print("solution found!", moves)
-}
+
+print("solution found!!", (phase1Moves + phase2Moves).map(\.action))
