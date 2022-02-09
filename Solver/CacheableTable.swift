@@ -20,8 +20,11 @@ extension CacheableTable {
 			let data = measureTime(as: "reading file") {
 				try! Data(contentsOf: url)
 			}
+			let decompressed = measureTime(as: "decompressing") {
+				data.decompress(size: rawSize)
+			}
 			let table = measureTime(as: "converting from data") {
-				Self(data: data)
+				Self(data: decompressed)
 			}
 			print("loaded \(Self.self) from \(url.path)")
 			return table
@@ -31,16 +34,21 @@ extension CacheableTable {
 			let data = measureTime(as: "converting to data") {
 				table.data()
 			}
+			let compressed = measureTime(as: "compressing") {
+				data.compress()
+			}
 			measureTime(as: "writing file") {
-				try! data.write(to: url)
+				try! compressed.write(to: url)
 			}
 			print("saved to \(url.path)")
 			return table
 		}
 	}
 	
+	private static var rawSize: Int { MemoryLayout<Value>.stride * Self.count }
+	
 	private init(data: Data) {
-		precondition(data.count == MemoryLayout<Value>.stride * Self.count)
+		precondition(data.count == Self.rawSize)
 		let values = data.withUnsafeBytes { buffer in
 			Array(buffer.bindMemory(to: Value.self))
 		}

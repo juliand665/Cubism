@@ -77,7 +77,7 @@ extension EdgeOrientationCoordinate {
 }
 
 struct Phase1Coordinate: PruningCoordinate {
-	static let pruningTable = PruningTable<Self>.loadOrCreate(forceComputation: true)
+	static let pruningTable = PruningTable<Self>.loadOrCreate()
 	static let allowedMoves = SolverMove.all
 	
 	var reduced: ReducedFlipUDSliceCoordinate
@@ -118,7 +118,7 @@ extension Phase1Coordinate {
 }
 
 struct Phase2Coordinate: PruningCoordinate {
-	static let pruningTable = PruningTable<Self>.loadOrCreate(forceComputation: true)
+	static let pruningTable = PruningTable<Self>.loadOrCreate()
 	static let allowedMoves = SolverMove.phase1Preserving
 	
 	var reduced: ReducedCornerPermutationCoordinate

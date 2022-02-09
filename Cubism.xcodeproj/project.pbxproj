@@ -98,6 +98,9 @@
 		B9B47D1A27B37E2400EECC6F /* CacheableTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* CacheableTable.swift */; };
 		B9B47D1B27B37E2C00EECC6F /* CacheableTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* CacheableTable.swift */; };
 		B9B47D1C27B37E2C00EECC6F /* CacheableTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* CacheableTable.swift */; };
+		B9B47D1E27B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
+		B9B47D1F27B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
+		B9B47D2027B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
 		B9CF259326E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
 		B9CF259426E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
 		B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */; };
@@ -168,6 +171,7 @@
 		B9AEB80027B1B7C70090A203 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9AEB80127B1BD990090A203 /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
 		B9B47D1927B37E2400EECC6F /* CacheableTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheableTable.swift; sourceTree = "<group>"; };
+		B9B47D1D27B4078600EECC6F /* Data+Compression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Compression.swift"; sourceTree = "<group>"; };
 		B9CF259226E2DF6C00E14E94 /* TimerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerResult.swift; sourceTree = "<group>"; };
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 				B93F8C122783A68300909080 /* Coordinates */,
 				B9AEB80027B1B7C70090A203 /* Info.plist */,
 				B9AEB7FF27B1B7500090A203 /* Solver.entitlements */,
+				B9B47D1D27B4078600EECC6F /* Data+Compression.swift */,
 			);
 			path = Solver;
 			sourceTree = "<group>";
@@ -522,6 +527,7 @@
 				B9F3C920270CE9E7002FBEBD /* Coordinate.swift in Sources */,
 				B9AEB80227B1BD990090A203 /* Solver.swift in Sources */,
 				B93F8C0B2783A42700909080 /* Timing.swift in Sources */,
+				B9B47D2027B4078600EECC6F /* Data+Compression.swift in Sources */,
 				B93F8C142783AA8800909080 /* UDSliceCoordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,6 +555,7 @@
 				B9AEB7E027B17CDF0090A203 /* DirectCoordinates.swift in Sources */,
 				B9AEB7E727B17CDF0090A203 /* MoveTable.swift in Sources */,
 				B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */,
+				B9B47D1E27B4078600EECC6F /* Data+Compression.swift in Sources */,
 				B9855C1926EDA53E006764BD /* MoveSequenceView.swift in Sources */,
 				B9AEB7DB27B17CDE0090A203 /* Coordinate.swift in Sources */,
 				B9AEB7E827B17CDF0090A203 /* TaggedPieces.swift in Sources */,
@@ -579,6 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9B47D1F27B4078600EECC6F /* Data+Compression.swift in Sources */,
 				B9AEB7FD27B17CDF0090A203 /* Pieces.swift in Sources */,
 				B9AEB7F027B17CDF0090A203 /* PruningTable.swift in Sources */,
 				B9AEB7F327B17CDF0090A203 /* Orientation.swift in Sources */,

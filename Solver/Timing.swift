@@ -10,7 +10,7 @@ func measureTime<Result>(as title: String? = nil, for block: () throws -> Result
 	let result = try block()
 	let timeTaken = -start.timeIntervalSinceNow
 	let formatter = NumberFormatter() <- { $0.minimumFractionDigits = 6 }
-	print("done in \(formatter.string(from: timeTaken as NSNumber)!)s")
+	print("done in \(formatter.string(from: timeTaken as NSNumber)!)s", title.map { "(\($0))" } ?? "")
 	print()
 	return result
 }
