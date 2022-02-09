@@ -2,6 +2,8 @@ import Foundation
 
 protocol PruningCoordinate: ComposedCoordinate, CoordinateWithMoves
 where OuterCoord: ReducedCoordinate, InnerCoord: CoordinateWithSymmetries {
+	static var allowedMoves: [SolverMove] { get }
+	
 	static var pruningTable: PruningTable<Self> { get }
 }
 
@@ -14,48 +16,29 @@ extension PruningCoordinate {
 struct PruningTable<Coord: PruningCoordinate> {
 	var distances: [UInt8]
 	
-	init(allowedMoves: [SolverMove], forceComputation: Bool = false) {
-		let filename = "\(Self.self).dat"
-		let url = tablesFolder.appendingPathComponent(filename)
-		try! FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+	init() {
+		// make sure underlying move/symmetry tables are initialized
+		print("initializing underlying tables")
+		_ = Coord(0) + SolverMove.all.first!
 		
-		print("initializing \(Self.self)")
-		
-		// TODO: gzip or some other form of compression? zip took it from 140 to 30 MB
-		if !forceComputation, FileManager.default.fileExists(atPath: url.path) {
-			self.distances = .init(try! Data(contentsOf: url))
-			precondition(distances.count == Coord.count)
-			print("loaded from \(url.path)")
-		} else {
-			// make sure underlying move/symmetry tables are initialized
-			print("initializing underlying tables")
-			_ = Coord(0) + SolverMove.all.first!
-			
-			print("setting up pruning table")
-			self.distances = Initializer.run(allowedMoves: allowedMoves)
-			try! Data(distances).write(to: url)
-			print("saved to \(url.path)")
-		}
+		print("setting up pruning table")
+		self.distances = Initializer.run()
 	}
 	
 	private final class Initializer {
-		var allowedMoves: [SolverMove]
-		
 		var distances = [UInt8](repeating: .max, count: Coord.count)
 		var statesReached: Int32 = 1
 		var distance: UInt8 = 1
 		var isSearchingForwards = true
 		var distanceToSearch: UInt8 = 0
 		
-		static func run(allowedMoves: [SolverMove]) -> [UInt8] {
+		static func run() -> [UInt8] {
 			measureTime(as: "\(Self.self)") {
-				Initializer(allowedMoves: allowedMoves).distances
+				Initializer().distances
 			}
 		}
 		
-		private init(allowedMoves: [SolverMove]) {
-			self.allowedMoves = allowedMoves
-			
+		private init() {
 			distances[0] = 0
 			
 			while statesReached < Coord.count {
@@ -96,7 +79,7 @@ struct PruningTable<Coord: PruningCoordinate> {
 				// takes ~160 ns per entry (80 ns on my iPhone 11 Pro Max)
 				
 				let coord = Coord(index)
-				let neighbors = allowedMoves.lazy.map { coord + $0 }
+				let neighbors = Coord.allowedMoves.lazy.map { coord + $0 }
 				if isSearchingForwards {
 					for neighbor in neighbors {
 						let index = neighbor.intValue
@@ -126,11 +109,3 @@ struct PruningTable<Coord: PruningCoordinate> {
 		}
 	}
 }
-
-private let tablesFolder = try! FileManager.default.url(
-	for: .applicationSupportDirectory,
-	in: .userDomainMask,
-	appropriateFor: nil,
-	create: true
-)
-.appendingPathComponent("Tables", isDirectory: true)
