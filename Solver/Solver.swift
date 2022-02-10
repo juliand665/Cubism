@@ -1,5 +1,24 @@
 import Foundation
 
+extension CubeTransformation {
+	func solve() -> [SolverMove] {
+		let phase1Moves = PhaseSolver.solvePhase1(from: scramble)
+		print("phase 1 solved:", phase1Moves)
+		let phase1Result = phase1Moves.map(\.transform).reduce(scramble, +)
+		print(phase1Result)
+		
+		let phase2Moves: [SolverMove] = measureTime(as: "phase 2") {
+			let phase2Moves = PhaseSolver.solvePhase2(from: phase1Result)
+			print("phase 2 solved:", phase2Moves)
+			let phase2Result = phase2Moves.map(\.transform).reduce(phase1Result, +)
+			print(phase2Result)
+			return phase2Moves
+		}
+		
+		return phase1Moves + phase2Moves
+	}
+}
+
 enum PhaseSolver<Coord: PruningCoordinate> where Coord.CubeState == CubeTransformation {
 	static func solvePhase1(from start: CubeTransformation) -> [SolverMove]
 	where Coord == Phase1Coordinate {

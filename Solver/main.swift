@@ -196,70 +196,12 @@ func testCoordCalculations() {
 
 // MARK: -
 
-/*
-typealias BaseCoord = FlipUDSliceCoordinate
-let coord = BaseCoord(2048)
-let (udSlice, orientation) = coord.components
-let symmetries = zip(udSlice.standardSymmetries, orientation.standardSymmetries)
-let state = coord.makeState()
-print()
-print()
-print()
-print(coord)
-print(state)
-print()
-
-for ((index, (udSlice, edgeOri)), symmetry) in zip(symmetries.enumerated(), Symmetry.standardSubgroup) {
-	let slow = symmetry.shift(state)
-	print(index)
-	print("ground truth:", slow)
-	//let perm = udSlice.makeState()
-	let ori = state.edgeOrientation
-	//print(symmetry.shift(perm))
-	print("ori only:", symmetry.shift(ori))
-	print("ori wrapped:", symmetry.shift(CubeTransformation(edgeOrientation: ori)))
-	let coord = BaseCoord(udSlice, edgeOri)
-	//print("fast result:", coord.makeState())
-	let slowCoord = BaseCoord(slow)
-	
-	print(coord, slowCoord)
-	precondition(coord == slowCoord)
-}
- */
-
-func setUpTables() {
-	print(ReducedCornerPermutationCoordinate.count, "CornerPermutation representants")
-	print()
-	
-	_ = Phase2Coordinate.pruningTable
-	
-	_ = UDSliceCoordinate.standardSymmetryTable
-	_ = EdgeOrientationCoordinate.standardSymmetryTable
-	print(ReducedFlipUDSliceCoordinate.count, "FlipUDSlice representants")
-	print()
-	_ = ReducedFlipUDSliceCoordinate.moveTable
-	_ = Phase1Coordinate.pruningTable
-}
-//setUpTables()
-
 let scramble = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
 
-_ = Phase1Coordinate.pruningTable
-_ = Phase2Coordinate.pruningTable
-_ = PhaseSolver.solvePhase1(from: .zero)
-_ = PhaseSolver.solvePhase2(from: .zero)
-
-let phase1Moves = PhaseSolver.solvePhase1(from: scramble)
-print("phase 1 solved:", phase1Moves)
-let phase1Result = phase1Moves.map(\.transform).reduce(scramble, +)
-print(phase1Result)
-
-let phase2Moves: [SolverMove] = measureTime(as: "phase 2") {
-	let phase2Moves = PhaseSolver.solvePhase2(from: phase1Result)
-	print("phase 2 solved:", phase2Moves)
-	let phase2Result = phase2Moves.map(\.transform).reduce(phase1Result, +)
-	print(phase2Result)
-	return phase2Moves
+measureTime(as: "initializing") {
+	_ = PhaseSolver.solvePhase1(from: .zero)
+	_ = PhaseSolver.solvePhase2(from: .zero)
 }
+let solution = scramble.solve()
 
-print("solution found!!", (phase1Moves + phase2Moves).map(\.action))
+print("solution found!!", solution.map(\.action))
