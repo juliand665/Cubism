@@ -6,7 +6,7 @@ struct UDSliceCoordinate: SimpleCoordinate, CoordinateWithSymmetryTable {
 	
 	static let count = 495 // nCr(12, 8)
 	
-	static let standardSymmetryTable = StandardSymmetryTable<Self>()
+	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt16
 }

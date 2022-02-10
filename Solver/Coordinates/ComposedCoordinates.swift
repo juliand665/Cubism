@@ -51,16 +51,23 @@ extension FlipUDSliceCoordinate {
  we can precompute both, then simply compose them with an XOR on the coordinate
  */
 extension FlipUDSliceCoordinate {
-	private static let udSlicePart = MoveTable(for: UDSliceCoordinate.self) { permutation in
-		StandardSymmetryEntry {
-			($0.forward.edges.orientation.applying(permutation) + $0.backward).coordinate()
+	typealias Symmetries = StandardSymmetryEntry<EdgeOrientationCoordinate>
+	
+	private static let udSlicePart = MoveTable<UDSliceCoordinate, Symmetries>.cached {
+		MoveTable(for: UDSliceCoordinate.self) { permutation in
+			StandardSymmetryEntry {
+				($0.forward.edges.orientation.applying(permutation) + $0.backward).coordinate()
+			}
 		}
-	}
-	private static let flipPart = MoveTable(for: EdgeOrientationCoordinate.self) { orientation in
-		StandardSymmetryEntry {
-			orientation.applying($0.backward.edges.permutation).coordinate()
+	}.name("\(Self.self).udSlicePart").load()
+	
+	private static let flipPart = MoveTable<EdgeOrientationCoordinate, Symmetries>.cached {
+		MoveTable(for: EdgeOrientationCoordinate.self) { orientation in
+			StandardSymmetryEntry {
+				orientation.applying($0.backward.edges.permutation).coordinate()
+			}
 		}
-	}
+	}.name("\(Self.self).flipPart").load()
 	
 	func shifted(with symmetry: StandardSymmetry) -> Self {
 		.init(
@@ -77,7 +84,7 @@ extension EdgeOrientationCoordinate {
 }
 
 struct Phase1Coordinate: PruningCoordinate {
-	static let pruningTable = PruningTable<Self>.loadOrCreate()
+	static let pruningTable = PruningTable<Self>.cached().load()
 	static let allowedMoves = SolverMove.all
 	
 	var reduced: ReducedFlipUDSliceCoordinate
@@ -118,7 +125,7 @@ extension Phase1Coordinate {
 }
 
 struct Phase2Coordinate: PruningCoordinate {
-	static let pruningTable = PruningTable<Self>.loadOrCreate()
+	static let pruningTable = PruningTable<Self>.cached().load()
 	static let allowedMoves = SolverMove.phase1Preserving
 	
 	var reduced: ReducedCornerPermutationCoordinate

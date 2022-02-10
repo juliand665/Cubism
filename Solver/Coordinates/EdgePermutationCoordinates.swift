@@ -27,7 +27,7 @@ struct NonSliceEdgePermutationCoordinate: SimpleCoordinate, CoordinateWithMoveTa
 	static let count = 40_320 // 8!
 	
 	static let moveTable = FaceTurnMoveTable<Self>()
-	static let standardSymmetryTable = StandardSymmetryTable<Self>()
+	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt16
 }

@@ -95,9 +95,9 @@
 		B9AEB7FD27B17CDF0090A203 /* Pieces.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C709B2708C46A001DAEF8 /* Pieces.swift */; };
 		B9AEB7FE27B17CDF0090A203 /* PiecePermutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C70A12708C524001DAEF8 /* PiecePermutation.swift */; };
 		B9AEB80227B1BD990090A203 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AEB80127B1BD990090A203 /* Solver.swift */; };
-		B9B47D1A27B37E2400EECC6F /* CacheableTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* CacheableTable.swift */; };
-		B9B47D1B27B37E2C00EECC6F /* CacheableTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* CacheableTable.swift */; };
-		B9B47D1C27B37E2C00EECC6F /* CacheableTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* CacheableTable.swift */; };
+		B9B47D1A27B37E2400EECC6F /* MoveTable+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */; };
+		B9B47D1B27B37E2C00EECC6F /* MoveTable+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */; };
+		B9B47D1C27B37E2C00EECC6F /* MoveTable+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */; };
 		B9B47D1E27B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
 		B9B47D1F27B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
 		B9B47D2027B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
@@ -170,7 +170,7 @@
 		B9AEB7FF27B1B7500090A203 /* Solver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solver.entitlements; sourceTree = "<group>"; };
 		B9AEB80027B1B7C70090A203 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9AEB80127B1BD990090A203 /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
-		B9B47D1927B37E2400EECC6F /* CacheableTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheableTable.swift; sourceTree = "<group>"; };
+		B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoveTable+Cache.swift"; sourceTree = "<group>"; };
 		B9B47D1D27B4078600EECC6F /* Data+Compression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Compression.swift"; sourceTree = "<group>"; };
 		B9CF259226E2DF6C00E14E94 /* TimerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerResult.swift; sourceTree = "<group>"; };
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
@@ -264,7 +264,7 @@
 				B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */,
 				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
 				B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */,
-				B9B47D1927B37E2400EECC6F /* CacheableTable.swift */,
+				B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */,
 				B93F8C122783A68300909080 /* Coordinates */,
 				B9AEB80027B1B7C70090A203 /* Info.plist */,
 				B9AEB7FF27B1B7500090A203 /* Solver.entitlements */,
@@ -511,7 +511,7 @@
 				B96C709E2708C4B6001DAEF8 /* Orientation.swift in Sources */,
 				B96C7099270885BA001DAEF8 /* CubeConfiguration.swift in Sources */,
 				B96C709A270885CC001DAEF8 /* Notation.swift in Sources */,
-				B9B47D1A27B37E2400EECC6F /* CacheableTable.swift in Sources */,
+				B9B47D1A27B37E2400EECC6F /* MoveTable+Cache.swift in Sources */,
 				B96C70A827090EE3001DAEF8 /* PieceOrientation.swift in Sources */,
 				B9AEB7DA27B17C950090A203 /* PruningTable.swift in Sources */,
 				B96C70AA270910D7001DAEF8 /* CubeTransformation.swift in Sources */,
@@ -549,7 +549,7 @@
 				B9A2963126E434C4005C59D1 /* BaseAlgorithms.swift in Sources */,
 				B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
 				B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */,
-				B9B47D1C27B37E2C00EECC6F /* CacheableTable.swift in Sources */,
+				B9B47D1C27B37E2C00EECC6F /* MoveTable+Cache.swift in Sources */,
 				B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */,
 				B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */,
 				B9AEB7E027B17CDF0090A203 /* DirectCoordinates.swift in Sources */,
@@ -600,7 +600,7 @@
 				B96E9BFD26E2755600A46A3B /* ContentView.swift in Sources */,
 				B96E9C1026E2883600A46A3B /* TimerScreen.swift in Sources */,
 				B9AEB7F427B17CDF0090A203 /* CubeTransformation.swift in Sources */,
-				B9B47D1B27B37E2C00EECC6F /* CacheableTable.swift in Sources */,
+				B9B47D1B27B37E2C00EECC6F /* MoveTable+Cache.swift in Sources */,
 				B9AEB7F227B17CDF0090A203 /* DirectCoordinates.swift in Sources */,
 				B9AEB7ED27B17CDF0090A203 /* Coordinate.swift in Sources */,
 				B9AEB7FE27B17CDF0090A203 /* PiecePermutation.swift in Sources */,

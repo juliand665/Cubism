@@ -13,7 +13,7 @@ struct CornerOrientationCoordinate: SimpleCoordinate, CoordinateWithMoveTable, C
 	static let count = 2187 // 3^7
 	
 	static let moveTable = FaceTurnMoveTable<Self>()
-	static let standardSymmetryTable = StandardSymmetryTable<Self>()
+	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt16
 }
@@ -24,7 +24,7 @@ struct EdgeOrientationCoordinate: SimpleCoordinate, CoordinateWithSymmetryTable 
 	static let count = 2048 // 2^11
 	static let validSymmetries = Symmetry.edgeFlipPreservingSubgroup
 	
-	static let standardSymmetryTable = StandardSymmetryTable<Self>()
+	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt16
 }
@@ -34,7 +34,7 @@ struct CornerPermutationCoordinate: SimpleCoordinate, CoordinateWithSymmetryTabl
 	
 	static let count = 40_320 // 8!
 	
-	static let standardSymmetryTable = StandardSymmetryTable<Self>()
+	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt16
 }

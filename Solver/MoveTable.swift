@@ -1,6 +1,3 @@
-typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<Coord, SolverMoveMap<Coord>>
-typealias StandardSymmetryTable<Coord: Coordinate> = MoveTable<Coord, StandardSymmetryEntry<Coord>>
-
 struct MoveTable<Coord: Coordinate, Entry> {
 	var entries: [Entry]
 	
@@ -16,12 +13,30 @@ struct MoveTable<Coord: Coordinate, Entry> {
 		}
 	}
 	
+	init(entries: [Entry]) {
+		self.entries = entries
+	}
+	
 	init(for coord: Coord.Type = Coord.self, computeEntry: (Coord.CubeState) -> Entry) {
 		self.init { computeEntry($0.makeState()) }
+	}
+}
+
+typealias FaceTurnMoveTable<Coord: Coordinate> = MoveTable<Coord, SolverMoveMap<Coord>>
+extension FaceTurnMoveTable {
+	static func cached() -> CacheBuilder<Entry> where Entry == SolverMoveMap<Coord> {
+		cached(create: Self.init)
 	}
 	
 	init() where Entry == SolverMoveMap<Coord> {
 		self.init { Entry(state: $0.makeState()) }
+	}
+}
+
+typealias StandardSymmetryTable<Coord: Coordinate> = MoveTable<Coord, StandardSymmetryEntry<Coord>>
+extension StandardSymmetryTable {
+	static func cached() -> CacheBuilder<Entry> where Entry == StandardSymmetryEntry<Coord> {
+		cached(create: Self.init)
 	}
 	
 	init() where Entry == StandardSymmetryEntry<Coord> {

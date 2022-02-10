@@ -8,7 +8,7 @@ struct ReducedFlipUDSliceCoordinate: ReducedCoordinate, CoordinateWithMoveTable 
 	
 	static let moveTable = FaceTurnMoveTable<Self>()
 	
-	static let (representants, classIndices) = computeRepresentants()
+	static let (representants, classIndices) = loadOrComputeRepresentants()
 	
 	var index: UInt16
 	var symmetry: StandardSymmetry
@@ -20,7 +20,7 @@ struct ReducedCornerPermutationCoordinate: ReducedCoordinate, CoordinateWithMove
 	
 	static let moveTable = FaceTurnMoveTable<Self>()
 	
-	static let (representants, classIndices) = computeRepresentants()
+	static let (representants, classIndices) = loadOrComputeRepresentants()
 	
 	var index: UInt16
 	var symmetry: StandardSymmetry
@@ -36,7 +36,7 @@ protocol ReducedCoordinate: CoordinateWithMoveTable {
 	static var representants: [Representant] { get }
 	static var classIndices: [ClassIndex] { get }
 	
-	static func computeRepresentants() -> ([Representant], [UInt16])
+	static func loadOrComputeRepresentants() -> ([Representant], [ClassIndex])
 	
 	var index: ClassIndex { get }
 	var symmetry: StandardSymmetry { get set }
@@ -101,7 +101,15 @@ extension ReducedCoordinate {
 		}
 	}
 	
-	static func computeRepresentants() -> ([Representant], [ClassIndex]) {
+	static func loadOrComputeRepresentants() -> ([Representant], [ClassIndex]) {
+		lazy var computed = computeRepresentants()
+		return (
+			.loadOrCompute(name: "\(Self.self).representants") { computed.0 },
+			.loadOrCompute(name: "\(Self.self).classIndices") { computed.1 }
+		)
+	}
+	
+	private static func computeRepresentants() -> ([Representant], [ClassIndex]) {
 		measureTime(as: "computeRepresentants for \(Self.self)") {
 			var representants: [Representant] = []
 			representants.reserveCapacity(BaseCoord.count / Symmetry.standardSubgroup.count)
