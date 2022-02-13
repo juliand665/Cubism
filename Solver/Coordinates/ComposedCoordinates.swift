@@ -92,22 +92,6 @@ struct Phase1Coordinate: PruningCoordinate {
 	
 	var outerCoord: ReducedFlipUDSliceCoordinate { reduced }
 	var innerCoord: CornerOrientationCoordinate { corners }
-	
-	static func + (coord: Self, _ move: SolverMove) -> Self {
-		let reduced = coord.reduced + move
-		let oldSymmetry = coord.reduced.symmetry
-		let newSymmetry = reduced.symmetry
-		
-		// this mirrors the computation of `coord.reduced + move`
-		let shiftedMove = oldSymmetry.shift(move)
-		let corners = (coord.corners + shiftedMove).shifted(with: newSymmetry * oldSymmetry.inverse)
-		
-		// alternative equivalent version with 3 rather than 2 lookups in big tables (likely cache misses):
-		//let unshifted = coord.corners.shifted(with: oldSymmetry.inverse)
-		//let corners = (unshifted + move).shifted(with: newSymmetry)
-		
-		return .init(reduced, corners)
-	}
 }
 
 extension Phase1Coordinate {
@@ -141,13 +125,6 @@ struct Phase2Coordinate: PruningCoordinate {
 	
 	var outerCoord: ReducedCornerPermutationCoordinate { reduced }
 	var innerCoord: NonSliceEdgePermutationCoordinate { edges }
-	
-	static func + (coord: Self, _ move: SolverMove) -> Self {
-		let shiftedMove = coord.reduced.symmetry.shift(move)
-		let reduced = coord.reduced + move
-		let corners = (coord.edges + shiftedMove).shifted(with: reduced.symmetry)
-		return .init(reduced, corners)
-	}
 }
 
 extension Phase2Coordinate {
@@ -169,5 +146,64 @@ extension Phase2Coordinate {
 			cornerPermutation: reduced.makeState(),
 			edgePermutation: edges.shifted(with: reduced.symmetry).makeState()
 		)
+	}
+}
+
+struct FullPhase2Coordinate: ComposedSymmetryCoordinate {
+	typealias CubeState = CubeTransformation
+	
+	var base: Phase2Coordinate
+	var slice: SliceEdgePermutationCoordinate
+	
+	var outerCoord: Phase2Coordinate { base }
+	var innerCoord: SliceEdgePermutationCoordinate { slice }
+}
+
+extension FullPhase2Coordinate {
+	init(_ base: Phase2Coordinate, _ slice: SliceEdgePermutationCoordinate) {
+		self.base = base
+		self.slice = slice
+	}
+	
+	init(_ state: CubeTransformation) {
+		let base = Phase2Coordinate(state)
+		self.init(
+			base: base,
+			slice: .init(state.edges.permutation).shifted(with: base.symmetry)
+		)
+	}
+	
+	func makeState() -> CubeTransformation {
+		base.makeState() <- {
+			$0.edges.permutation += slice.makeState()
+		}
+	}
+}
+
+protocol ComposedSymmetryCoordinate: ComposedCoordinate, SymmetryCoordinate
+where OuterCoord: SymmetryCoordinate & CoordinateWithMoves, InnerCoord: CoordinateWithSymmetries {}
+
+extension ComposedSymmetryCoordinate {
+	var symmetry: StandardSymmetry { outerCoord.symmetry }
+}
+
+extension CoordinateWithMoves where Self: ComposedSymmetryCoordinate, InnerCoord: CoordinateWithMoves {
+	static func + (coord: Self, _ move: SolverMove) -> Self {
+		// the problem is that we need to apply the symmetry from the reduced (outer) coordinate to the raw (inner) one for the resulting composed number to be meaningful, but that makes dealing with the latter more inconvenient.
+		// TODO: i wonder if there's a better way (like only applying symmetries when we calculate the int value, or maybe not even then?? the mapping to numbers would stay just as bijective, just defined differently)
+		
+		let outer = coord.outerCoord + move
+		let oldSymmetry = coord.outerCoord.symmetry
+		let newSymmetry = outer.symmetry
+		
+		// this mirrors the computation of `coord.reduced + move`
+		let shiftedMove = oldSymmetry.shift(move)
+		let inner = (coord.innerCoord + shiftedMove).shifted(with: newSymmetry * oldSymmetry.inverse)
+		
+		// alternative equivalent version with 3 rather than 2 lookups in big tables (likely cache misses):
+		//let unshifted = coord.innerCoord.shifted(with: oldSymmetry.inverse)
+		//let inner = (unshifted + move).shifted(with: newSymmetry)
+		
+		return .init(outer, inner)
 	}
 }

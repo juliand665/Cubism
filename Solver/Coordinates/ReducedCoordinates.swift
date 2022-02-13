@@ -26,20 +26,23 @@ struct ReducedCornerPermutationCoordinate: ReducedCoordinate, CoordinateWithMove
 	var symmetry: StandardSymmetry
 }
 
-protocol ReducedCoordinate: CoordinateWithMoveTable {
+protocol SymmetryCoordinate: Coordinate {
+	var symmetry: StandardSymmetry { get }
+}
+
+protocol ReducedCoordinate: SymmetryCoordinate, CoordinateWithMoveTable {
 	associatedtype BaseCoord: CoordinateWithSymmetries where CubeState == BaseCoord.CubeState
 	associatedtype ClassIndex: FixedWidthInteger
 	
 	typealias Representant = ReducedRepresentant<BaseCoord>
 	
-	static var count: Int { get }
 	static var representants: [Representant] { get }
 	static var classIndices: [ClassIndex] { get }
 	
 	static func loadOrComputeRepresentants() -> ([Representant], [ClassIndex])
 	
 	var index: ClassIndex { get }
-	var symmetry: StandardSymmetry { get set }
+	var symmetry: StandardSymmetry { get set } // want to be able to set this too
 	
 	var representant: Representant { get }
 	

@@ -1,7 +1,7 @@
 import Foundation
 
-protocol PruningCoordinate: ComposedCoordinate, CoordinateWithMoves
-where OuterCoord: ReducedCoordinate, InnerCoord: CoordinateWithSymmetries {
+protocol PruningCoordinate: ComposedSymmetryCoordinate, CoordinateWithMoves
+where OuterCoord: ReducedCoordinate {
 	static var allowedMoves: [SolverMove] { get }
 	
 	static var pruningTable: PruningTable<Self> { get }
