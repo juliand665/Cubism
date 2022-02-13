@@ -2,10 +2,24 @@ import Foundation
 
 extension CubeTransformation {
 	func solve() -> [SolverMove] {
-		let phase1Moves = PhaseSolver.solvePhase1(from: scramble)
+		let phase1Moves = PhaseSolver.solvePhase1(from: self)
 		print("phase 1 solved:", phase1Moves)
-		let phase1Result = phase1Moves.map(\.transform).reduce(scramble, +)
+		let phase1Result = phase1Moves.map(\.transform).reduce(self, +)
 		print(phase1Result)
+		
+		_ = Phase1Coordinate(0) + SolverMove.all.first!
+		print()
+		let path = phase1Moves.map(\.transform).reductions(self, +)
+		for (startState, move) in zip(path, phase1Moves) {
+			let startCoord = Phase1Coordinate(startState)
+			print(startCoord, "in the beginning")
+			let nextState = startState + move.transform
+			let nextCoord = Phase1Coordinate(nextState)
+			print(nextCoord, "from computation")
+			let lookedUp = startCoord + move
+			print(lookedUp, "from move table")
+			print()
+		}
 		
 		let phase2Moves: [SolverMove] = measureTime(as: "phase 2") {
 			let phase2Moves = PhaseSolver.solvePhase2(from: phase1Result)

@@ -100,7 +100,8 @@ struct StandardSymmetry: Hashable {
 		Self.inverses[index]
 	}
 	
-	static func + (lhs: Self, rhs: Self) -> Self {
+	/// shifting with `rhs` then `lhs` is the same as shifting with a different symmetry `lhs * rhs`
+	static func * (lhs: Self, rhs: Self) -> Self {
 		compositions[lhs.index][rhs.index]
 	}
 	
@@ -113,5 +114,11 @@ extension StandardSymmetry {
 	init(index: Int) {
 		assert(Self.symmetries.indices.contains(index))
 		self.init(storedIndex: UInt8(index))
+	}
+}
+
+extension StandardSymmetry: CustomStringConvertible {
+	var description: String {
+		"S\(storedIndex)"
 	}
 }

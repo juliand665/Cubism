@@ -45,7 +45,7 @@ func runTests(on start: CubeTransformation) {
 	print("shifted:", shiftedMove)
 	let fromTable = ReducedFlipUDSliceCoordinate.moveTable[startCoord][shiftedMove]
 	print("from table:", fromTable)
-	print(startCoord.symmetry + fromTable.symmetry, fromTable.symmetry + startCoord.symmetry)
+	print(startCoord.symmetry * fromTable.symmetry, fromTable.symmetry * startCoord.symmetry)
 	let endCoord = startCoord + move
 	
 	let end = start + move.transform
@@ -196,12 +196,15 @@ func testCoordCalculations() {
 
 // MARK: -
 
-let scramble = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
-
 measureTime(as: "initializing") {
 	_ = PhaseSolver.solvePhase1(from: .zero)
 	_ = PhaseSolver.solvePhase2(from: .zero)
 }
-let solution = scramble.solve()
 
-print("solution found!!", solution.map(\.action))
+let scramble1 = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
+let solution1 = scramble1.solve()
+print("solution found!!", solution1.map(\.action))
+
+let scramble2 = f + r + dd + r + l + ui + li + ui + d + b + dd + b + rr + uu + fi + rr + fi + dd + ff + rr
+let solution2 = scramble2.solve()
+print("solution found!!", solution2.map(\.action))

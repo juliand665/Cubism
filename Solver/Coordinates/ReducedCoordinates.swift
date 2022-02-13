@@ -6,7 +6,7 @@ import HandyOperators
 struct ReducedFlipUDSliceCoordinate: ReducedCoordinate, CoordinateWithMoveTable {
 	typealias BaseCoord = FlipUDSliceCoordinate
 	
-	static let moveTable = FaceTurnMoveTable<Self>()
+	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	
 	static let (representants, classIndices) = loadOrComputeRepresentants()
 	
@@ -96,8 +96,7 @@ extension ReducedCoordinate {
 	
 	static func + (coord: Self, _ move: SolverMove) -> Self {
 		moveTable[coord][coord.symmetry.shift(move)] <- {
-			// TODO: make sure this is correct by comparing to unreduced versions
-			$0.symmetry = coord.symmetry + $0.symmetry
+			$0.symmetry = $0.symmetry * coord.symmetry.inverse
 		}
 	}
 	

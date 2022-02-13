@@ -94,10 +94,18 @@ struct Phase1Coordinate: PruningCoordinate {
 	var innerCoord: CornerOrientationCoordinate { corners }
 	
 	static func + (coord: Self, _ move: SolverMove) -> Self {
-		// FIXME: pretty sure this isn't quite right yet…
-		let shiftedMove = coord.reduced.symmetry.shift(move)
 		let reduced = coord.reduced + move
-		let corners = (coord.corners + shiftedMove).shifted(with: reduced.symmetry)
+		let oldSymmetry = coord.reduced.symmetry
+		let newSymmetry = reduced.symmetry
+		
+		// this mirrors the computation of `coord.reduced + move`
+		let shiftedMove = oldSymmetry.shift(move)
+		let corners = (coord.corners + shiftedMove).shifted(with: newSymmetry * oldSymmetry.inverse)
+		
+		// alternative equivalent version with 3 rather than 2 lookups in big tables (likely cache misses):
+		//let unshifted = coord.corners.shifted(with: oldSymmetry.inverse)
+		//let corners = (unshifted + move).shifted(with: newSymmetry)
+		
 		return .init(reduced, corners)
 	}
 }
