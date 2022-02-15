@@ -4,8 +4,8 @@ import HandyOperators
 
 /// Combines the UD slice coordinate with the edge orientation (flip).
 struct FlipUDSliceCoordinate: ComposedCoordinate, CoordinateWithSymmetries {
-	var flip: EdgeOrientationCoordinate
 	var udSlice: UDSliceCoordinate
+	var flip: EdgeOrientationCoordinate
 	
 	var outerCoord: UDSliceCoordinate { udSlice }
 	var innerCoord: EdgeOrientationCoordinate { flip }
@@ -13,12 +13,11 @@ struct FlipUDSliceCoordinate: ComposedCoordinate, CoordinateWithSymmetries {
 
 extension FlipUDSliceCoordinate {
 	init(_ permutation: EdgePermutation, _ orientation: EdgeOrientation) {
-		self.init(permutation.udSliceCoordinate(), orientation.coordinate())
+		self.init(udSlice: permutation.udSliceCoordinate(), flip: orientation.coordinate())
 	}
 	
-	init(_ udSlice: UDSliceCoordinate, _ flip: EdgeOrientationCoordinate) {
-		self.udSlice = udSlice
-		self.flip = flip
+	init(outer: UDSliceCoordinate, inner: EdgeOrientationCoordinate) {
+		self.init(udSlice: outer, flip: inner)
 	}
 	
 	init(_ state: CubeTransformation.Edges) {
@@ -71,8 +70,8 @@ extension FlipUDSliceCoordinate {
 	
 	func shifted(with symmetry: StandardSymmetry) -> Self {
 		.init(
-			udSlice.shifted(with: symmetry),
-			Self.udSlicePart[udSlice][symmetry] + Self.flipPart[flip][symmetry]
+			udSlice: udSlice.shifted(with: symmetry),
+			flip: Self.udSlicePart[udSlice][symmetry] + Self.flipPart[flip][symmetry]
 		)
 	}
 }
@@ -84,92 +83,114 @@ extension EdgeOrientationCoordinate {
 }
 
 struct Phase1Coordinate: PruningCoordinate {
+	// TODO: why do i need this??
+	typealias OuterCoord = ReducedFlipUDSliceCoordinate
+	typealias InnerCoord = CornerOrientationCoordinate
+	
 	static let pruningTable = PruningTable<Self>.cached().load()
 	static let allowedMoves = SolverMove.all
 	
 	var reduced: ReducedFlipUDSliceCoordinate
 	var corners: CornerOrientationCoordinate
 	
-	var outerCoord: ReducedFlipUDSliceCoordinate { reduced }
-	var innerCoord: CornerOrientationCoordinate { corners }
+	var symmetryCoord: ReducedFlipUDSliceCoordinate {
+		get { reduced }
+		set { reduced = newValue }
+	}
+	var basicCoord: CornerOrientationCoordinate { corners }
 }
 
 extension Phase1Coordinate {
-	init(_ reduced: ReducedFlipUDSliceCoordinate, _ corners: CornerOrientationCoordinate) {
-		self.reduced = reduced
-		self.corners = corners
+	init(symmetry: ReducedFlipUDSliceCoordinate, basic: CornerOrientationCoordinate) {
+		self.init(reduced: symmetry, corners: basic)
 	}
 	
 	init(_ state: CubeTransformation) {
 		let reduced = ReducedFlipUDSliceCoordinate(state.edges)
 		self.init(
 			reduced: reduced,
-			corners: .init(state.corners.orientation).shifted(with: reduced.symmetry)
+			corners: .init(state.corners.orientation)
 		)
 	}
 	
+	init(full: Self) { self = full }
+	
 	func makeState() -> CubeTransformation {
 		.init(
-			corners: .init(orientation: corners.shifted(with: reduced.symmetry).makeState()),
+			corners: .init(orientation: corners.makeState()),
 			edges: reduced.makeState()
 		)
 	}
 }
 
 struct Phase2Coordinate: PruningCoordinate {
+	typealias OuterCoord = ReducedCornerPermutationCoordinate
+	typealias InnerCoord = NonSliceEdgePermutationCoordinate
+	
 	static let pruningTable = PruningTable<Self>.cached().load()
 	static let allowedMoves = SolverMove.phase1Preserving
 	
 	var reduced: ReducedCornerPermutationCoordinate
 	var edges: NonSliceEdgePermutationCoordinate
 	
-	var outerCoord: ReducedCornerPermutationCoordinate { reduced }
-	var innerCoord: NonSliceEdgePermutationCoordinate { edges }
+	var symmetryCoord: ReducedCornerPermutationCoordinate {
+		get { reduced }
+		set { reduced = newValue }
+	}
+	var basicCoord: NonSliceEdgePermutationCoordinate { edges }
 }
 
 extension Phase2Coordinate {
-	init(_ reduced: ReducedCornerPermutationCoordinate, _ edges: NonSliceEdgePermutationCoordinate) {
-		self.reduced = reduced
-		self.edges = edges
+	init(symmetry: ReducedCornerPermutationCoordinate, basic: NonSliceEdgePermutationCoordinate) {
+		self.init(reduced: symmetry, edges: basic)
 	}
 	
 	init(_ state: CubeTransformation) {
 		let reduced = ReducedCornerPermutationCoordinate(state.corners.permutation)
 		self.init(
 			reduced: reduced,
-			edges: .init(state.edges.permutation).shifted(with: reduced.symmetry)
+			edges: .init(state.edges.permutation)
 		)
+	}
+	
+	init(full: FullPhase2Coordinate) {
+		self = full.base
 	}
 	
 	func makeState() -> CubeTransformation {
 		.init(
 			cornerPermutation: reduced.makeState(),
-			edgePermutation: edges.shifted(with: reduced.symmetry).makeState()
+			edgePermutation: edges.makeState()
 		)
 	}
 }
 
-struct FullPhase2Coordinate: ComposedSymmetryCoordinate {
+struct FullPhase2Coordinate: HalfSymmetryCoordinate, CoordinateWithMoves {
+	typealias OuterCoord = Phase2Coordinate
+	typealias InnerCoord = SliceEdgePermutationCoordinate
+	
 	typealias CubeState = CubeTransformation
 	
 	var base: Phase2Coordinate
 	var slice: SliceEdgePermutationCoordinate
 	
-	var outerCoord: Phase2Coordinate { base }
-	var innerCoord: SliceEdgePermutationCoordinate { slice }
+	var symmetryCoord: Phase2Coordinate {
+		get { base }
+		set { base = newValue }
+	}
+	var basicCoord: SliceEdgePermutationCoordinate { slice }
 }
 
 extension FullPhase2Coordinate {
-	init(_ base: Phase2Coordinate, _ slice: SliceEdgePermutationCoordinate) {
-		self.base = base
-		self.slice = slice
+	init(symmetry: Phase2Coordinate, basic: SliceEdgePermutationCoordinate) {
+		self.init(base: symmetry, slice: basic)
 	}
 	
 	init(_ state: CubeTransformation) {
 		let base = Phase2Coordinate(state)
 		self.init(
 			base: base,
-			slice: .init(state.edges.permutation).shifted(with: base.symmetry)
+			slice: .init(state.edges.permutation)
 		)
 	}
 	
@@ -180,30 +201,45 @@ extension FullPhase2Coordinate {
 	}
 }
 
-protocol ComposedSymmetryCoordinate: ComposedCoordinate, SymmetryCoordinate
-where OuterCoord: SymmetryCoordinate & CoordinateWithMoves, InnerCoord: CoordinateWithSymmetries {}
-
-extension ComposedSymmetryCoordinate {
-	var symmetry: StandardSymmetry { outerCoord.symmetry }
+protocol HalfSymmetryCoordinate: ComposedCoordinate, SymmetryCoordinate
+where OuterCoord: SymmetryCoordinate, InnerCoord: CoordinateWithSymmetries {
+	var symmetryCoord: OuterCoord { get set }
+	var basicCoord: InnerCoord { get }
+	
+	init(symmetry: OuterCoord, basic: InnerCoord)
 }
 
-extension CoordinateWithMoves where Self: ComposedSymmetryCoordinate, InnerCoord: CoordinateWithMoves {
+extension HalfSymmetryCoordinate {
+	var symmetry: StandardSymmetry {
+		get { symmetryCoord.symmetry }
+		set { symmetryCoord.symmetry = newValue }
+	}
+	
+	var outerCoord: OuterCoord { symmetryCoord }
+	
+	/// reframed to match the symmetry of the outer coord
+	var innerCoord: InnerCoord {
+		basicCoord.shifted(with: symmetry)
+	}
+	
+	init(outer: OuterCoord, inner: InnerCoord) {
+		self.init(
+			symmetry: outer,
+			basic: inner.shifted(with: outer.symmetry.inverse)
+		)
+	}
+	
+	var description: String {
+		"\(Self.self)(symmetry: \(symmetryCoord), basic: \(basicCoord))"
+	}
+}
+
+extension CoordinateWithMoves
+where Self: HalfSymmetryCoordinate, OuterCoord: CoordinateWithMoves, InnerCoord: CoordinateWithMoves {
 	static func + (coord: Self, _ move: SolverMove) -> Self {
-		// the problem is that we need to apply the symmetry from the reduced (outer) coordinate to the raw (inner) one for the resulting composed number to be meaningful, but that makes dealing with the latter more inconvenient.
-		// TODO: i wonder if there's a better way (like only applying symmetries when we calculate the int value, or maybe not even then?? the mapping to numbers would stay just as bijective, just defined differently)
-		
-		let outer = coord.outerCoord + move
-		let oldSymmetry = coord.outerCoord.symmetry
-		let newSymmetry = outer.symmetry
-		
-		// this mirrors the computation of `coord.reduced + move`
-		let shiftedMove = oldSymmetry.shift(move)
-		let inner = (coord.innerCoord + shiftedMove).shifted(with: newSymmetry * oldSymmetry.inverse)
-		
-		// alternative equivalent version with 3 rather than 2 lookups in big tables (likely cache misses):
-		//let unshifted = coord.innerCoord.shifted(with: oldSymmetry.inverse)
-		//let inner = (unshifted + move).shifted(with: newSymmetry)
-		
-		return .init(outer, inner)
+		.init(
+			symmetry: coord.symmetryCoord + move,
+			basic: coord.basicCoord + move
+		)
 	}
 }

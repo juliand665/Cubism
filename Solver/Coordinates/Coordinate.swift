@@ -7,6 +7,8 @@ protocol Coordinate: Hashable, Comparable, CustomStringConvertible {
 	
 	static var validSymmetries: [Symmetry] { get }
 	
+	var isZero: Bool { get }
+	
 	init(_ state: CubeState)
 	func makeState() -> CubeState
 	
@@ -35,6 +37,8 @@ extension SimpleCoordinate {
 		(0..<countAsValue).lazy.map(Self.init)
 	}
 	
+	var isZero: Bool { value == 0 }
+	
 	var intValue: Int { Int(value) }
 	
 	init<I: BinaryInteger>(_ value: I) {
@@ -58,16 +62,13 @@ protocol ComposedCoordinate {
 	var outerCoord: OuterCoord { get }
 	var innerCoord: InnerCoord { get }
 	
-	init(_ outerCoord: OuterCoord, _ innerCoord: InnerCoord)
+	init(outer: OuterCoord, inner: InnerCoord)
 }
 
 extension ComposedCoordinate {
 	static var count: Int { OuterCoord.count * InnerCoord.count }
 	
-	static func < (lhs: Self, rhs: Self) -> Bool {
-		lhs.outerCoord < rhs.outerCoord
-		|| lhs.outerCoord == rhs.outerCoord && lhs.innerCoord < rhs.innerCoord
-	}
+	var isZero: Bool { outerCoord.isZero && innerCoord.isZero }
 	
 	var intValue: Int {
 		outerCoord.intValue * InnerCoord.count + innerCoord.intValue
@@ -75,11 +76,16 @@ extension ComposedCoordinate {
 	
 	init<I: BinaryInteger>(_ value: I) {
 		let (outer, inner) = value.quotientAndRemainder(dividingBy: .init(InnerCoord.count))
-		self.init(.init(outer), .init(inner))
+		self.init(outer: .init(outer), inner: .init(inner))
+	}
+	
+	static func < (lhs: Self, rhs: Self) -> Bool {
+		lhs.outerCoord < rhs.outerCoord
+		|| lhs.outerCoord == rhs.outerCoord && lhs.innerCoord < rhs.innerCoord
 	}
 	
 	var description: String {
-		"\(Self.self)(\(outerCoord), \(innerCoord))"
+		"\(Self.self)(outer: \(outerCoord), inner: \(innerCoord))"
 	}
 }
 

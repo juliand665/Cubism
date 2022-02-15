@@ -1,10 +1,14 @@
 import Foundation
 
-protocol PruningCoordinate: ComposedSymmetryCoordinate, CoordinateWithMoves
+protocol PruningCoordinate: HalfSymmetryCoordinate, CoordinateWithMoves
 where OuterCoord: ReducedCoordinate {
+	associatedtype FullCoordinate: CoordinateWithMoves
+	
 	static var allowedMoves: [SolverMove] { get }
 	
 	static var pruningTable: PruningTable<Self> { get }
+	
+	init(full: FullCoordinate)
 }
 
 extension PruningCoordinate {
@@ -93,13 +97,12 @@ private final class Initializer<Coord: PruningCoordinate> {
 					distances[index] = distance
 					statesReached += 1
 					
-					let representant = neighbor.outerCoord.representant
+					let representant = neighbor.symmetryCoord.representant
 					if representant.hasSymmetries { // applies to ~3% of values
 						for symmetry in StandardSymmetry.all.dropFirst() where representant.hasSymmetry(symmetry) {
-							let shiftedInner = neighbor.innerCoord.shifted(with: symmetry)
-							let new = Coord(neighbor.outerCoord, shiftedInner)
-							guard distances[new.intValue] == .max else { continue }
-							distances[new.intValue] = distance
+							let shifted = neighbor.shifted(with: symmetry)
+							guard distances[shifted.intValue] == .max else { continue }
+							distances[shifted.intValue] = distance
 							statesReached += 1
 						}
 					}

@@ -26,8 +26,14 @@ struct ReducedCornerPermutationCoordinate: ReducedCoordinate, CoordinateWithMove
 	var symmetry: StandardSymmetry
 }
 
-protocol SymmetryCoordinate: Coordinate {
-	var symmetry: StandardSymmetry { get }
+protocol SymmetryCoordinate: CoordinateWithSymmetries {
+	var symmetry: StandardSymmetry { get set }
+}
+
+extension SymmetryCoordinate {
+	func shifted(with symmetry: StandardSymmetry) -> Self {
+		self <- { $0.symmetry = symmetry * $0.symmetry }
+	}
 }
 
 protocol ReducedCoordinate: SymmetryCoordinate, CoordinateWithMoveTable {
@@ -62,12 +68,14 @@ extension ReducedCoordinate {
 		self.init(index: .init(index), symmetry: .init(index: symmetryIndex))
 	}
 	
-	init<I>(_ value: I) where I: BinaryInteger {
-		self.init(index: .init(value), symmetry: StandardSymmetry.zero)
-	}
+	var isZero: Bool { index == 0 }
 	
 	var intValue: Int {
 		Int(index)
+	}
+	
+	init<I>(_ value: I) where I: BinaryInteger {
+		self.init(index: .init(value), symmetry: StandardSymmetry.zero)
 	}
 	
 	init(_ baseCoord: BaseCoord) {
@@ -99,7 +107,7 @@ extension ReducedCoordinate {
 	
 	static func + (coord: Self, _ move: SolverMove) -> Self {
 		moveTable[coord][coord.symmetry.shift(move)] <- {
-			$0.symmetry = $0.symmetry * coord.symmetry.inverse
+			$0.symmetry = $0.symmetry * coord.symmetry
 		}
 	}
 	
