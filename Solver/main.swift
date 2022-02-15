@@ -197,8 +197,7 @@ func testCoordCalculations() {
 // MARK: -
 
 measureTime(as: "initializing") {
-	_ = PhaseSolver.solvePhase1(from: f)
-	_ = PhaseSolver.solvePhase2(from: ff)
+	_ = (r + f).solve()
 }
 
 print()
@@ -212,3 +211,7 @@ print()
 let scramble2 = f + r + dd + r + l + ui + li + ui + d + b + dd + b + rr + uu + fi + rr + fi + dd + ff + rr
 let solution2 = scramble2.solve()
 print("solution found!!", solution2.map(\.action))
+
+print()
+print("cube in a cube:", cubeInACube.solve().map(\.action))
+print("cube in a cube reversed:", (-cubeInACube).solve().map(\.action))

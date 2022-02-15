@@ -82,7 +82,7 @@ extension EdgeOrientationCoordinate {
 	}
 }
 
-struct Phase1Coordinate: PruningCoordinate {
+struct Phase1Coordinate: PruningCoordinate, SolverCoordinate {
 	// TODO: why do i need this??
 	typealias OuterCoord = ReducedFlipUDSliceCoordinate
 	typealias InnerCoord = CornerOrientationCoordinate
@@ -165,7 +165,7 @@ extension Phase2Coordinate {
 	}
 }
 
-struct FullPhase2Coordinate: HalfSymmetryCoordinate, CoordinateWithMoves {
+struct FullPhase2Coordinate: HalfSymmetryCoordinate {
 	typealias OuterCoord = Phase2Coordinate
 	typealias InnerCoord = SliceEdgePermutationCoordinate
 	
@@ -179,6 +179,16 @@ struct FullPhase2Coordinate: HalfSymmetryCoordinate, CoordinateWithMoves {
 		set { base = newValue }
 	}
 	var basicCoord: SliceEdgePermutationCoordinate { slice }
+}
+
+extension FullPhase2Coordinate: SolverCoordinate {
+	static var allowedMoves: [SolverMove] {
+		Phase2Coordinate.allowedMoves
+	}
+	
+	var minDistance: UInt8 {
+		base.pruningValue
+	}
 }
 
 extension FullPhase2Coordinate {
