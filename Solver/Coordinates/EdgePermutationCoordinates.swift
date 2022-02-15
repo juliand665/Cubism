@@ -2,8 +2,8 @@
 struct SliceEdgePermutationCoordinate: SimpleCoordinate, CoordinateWithMoveTable, CoordinateWithSymmetryTable {
 	static let count = 24 // 4!
 	
-	static let moveTable = FaceTurnMoveTable<Self>()
-	static let standardSymmetryTable = StandardSymmetryTable<Self>()
+	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
+	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt8
 }
@@ -26,7 +26,7 @@ extension SliceEdgePermutationCoordinate {
 struct NonSliceEdgePermutationCoordinate: SimpleCoordinate, CoordinateWithMoveTable, CoordinateWithSymmetryTable {
 	static let count = 40_320 // 8!
 	
-	static let moveTable = FaceTurnMoveTable<Self>()
+	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt16

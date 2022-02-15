@@ -12,7 +12,7 @@ struct CornerOrientationCoordinate: SimpleCoordinate, CoordinateWithMoveTable, C
 	
 	static let count = 2187 // 3^7
 	
-	static let moveTable = FaceTurnMoveTable<Self>()
+	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
 	var value: UInt16

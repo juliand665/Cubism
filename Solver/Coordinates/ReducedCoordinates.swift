@@ -18,7 +18,7 @@ struct ReducedFlipUDSliceCoordinate: ReducedCoordinate, CoordinateWithMoveTable 
 struct ReducedCornerPermutationCoordinate: ReducedCoordinate, CoordinateWithMoveTable {
 	typealias BaseCoord = CornerPermutationCoordinate
 	
-	static let moveTable = FaceTurnMoveTable<Self>()
+	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	
 	static let (representants, classIndices) = loadOrComputeRepresentants()
 	
