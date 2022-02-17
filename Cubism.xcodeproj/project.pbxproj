@@ -57,6 +57,7 @@
 		B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */; };
 		B9A2962F26E43495005C59D1 /* Notation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962E26E43495005C59D1 /* Notation.swift */; };
 		B9A2963126E434C4005C59D1 /* BaseAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */; };
+		B9ABDAAB27BDD7C700C7D65B /* CubeTransformation+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABDAAA27BDD7C700C7D65B /* CubeTransformation+Random.swift */; };
 		B9AEB7DA27B17C950090A203 /* PruningTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AEB7D927B17C950090A203 /* PruningTable.swift */; };
 		B9AEB7DB27B17CDE0090A203 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F3C91F270CE9E7002FBEBD /* Coordinate.swift */; };
 		B9AEB7DC27B17CDF0090A203 /* ReducedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93F8C102783A63C00909080 /* ReducedCoordinates.swift */; };
@@ -166,6 +167,7 @@
 		B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfiguration.swift; sourceTree = "<group>"; };
 		B9A2962E26E43495005C59D1 /* Notation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notation.swift; sourceTree = "<group>"; };
 		B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAlgorithms.swift; sourceTree = "<group>"; };
+		B9ABDAAA27BDD7C700C7D65B /* CubeTransformation+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CubeTransformation+Random.swift"; sourceTree = "<group>"; };
 		B9AEB7D927B17C950090A203 /* PruningTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PruningTable.swift; sourceTree = "<group>"; };
 		B9AEB7FF27B1B7500090A203 /* Solver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solver.entitlements; sourceTree = "<group>"; };
 		B9AEB80027B1B7C70090A203 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				B96C57DA27133EE7006D4EEA /* TaggedPieces.swift */,
 				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
 				B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */,
+				B9ABDAAA27BDD7C700C7D65B /* CubeTransformation+Random.swift */,
 				B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */,
 				B93F8C122783A68300909080 /* Coordinates */,
 				B9AEB80027B1B7C70090A203 /* Info.plist */,
@@ -522,6 +525,7 @@
 				B96FEAA5277E9526008AD165 /* PrettyPrinting.swift in Sources */,
 				B93F8C112783A63C00909080 /* ReducedCoordinates.swift in Sources */,
 				B9EC07F72715022B00CAC7BE /* MoveTable.swift in Sources */,
+				B9ABDAAB27BDD7C700C7D65B /* CubeTransformation+Random.swift in Sources */,
 				B96C70A927090F6C001DAEF8 /* PiecePermutation.swift in Sources */,
 				B93F8C092783A39500909080 /* DirectCoordinates.swift in Sources */,
 				B9F3C920270CE9E7002FBEBD /* Coordinate.swift in Sources */,

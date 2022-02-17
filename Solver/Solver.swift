@@ -14,7 +14,7 @@ extension SolverCoordinate where Self: PruningCoordinate {
 
 // TODO: consider all 3 axes for defining edge orientation (i.e. just the urf3 symmetry group)
 extension CubeTransformation {
-	func solve(alternativesConsidered: Int = 1000) -> SolverManeuver {
+	func solve(alternativesConsidered: Int = 100) -> SolverManeuver {
 		measureTime(as: "solving with \(alternativesConsidered) alternatives") {
 			let start = Phase1Coordinate(self)
 			

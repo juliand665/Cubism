@@ -202,6 +202,7 @@ measureTime(as: "initializing") {
 
 print()
 
+/*
 let scramble1 = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
 let solution1 = scramble1.solve()
 print("solution found!", solution1)
@@ -215,3 +216,6 @@ print("solution found!", solution2)
 print()
 print("cube in a cube:", cubeInACube.solve())
 print("cube in a cube reversed:", (-cubeInACube).solve())
+*/
+
+print(CubeTransformation.random().solve())

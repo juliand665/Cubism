@@ -1,7 +1,7 @@
 // these coordinates directly represent a partial cube state
 
-protocol PartialCubeStateWithCoord: PartialCubeState {
-	associatedtype Coord: SimpleCoordinate
+protocol PartialCubeStateWithCoord { // conformance to PartialCubeState implied by the associatedtype—swift is weird sometimes…
+	associatedtype Coord: SimpleCoordinate where Coord.CubeState == Self
 	
 	init(_ coordinate: Coord)
 	func coordinate() -> Coord

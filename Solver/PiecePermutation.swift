@@ -121,10 +121,21 @@ struct EdgePermutation: Hashable, PiecePermutation, TaggedEdges {
 }
 
 extension RandomAccessCollection where Element: Comparable {
+	var permutationParity: Int {
+		self
+			.indexed()
+			.lazy
+			.map { (index, piece) in
+				prefix(upTo: index).count { $0 > piece }
+			}
+			.reduce(0, ^) & 1
+	}
+	
 	func permutationCoordinate<Coord: Coordinate>() -> Coord {
 		.init(
 			self
 				.indexed()
+				.lazy
 				.map { (index, piece) in
 					prefix(upTo: index).count { $0 > piece }
 				}
