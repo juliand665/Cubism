@@ -204,14 +204,14 @@ print()
 
 let scramble1 = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
 let solution1 = scramble1.solve()
-print("solution found!!", solution1.map(\.action))
+print("solution found!", solution1)
 
 print()
 
 let scramble2 = f + r + dd + r + l + ui + li + ui + d + b + dd + b + rr + uu + fi + rr + fi + dd + ff + rr
 let solution2 = scramble2.solve()
-print("solution found!!", solution2.map(\.action))
+print("solution found!", solution2)
 
 print()
-print("cube in a cube:", cubeInACube.solve().map(\.action))
-print("cube in a cube reversed:", (-cubeInACube).solve().map(\.action))
+print("cube in a cube:", cubeInACube.solve())
+print("cube in a cube reversed:", (-cubeInACube).solve())
