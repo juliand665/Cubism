@@ -13,6 +13,8 @@ struct Symmetry {
 		Generator.lr2.transforms,
 	])
 	
+	static let urf3Subgroup = subgroup(generatedBy: [Generator.urf3.transforms])
+	
 	private static func subgroup(generatedBy transforms: [[CubeTransformation]]) -> [Self] {
 		subgroupTransforms(generatedBy: transforms[...]).map(Self.init)
 	}
@@ -34,8 +36,8 @@ struct Symmetry {
 		forward + transform + backward
 	}
 	
-	func unshift<State: PartialCubeState>(_ transform: State) -> State {
-		backward + transform + forward
+	func shift(_ move: SolverMove) -> SolverMove {
+		SolverMove.byTransform[shift(move.transform)]!
 	}
 	
 	struct Generator {
@@ -82,10 +84,7 @@ struct StandardSymmetry: Hashable {
 		}
 	}
 	static let shiftedMoves: [SolverMoveMap<SolverMove>] = all.map { symmetry in
-		let resolved = symmetry.resolved
-		return SolverMoveMap { (action: SolverMove.Action) in
-			SolverMove.byTransform[resolved.shift(action.resolved.transform)]!
-		}
+		.init { symmetry.resolved.shift($0.resolved) }
 	}
 	static let zero = Self(index: 0)
 	

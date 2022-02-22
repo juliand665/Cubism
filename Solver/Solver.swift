@@ -12,50 +12,99 @@ extension SolverCoordinate where Self: PruningCoordinate {
 	var minDistance: UInt8 { pruningValue }
 }
 
-// TODO: consider all 3 axes for defining edge orientation (i.e. just the urf3 symmetry group)
-extension CubeTransformation {
-	func solve(alternativesConsidered: Int = 100) -> SolverManeuver {
-		measureTime(as: "solving with \(alternativesConsidered) alternatives") {
-			let start = Phase1Coordinate(self)
+protocol Solver {
+	var bestSolution: SolverManeuver? { get }
+	var isDone: Bool { get }
+	
+	func searchNextLevel()
+}
+
+/// Applies `BasicTwoPhaseSolver` along all three axes, yielding more consistent results regardless of cube rotation.
+final class ThreeWayTwoPhaseSolver: Solver {
+	let solvers: [(symmetry: Symmetry, solver: BasicTwoPhaseSolver)]
+	
+	var nextPhase1Length: UInt8
+	var bestSolution: SolverManeuver?
+	var isDone = false
+	
+	init(start: CubeTransformation) {
+		self.solvers = Symmetry.urf3Subgroup.map { symmetry in
+			(symmetry, .init(start: symmetry.shift(start)))
+		}
+		self.nextPhase1Length = solvers.map(\.solver.nextPhase1Length).min()!
+	}
+	
+	func searchNextLevel() {
+		// TODO: benchmark just how little i can get away with here if i'm using symmetries
+		for (symmetry, solver) in solvers {
+			guard solver.nextPhase1Length == nextPhase1Length else { continue }
+			solver.searchNextLevel()
 			
-			var considered = 0
-			var bestSolution: SolverManeuver?
-			for phase1Length in start.minDistance... {
-				if let bestSolution = bestSolution {
-					guard phase1Length < bestSolution.length else { break }
-				}
-				
-				let alternatives = measureTime(as: "computing phase 1 solutions of length \(phase1Length)") {
-					PhaseSolver.solutions(from: start, exactLength: phase1Length)
-				}
-				let earlySolution = measureTime(as: "trying out \(alternatives.count) alternatives") { () -> SolverManeuver? in
-					for phase1 in alternatives {
-						// can't just use a coordinate here because it's not valid to perform non-phase2 moves on phase2 coordinates
-						let state = phase1.applied(to: self)
-						let phase2Start = FullPhase2Coordinate(state)
-						guard !phase2Start.isZero else { return phase1 } // already solved with minimal length
-						
-						let phase2Solutions = PhaseSolver.solutions(
-							from: phase2Start,
-							maxLength: bestSolution.map { .init($0.length - phase1.length) }
-						)
-						guard let phase2 = phase2Solutions.first else { continue }
-						
-						let length = phase1.length + phase2.length
-						let bestLength = bestSolution?.length ?? .max
-						guard length < bestLength else { continue }
-						
-						bestSolution = phase1 + phase2
-						print("found solution with \(length) moves")
-					}
-					return nil
-				}
-				if let earlySolution = earlySolution { return earlySolution }
-				
-				considered += alternatives.count
-				guard considered <= alternativesConsidered else { break }
+			guard
+				let newSolution = solver.bestSolution,
+				newSolution.length < bestSolution?.length ?? .max
+			else { continue }
+			bestSolution = newSolution.shifted(with: symmetry.inverse)
+		}
+		
+		nextPhase1Length += 1
+		if let bestSolution = bestSolution {
+			isDone = nextPhase1Length >= bestSolution.length
+		}
+	}
+}
+
+final class BasicTwoPhaseSolver: Solver {
+	let start: CubeTransformation
+	let phase1Start: Phase1Coordinate
+	
+	var nextPhase1Length: UInt8
+	var bestSolution: SolverManeuver?
+	var isDone = false
+	
+	init(start: CubeTransformation) {
+		self.start = start
+		self.phase1Start = .init(start)
+		
+		self.nextPhase1Length = phase1Start.minDistance
+	}
+	
+	func searchNextLevel() {
+		guard !isDone else { return }
+		
+		let alternatives = PhaseSolver.solutions(from: phase1Start, exactLength: nextPhase1Length)
+		print(alternatives.count, terminator: ", ")
+		fflush(stdout)
+		
+		for phase1 in alternatives {
+			// can't just use a coordinate here because it's not valid to perform non-phase2 moves on phase2 coordinates
+			// TODO: implement other coords like udSlice from which this can be restored
+			// TODO: generate a small pruning table for corner permutation (and maybe the others too?) to quickly discard phase 1 solutions which can't improve our solution
+			let state = phase1.applied(to: start)
+			let phase2Start = FullPhase2Coordinate(state)
+			guard !phase2Start.isZero else {
+				// already solved with minimal length
+				bestSolution = phase1
+				break
 			}
-			return bestSolution!
+			
+			let phase2Solutions = PhaseSolver.solutions(
+				from: phase2Start,
+				maxLength: bestSolution.map { .init($0.length - phase1.length) }
+			)
+			guard let phase2 = phase2Solutions.first else { continue }
+			
+			let length = phase1.length + phase2.length
+			let bestLength = bestSolution?.length ?? .max
+			guard length < bestLength else { continue }
+			
+			bestSolution = phase1 + phase2
+			//print("found solution with \(length) moves")
+		}
+		
+		nextPhase1Length += 1
+		if let bestSolution = bestSolution {
+			isDone = nextPhase1Length >= bestSolution.length
 		}
 	}
 }
@@ -148,6 +197,10 @@ struct SolverManeuver: CustomStringConvertible {
 	
 	func prepending(_ move: SolverMove) -> Self {
 		.init(moves: [move] + moves)
+	}
+	
+	func shifted(with symmetry: Symmetry) -> Self {
+		.init(moves: moves.map(symmetry.shift))
 	}
 	
 	static func + (lhs: Self, rhs: Self) -> Self {

@@ -197,7 +197,7 @@ func testCoordCalculations() {
 // MARK: -
 
 measureTime(as: "initializing") {
-	_ = (r + f).solve()
+	BasicTwoPhaseSolver(start: r + f).searchNextLevel()
 }
 
 print()
@@ -218,4 +218,20 @@ print("cube in a cube:", cubeInACube.solve())
 print("cube in a cube reversed:", (-cubeInACube).solve())
 */
 
-print(CubeTransformation.random().solve())
+// TODO: compare to basic solver
+let solvers = (1...1000).map { _ in ThreeWayTwoPhaseSolver(start: .random()) }
+for depth in 1... {
+	print()
+	measureTime {
+		solvers.forEach { $0.searchNextLevel() }
+	}
+	let lengths = solvers.map(\.bestSolution!.length)
+	let lengthCounts: [Int: Int] = lengths.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+	print("depth \(depth):")
+	print(
+		lengthCounts
+			.sorted { $0.key < $1.key }
+			.map { "length \($0): \($1)x" }
+			.joined(separator: "\n")
+	)
+}
