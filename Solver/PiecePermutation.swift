@@ -1,10 +1,7 @@
 import HandyOperators
 
 protocol PiecePermutation: PartialCubeStateWithCoord, TaggedPieces where Tag == Piece {
-	subscript(piece: Piece) -> Piece { get set }
-	
 	init()
-	init(array: [Piece])
 }
 
 extension PiecePermutation {
