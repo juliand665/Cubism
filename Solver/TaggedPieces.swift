@@ -1,4 +1,4 @@
-protocol TaggedPieces: RandomAccessCollection {
+protocol TaggedPieces: RandomAccessCollection where Index == Int {
 	associatedtype Tag where Tag == Element
 	// would like to declare it like this instead but that breaks the compiler…
 	//typealias Tag = Element
@@ -175,7 +175,7 @@ extension TaggedEdges {
 	}
 }
 
-extension Collection where Self: TaggedPieces, Index == Int {
+extension Collection where Self: TaggedPieces {
 	var startIndex: Int { 0 }
 	
 	func index(after i: Int) -> Int {
@@ -183,7 +183,7 @@ extension Collection where Self: TaggedPieces, Index == Int {
 	}
 }
 
-extension Collection where Self: TaggedCorners, Index == Int {
+extension Collection where Self: TaggedCorners {
 	var endIndex: Int { 8 }
 	
 	subscript(position: Int) -> Tag {
@@ -203,7 +203,7 @@ extension Collection where Self: TaggedCorners, Index == Int {
 	}
 }
 
-extension Collection where Self: TaggedEdges, Index == Int {
+extension Collection where Self: TaggedEdges {
 	var endIndex: Int { 12 }
 	
 	subscript(position: Int) -> Tag {

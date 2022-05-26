@@ -1,8 +1,15 @@
-protocol CubePiece: Comparable, CaseIterable where AllCases: RandomAccessCollection {
+protocol CubePiece: Hashable, Comparable, CaseIterable, RawRepresentable
+where AllCases: RandomAccessCollection, RawValue == Int {
 	var name: String { get }
 }
 
-enum Corner: CubePiece, Comparable, CaseIterable {
+extension CubePiece {
+	static func < (lhs: Self, rhs: Self) -> Bool {
+		lhs.rawValue < rhs.rawValue
+	}
+}
+
+enum Corner: Int, CubePiece, Comparable, CaseIterable {
 	case urf, ufl, ulb, ubr
 	case dfr, dlf, dbl, drb
 	
@@ -11,7 +18,7 @@ enum Corner: CubePiece, Comparable, CaseIterable {
 	}
 }
 
-enum Edge: CubePiece, Comparable, CaseIterable {
+enum Edge: Int, CubePiece, Comparable, CaseIterable {
 	case ur, uf, ul, ub
 	case dr, df, dl, db
 	case fr, fl, bl, br

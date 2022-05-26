@@ -146,9 +146,8 @@ extension Phase2Coordinate {
 	}
 	
 	init(_ state: CubeTransformation) {
-		let reduced = ReducedCornerPermutationCoordinate(state.corners.permutation)
 		self.init(
-			reduced: reduced,
+			reduced: .init(state.corners.permutation),
 			edges: .init(state.edges.permutation)
 		)
 	}

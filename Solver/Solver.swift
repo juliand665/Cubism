@@ -57,6 +57,8 @@ final class ThreeWayTwoPhaseSolver: Solver {
 final class BasicTwoPhaseSolver: Solver {
 	let start: CubeTransformation
 	let phase1Start: Phase1Coordinate
+	let startEdgePerm: SubsettedEdgePermutationCoordinate
+	let startCornerPerm: ReducedCornerPermutationCoordinate
 	
 	var nextPhase1Length: UInt8
 	var bestSolution: SolverManeuver?
@@ -65,6 +67,8 @@ final class BasicTwoPhaseSolver: Solver {
 	init(start: CubeTransformation) {
 		self.start = start
 		self.phase1Start = .init(start)
+		self.startEdgePerm = .init(start.edges.permutation)
+		self.startCornerPerm = .init(start.corners.permutation)
 		
 		self.nextPhase1Length = phase1Start.minDistance
 	}
@@ -80,8 +84,26 @@ final class BasicTwoPhaseSolver: Solver {
 			// can't just use a coordinate here because it's not valid to perform non-phase2 moves on phase2 coordinates
 			// TODO: implement other coords like udSlice from which this can be restored
 			// TODO: generate a small pruning table for corner permutation (and maybe the others too?) to quickly discard phase 1 solutions which can't improve our solution
-			let state = phase1.applied(to: start)
-			let phase2Start = FullPhase2Coordinate(state)
+			// TODO: create phase 2 coords directly from their respective subset coords
+			//let state = phase1.applied(to: start)
+			let edgePerm = phase1.applied(to: startEdgePerm)
+			let edgePermState = edgePerm.makeState()
+			//let slice = SliceEdgePermutationCoordinate(edgePermState)
+			//let gtSlice = SliceEdgePermutationCoordinate(state.edges.permutation)
+			//assert(slice == gtSlice)
+			
+			let corners = phase1.applied(to: startCornerPerm)
+			//let gtCorners = ReducedCornerPermutationCoordinate(state.corners.permutation)
+			let phase2Start = FullPhase2Coordinate(
+				base: .init(
+					reduced: corners,
+					edges: .init(edgePermState)
+				),
+				slice: .init(edgePermState)
+			)
+			//let gtPhase2Start = FullPhase2Coordinate(state)
+			//assert(phase2Start.makeState() == gtPhase2Start.makeState())
+			
 			guard !phase2Start.isZero else {
 				// already solved with minimal length
 				bestSolution = phase1
@@ -193,6 +215,10 @@ struct SolverManeuver: CustomStringConvertible {
 	
 	func applied(to state: CubeTransformation) -> CubeTransformation {
 		moves.lazy.map(\.transform).reduce(state, +)
+	}
+	
+	func applied<Coord: CoordinateWithMoves>(to coord: Coord) -> Coord {
+		moves.reduce(coord, +)
 	}
 	
 	func prepending(_ move: SolverMove) -> Self {

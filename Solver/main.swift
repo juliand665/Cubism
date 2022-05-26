@@ -160,7 +160,7 @@ func testSequences() {
 
 func timeStuff() {
 	let testSize = 20
-	let test = Array(0..<testSize).sumWithIncreasingBases()
+	let test = (0..<testSize).sumWithIncreasingBases()
 	
 	print("starting")
 	benchmark(repetitions: 1_000_000) { test.digitsWithIncreasingBases(count: testSize) }
@@ -195,12 +195,13 @@ func testCoordCalculations() {
 //testCoordCalculations()
 
 // MARK: -
-
+/*
 measureTime(as: "initializing") {
 	BasicTwoPhaseSolver(start: r + f).searchNextLevel()
 }
 
 print()
+*/
 
 /*
 let scramble1 = b + ri + ff + dd + li + bb + l + uu + r + ff + rr + bb + ri + bi + li + ff + di + b + ll + ff
@@ -219,11 +220,12 @@ print("cube in a cube reversed:", (-cubeInACube).solve())
 */
 
 // TODO: compare to basic solver
-let solvers = (1...1000).map { _ in ThreeWayTwoPhaseSolver(start: .random()) }
+let solvers = (1...20).map { _ in ThreeWayTwoPhaseSolver(start: .random()) }
 for depth in 1... {
 	print()
 	measureTime {
 		solvers.forEach { $0.searchNextLevel() }
+		print()
 	}
 	let lengths = solvers.map(\.bestSolution!.length)
 	let lengthCounts: [Int: Int] = lengths.reduce(into: [:]) { $0[$1, default: 0] += 1 }
@@ -235,3 +237,35 @@ for depth in 1... {
 			.joined(separator: "\n")
 	)
 }
+
+/*
+while true {
+	let permutation = EdgePermutation.random()
+	//let permutation = EdgePermutation(db: .fr, fr: .db)
+	let uFaceCoord = OrderedUFaceCoordinate(permutation)
+	let uFace = -uFaceCoord.makeState()
+	print(uFace)
+	let dFaceCoord = OrderedDFaceCoordinate(permutation)
+	let dFace = -dFaceCoord.makeState()
+	print(dFace)
+	let udSliceCoord = OrderedUDSliceCoordinate(permutation)
+	let udSlice = -udSliceCoord.makeState()
+	print(udSlice)
+	/*let recreated = -EdgePermutation(
+		ur: uFace.ur, uf: uFace.uf, ul: uFace.ul, ub: uFace.ub,
+		dr: dFace.dr, df: dFace.df, dl: dFace.dl, db: dFace.db,
+		fr: udSlice.fr, fl: udSlice.fl, bl: udSlice.bl, br: udSlice.br
+	)*/
+	var recreated = EdgePermutation()
+	uFaceCoord.apply(to: &recreated)
+	dFaceCoord.apply(to: &recreated)
+	udSliceCoord.apply(to: &recreated)
+	// TODO: basically do the same thing as negation but only look at relevant pieces
+	print(permutation)
+	print(recreated)
+	print(permutation.coordinate())
+	print(recreated.coordinate())
+	assert(permutation == recreated)
+	print()
+}
+*/

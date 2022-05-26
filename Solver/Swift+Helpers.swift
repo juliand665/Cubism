@@ -31,12 +31,12 @@ extension Sequence where Element == Int {
 		reduce(1, *)
 	}
 	
-	func sumWithIncreasingBases() -> Element {
-		self
+	func sumWithIncreasingBases(firstBase: Int = 1) -> Element {
+		self // todo: zip with bases instead
 			.enumerated()
 			.reversed()
 			.reduce(0) { sum, new in
-				let base = new.offset + 1
+				let base = new.offset + firstBase
 				assert(new.element < base)
 				return sum * base + new.element
 			}
@@ -61,11 +61,11 @@ extension BinaryInteger where Stride: SignedInteger {
 		}).reversed()
 	}
 	
-	func digitsWithIncreasingBases(count: Self) -> [Self] {
-		(1...count) // bases
+	func digitsWithIncreasingBases(count: Self, firstBase: Self = 1) -> [Self] {
+		(0..<count) // bases
 			.map(state: self) { rest, base in
 				let remainder: Self
-				(rest, remainder) = rest.quotientAndRemainder(dividingBy: base)
+				(rest, remainder) = rest.quotientAndRemainder(dividingBy: base + firstBase)
 				return remainder
 			}
 	}

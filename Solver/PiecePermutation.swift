@@ -5,7 +5,7 @@ protocol PiecePermutation: PartialCubeStateWithCoord, TaggedPieces where Tag == 
 }
 
 extension PiecePermutation {
-	func coordinate() -> Coord where Element: Comparable /* this shouldn't be necessary but it seems the constraint resolver is, well… imperfect */ {
+	func coordinate() -> Coord {
 		permutationCoordinate()
 	}
 	
@@ -153,6 +153,24 @@ extension Edge {
 	var isPartOfUDSlice: Bool {
 		switch self {
 		case .fr, .fl, .bl, .br:
+			return true
+		default:
+			return false
+		}
+	}
+	
+	var isPartOfUFace: Bool {
+		switch self {
+		case .ur, .uf, .ul, .ub:
+			return true
+		default:
+			return false
+		}
+	}
+	
+	var isPartOfDFace: Bool {
+		switch self {
+		case .dr, .df, .dl, .db:
 			return true
 		default:
 			return false

@@ -4,7 +4,7 @@ import HandyOperators
 struct UDSliceCoordinate: SimpleCoordinate, CoordinateWithSymmetryTable {
 	typealias CubeState = EdgePermutation
 	
-	static let count = 495 // nCr(12, 8)
+	static let count = 495 // nCr(12, 4)
 	
 	static let standardSymmetryTable = StandardSymmetryTable<Self>.cached().load()
 	
@@ -22,8 +22,6 @@ extension UDSliceCoordinate {
 }
 
 extension EdgePermutation {
-	private static let canonicalOrder = Array(Self())
-	
 	init(_ coordinate: UDSliceCoordinate) {
 		var currentValue = UInt16(UDSliceCoordinate.count)
 		// avoid hard math by just trying all possible values until it works lol
@@ -35,7 +33,7 @@ extension EdgePermutation {
 						currentValue -= 1
 						guard currentValue == coordinate.value else { continue }
 						
-						self.init(array: Self.canonicalOrder <- {
+						self.init(array: Edge.allCases <- {
 							$0.swapAt(i4, 8)
 							$0.swapAt(i3, 9)
 							$0.swapAt(i2, 10)
