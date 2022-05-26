@@ -24,6 +24,22 @@ final class ResultsStorage: ObservableObject {
 	init(results: [TimerResult]? = nil) {
 		self.results = results ?? Self.stored
 	}
+	
+	func bestTime() -> TimeInterval? {
+		results.lazy.map(\.timeTaken).min()
+	}
+	
+	func average(count: Int) -> TimeInterval? {
+		guard results.count >= count else { return nil }
+		let skippedCount = Int(ceil(0.05 * Double(count)))
+		let considered = results
+			.prefix(count)
+			.map(\.timeTaken)
+			.sorted()
+			.dropFirst(skippedCount)
+			.dropLast(skippedCount)
+		return considered.sum() / .init(considered.count)
+	}
 }
 
 extension TimerResult: DefaultsValueConvertible {}

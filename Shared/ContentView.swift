@@ -41,7 +41,7 @@ struct TestScreen: View {
 		let start = Date.now
 		let table = PruningTable<Phase1Coordinate>()
 		timeTaken = -start.timeIntervalSinceNow
-		print("done!", table.distances.count, "entries")
+		print("done!", table.entries.count, "entries")
 	}
 }
 

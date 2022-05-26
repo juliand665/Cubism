@@ -1,39 +1,44 @@
 import SwiftUI
 import HandyOperators
 import ArrayBuilder
-import UserDefault
 
 struct TimerScreen: View {
 	@StateObject var stopwatch = Stopwatch()
 	@StateObject var storage = ResultsStorage()
 	@State var latestResult: TimerResult?
 	@State var scramble: MoveSequence?
+	@AppStorage("showScrambleAsText") var showScrambleAsText = true
 	
 	var body: some View {
-		ZStack {
-			AdaptiveStack(spacing: 16) {
-				box { storedResultsArea }
-				
+		NavigationView {
+			ZStack {
 				VStack(spacing: 16) {
 					box { timerArea }
+					box { storedResultsArea }
 					box { scrambleArea }
+					Spacer(minLength: 0)
+				}
+				.compositingGroup()
+				.shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
+				.padding()
+				.background(Color.groupedBackground)
+				
+				VStack { // transitions don't work in ZStacks
+					if stopwatch.isRunning {
+						stopOverlay
+					}
 				}
 			}
-			.compositingGroup()
-			.shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
-			.padding()
-			.background(Color.groupedBackground)
-			
-			VStack { // transitions don't work in ZStacks
-				if stopwatch.isRunning {
-					stopOverlay
-				}
-			}
+			.navigationTitle("Timer")
 		}
+		.navigationViewStyle(.stack)
 	}
 	
 	func box<Content: View>(@ViewBuilder content: () -> Content) -> some View {
 		content()
+			.buttonStyle(.bordered)
+			.padding()
+			.frame(maxWidth: .infinity)
 			.background(Color.groupedContentBackground)
 			.cornerRadius(16)
 	}
@@ -95,28 +100,58 @@ struct TimerScreen: View {
 				.buttonStyle(.borderedProminent)
 			}
 		}
-		.buttonStyle(.bordered)
-		.padding()
-		.frame(maxWidth: .infinity)
 	}
 	
+	@State private var isPreparingScrambler = false
 	var scrambleArea: some View {
-		VStack {
-			if let scramble = scramble {
-				Text(scramble.description(using: StandardNotation.self))
-					.fixedSize(horizontal: false, vertical: true)
-					.frame(maxWidth: .infinity, alignment: .leading)
-			}
-			
-			Button {
-				scramble = .randomScramble(length: 30)
-			} label: {
-				Label("Generate Scramble", systemImage: "shuffle")
+		VStack(spacing: 16) {
+			if ScrambleGenerator.isPrepared {
+				if let scramble = scramble {
+					ZStack {
+						if showScrambleAsText {
+							Text(scramble.description())
+								.textSelection(.enabled)
+								.fixedSize(horizontal: false, vertical: true)
+								.frame(maxWidth: .infinity, alignment: .leading)
+						} else {
+							MoveSequenceView(moves: scramble)
+						}
+					}
+					.onTapGesture {
+						showScrambleAsText.toggle()
+					}
+					
+					Button {
+						UIPasteboard.general.string = scramble.description()
+					} label: {
+						Label("Copy", systemImage: "doc.on.doc")
+					}
+					.buttonStyle(.borderless)
+				}
+				
+				Button {
+					scramble = ScrambleGenerator.generate()
+				} label: {
+					Label("Generate Scramble", systemImage: "shuffle")
+				}
+			} else {
+				ZStack {
+					if isPreparingScrambler {
+						ProgressView()
+					}
+					
+					Button("Initialize Scrambler") {
+						isPreparingScrambler = true
+						Task {
+							await ScrambleGenerator.prepare()
+							isPreparingScrambler = false
+						}
+					}
+					.disabled(isPreparingScrambler)
+					.opacity(isPreparingScrambler ? 0.5 : 1)
+				}
 			}
 		}
-		.buttonStyle(.bordered)
-		.padding()
-		.frame(maxWidth: .infinity)
 	}
 	
 	var timerText: some View {
@@ -128,16 +163,43 @@ struct TimerScreen: View {
 	
 	@ViewBuilder
 	var storedResultsArea: some View {
-		if storage.results.isEmpty {
-			Text("No times saved yet!")
-				.foregroundStyle(.secondary)
-				.frame(maxWidth: .infinity, maxHeight: .infinity)
-		} else {
-			NavigationView {
-				StoredResultsList(storedResults: $storage.results)
-					.background(Color.groupedContentBackground, ignoresSafeAreaEdges: .all)
+		VStack(spacing: 16) {
+			if storage.results.isEmpty {
+				Text("No times saved yet!")
+					.foregroundStyle(.secondary)
+			} else {
+				VStack(spacing: 8) {
+					timeRow(label: "Personal best:", time: storage.bestTime()!)
+					
+					ForEach(static: [5, 12, 25, 50, 100]) { count in
+						if let average = storage.average(count: count) {
+							timeRow(label: "Average of \(count):", time: average)
+						}
+					}
+				}
+				
+				NavigationLink {
+					StoredResultsList(storedResults: $storage.results)
+						.background(Color.groupedContentBackground, ignoresSafeAreaEdges: .all)
+				} label: {
+					HStack {
+						Text("View All Results")
+						Image(systemName: "chevron.right")
+					}
+				}
 			}
-			.navigationViewStyle(.stack)
+		}
+	}
+	
+	func timeRow(label: String, time: TimeInterval) -> some View {
+		HStack {
+			Text(label)
+				.opacity(0.5)
+			
+			Spacer()
+			
+			Text(time, format: TimeIntervalFormatStyle())
+				.fontWeight(.medium)
 		}
 	}
 }
@@ -163,13 +225,11 @@ struct StoredResultsList: View {
 						Label("Remove", systemImage: "trash")
 					}
 				}
-				.listRowBackground(Color.groupedContentBackground)
 			}
 			.onDelete {
 				storedResults.remove(atOffsets: $0)
 			}
 		}
-		.listStyle(.plain)
 		.navigationTitle("Previous Times")
 		.navigationBarTitleDisplayMode(.inline)
 		.toolbar { EditButton() }
@@ -189,22 +249,6 @@ struct SpaceFillingButtonStyle: PrimitiveButtonStyle {
 				.background(Color.accentColor)
 		}
 		.buttonStyle(.plain)
-	}
-}
-
-/// Adaptively picks an HStack or VStack depending on available vertical size class.
-struct AdaptiveStack<Content: View>: View {
-	var spacing: CGFloat?
-	@ViewBuilder var content: () -> Content
-	
-	@Environment(\.verticalSizeClass) var verticalSizeClass
-	
-	var body: some View {
-		if verticalSizeClass == .regular {
-			VStack(spacing: spacing) { content() }
-		} else {
-			HStack(spacing: spacing) { content() }
-		}
 	}
 }
 
@@ -228,6 +272,11 @@ struct TimerScreen_Previews: PreviewProvider {
 		TimerScreen(storage: .init(results: exampleResults))
 			.inEachColorScheme()
 			.inEachOrientation()
+		
+		let _ = ScrambleGenerator.mockInitializeForPreviews()
+		TimerScreen(scramble: "R D' F2 D2 R2 B2 R2 B2 U2 F L2 B' D B2 F2 L R B")
+		TimerScreen(scramble: "R D' F2 D2 R2 B2 R2 B2 U2 F L2 B' D B2 F2 L R B", showScrambleAsText: false)
+			.preferredColorScheme(.dark)
 		
 		TimerScreen(
 			storage: .init(results: Array(exampleResults.prefix(3))),

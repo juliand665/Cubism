@@ -46,17 +46,35 @@ struct MoveSequence: Codable {
 }
 
 extension MoveSequence {
-	static func randomScramble(length: Int) -> Self {
-		let faces = sequence(first: Face.allCases.randomElement()!) { prev in
-			Face.allCases.filter { $0 != prev }.randomElement()!
+	init(_ maneuver: SolverManeuver) {
+		self.init(moves: maneuver.moves.map(\.action.move))
+	}
+}
+
+enum ScrambleGenerator {
+	#if DEBUG
+	static func mockInitializeForPreviews() {
+		isPrepared = true
+	}
+	#endif
+	
+	static private(set) var isPrepared = false
+	
+	static func prepare() async {
+		let basicState: CubeTransformation = .rightTurn + .frontTurn
+		await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+			DispatchQueue.global(qos: .userInitiated).async {
+				BasicTwoPhaseSolver(start: basicState).searchNextLevel()
+				continuation.resume()
+			}
 		}
-		
-		return Self(
-			moves: faces.prefix(length).map { Move(
-				target: .singleFace($0),
-				direction: .allCases.randomElement()!
-			) }
-		)
+		isPrepared = true
+	}
+	
+	static func generate() -> MoveSequence {
+		let solver = ThreeWayTwoPhaseSolver(start: .random())
+		solver.searchNextLevel()
+		return .init(moves: solver.bestSolution!.moves.map(\.action.move))
 	}
 }
 
