@@ -1,6 +1,6 @@
 // these coordinates directly represent a partial cube state
 
-protocol PartialCubeStateWithCoord: PartialCubeState {
+protocol PartialCubeStateWithCoord<Coord>: PartialCubeState {
 	associatedtype Coord: SimpleCoordinate where Coord.CubeState == Self
 	
 	init(_ coordinate: Coord)
@@ -47,7 +47,7 @@ struct EdgePermutationCoordinate: SimpleCoordinate {
 	var value: UInt32
 }
 
-extension Coordinate where CubeState: PartialCubeStateWithCoord, CubeState.Coord == Self {
+extension Coordinate where CubeState: PartialCubeStateWithCoord<Self> {
 	init(_ state: CubeState) {
 		self = state.coordinate()
 	}
