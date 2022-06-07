@@ -73,7 +73,9 @@ enum ScrambleGenerator {
 	
 	static func generate() -> MoveSequence {
 		let solver = ThreeWayTwoPhaseSolver(start: .random())
-		solver.searchNextLevel()
+		repeat {
+			solver.searchNextLevel()
+		} while solver.bestSolution!.length > 24
 		return .init(moves: solver.bestSolution!.moves.map(\.action.move))
 	}
 }

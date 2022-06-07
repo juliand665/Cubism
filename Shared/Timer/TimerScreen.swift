@@ -252,6 +252,7 @@ struct SpaceFillingButtonStyle: PrimitiveButtonStyle {
 	}
 }
 
+#if DEBUG
 struct TimerScreen_Previews: PreviewProvider {
 	static var previews: some View {
 		let exampleResults: [TimerResult] = [
@@ -288,3 +289,4 @@ struct TimerScreen_Previews: PreviewProvider {
 			.inEachOrientation()
 	}
 }
+#endif
