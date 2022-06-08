@@ -51,3 +51,7 @@ struct TimeIntervalFormatStyle: FormatStyle {
 		}.joined()
 	}
 }
+
+extension FormatStyle where Self == TimeIntervalFormatStyle {
+	static var timeInterval: Self { .init() }
+}

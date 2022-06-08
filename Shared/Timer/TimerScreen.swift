@@ -157,7 +157,7 @@ struct TimerScreen: View {
 	var timerText: some View {
 		Text(
 			latestResult?.timeTaken ?? stopwatch.elapsedTime,
-			format: TimeIntervalFormatStyle()
+			format: .timeInterval
 		)
 	}
 	
@@ -198,7 +198,7 @@ struct TimerScreen: View {
 			
 			Spacer()
 			
-			Text(time, format: TimeIntervalFormatStyle())
+			Text(time, format: .timeInterval)
 				.fontWeight(.medium)
 		}
 	}
@@ -215,7 +215,7 @@ struct StoredResultsList: View {
 					
 					Spacer()
 					
-					Text(result.timeTaken, format: TimeIntervalFormatStyle())
+					Text(result.timeTaken, format: .timeInterval)
 						.fontWeight(.medium)
 				}
 				.swipeActions {
