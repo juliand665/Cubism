@@ -1,37 +1,69 @@
 import Foundation
+import HandyOperators
 
 enum CubeConfiguration: Codable {
 	case oll(OLLConfiguration)
 	case pll(PLLPermutation)
+	
+	var checkable: CheckableConfiguration {
+		switch self {
+		case .oll(let oll):
+			return oll
+		case .pll(let pll):
+			return pll
+		}
+	}
+}
+
+protocol CheckableConfiguration {
+	init(_ state: CubeTransformation) throws
+	func matches(_ state: CubeTransformation) throws -> Bool
 }
 
 struct OLLConfiguration: Codable {
 	var correctEdges = FaceEdge.Set.all
 	
-	var neCorner: CornerState?
-	var seCorner: CornerState?
-	var swCorner: CornerState?
-	var nwCorner: CornerState?
+	var neCorner: SingleCornerOrientation?
+	var seCorner: SingleCornerOrientation?
+	var swCorner: SingleCornerOrientation?
+	var nwCorner: SingleCornerOrientation?
 	
 	static func edgesOnly(correctEdges: FaceEdge.Set) -> Self {
 		.init(correctEdges: correctEdges)
 	}
 	
 	static func cornersOnly(
-		ne: CornerState = .correct,
-		se: CornerState = .correct,
-		sw: CornerState = .correct,
-		nw: CornerState = .correct
+		ne: SingleCornerOrientation = .neutral,
+		se: SingleCornerOrientation = .neutral,
+		sw: SingleCornerOrientation = .neutral,
+		nw: SingleCornerOrientation = .neutral
 	) -> Self {
 		.init(neCorner: ne, seCorner: se, swCorner: sw, nwCorner: nw)
 	}
+}
+
+extension OLLConfiguration: CheckableConfiguration {
+	init(_ state: CubeTransformation) {
+		let edges = state.edges.orientation
+		correctEdges = .init(FaceEdge.allCases
+			.filter { edges[$0.uPiece] == .neutral }
+			.map(FaceEdge.Set.init(_:))
+		)
+		
+		let corners = state.corners.orientation
+		neCorner = corners.ubr
+		seCorner = corners.urf
+		swCorner = corners.ufl
+		nwCorner = corners.ulb
+	}
 	
-	enum CornerState: Codable {
-		case correct
-		/// e.g. when the NE corner is facing east
-		case facingCW
-		/// e.g. when the NE corner is facing north
-		case facingCCW
+	func matches(_ state: CubeTransformation) -> Bool {
+		let other = Self(-state) // OLLs are defined in terms of the previous state
+		return correctEdges == other.correctEdges
+		&& (neCorner.map { $0 == other.neCorner } ?? true)
+		&& (seCorner.map { $0 == other.seCorner } ?? true)
+		&& (swCorner.map { $0 == other.swCorner } ?? true)
+		&& (nwCorner.map { $0 == other.nwCorner } ?? true)
 	}
 }
 
@@ -40,11 +72,75 @@ struct PLLPermutation: Codable {
 	var cornerCycles: [[FaceCorner]] = []
 }
 
-enum FaceEdge: Int, Codable {
+extension PLLPermutation: CheckableConfiguration {
+	init(_ state: CubeTransformation) throws {
+		edgeCycles = try state.edges.permutation.cycles().map {
+			try $0.map {
+				try FaceEdge(uPiece: $0)
+				??? TransformationConversionError.pieceOutsideULayerAffected($0)
+			}
+		}
+		
+		cornerCycles = state.corners.permutation.cycles().map {
+			$0.map(FaceCorner.init(uPiece:))
+		}
+	}
+	
+	func matches(_ state: CubeTransformation) throws -> Bool {
+		let other = try Self(state) // PLLs are defined in terms of how they move pieces
+		return cyclesMatch(edgeCycles, other.edgeCycles)
+		&& cyclesMatch(cornerCycles, other.cornerCycles)
+	}
+	
+	enum TransformationConversionError: Error {
+		case pieceOutsideULayerAffected(Edge)
+	}
+}
+
+private func cyclesMatch<T: Equatable>(_ lhs: [[T]], _ rhs: [[T]]) -> Bool {
+	guard lhs.count == rhs.count else { return false }
+	for cycle in lhs {
+		let start = cycle.first!
+		guard let other = rhs.first(where: { $0.contains(start) }) else { return false }
+		let aligned = other.drop { $0 != start } + other
+		guard aligned.starts(with: cycle) else { return false }
+	}
+	return true
+}
+
+enum FaceEdge: Int, Codable, CaseIterable {
 	case north
 	case east
 	case south
 	case west
+	
+	var uPiece: Edge {
+		switch self {
+		case .north:
+			return .ub
+		case .east:
+			return .ur
+		case .south:
+			return .uf
+		case .west:
+			return .ul
+		}
+	}
+	
+	init?(uPiece: Edge) {
+		switch uPiece {
+		case .ub:
+			self = .north
+		case .ur:
+			self = .east
+		case .uf:
+			self = .south
+		case .ul:
+			self = .west
+		default:
+			return nil
+		}
+	}
 	
 	struct Set: OptionSet, Codable {
 		static let north = Self(.north)
@@ -64,7 +160,7 @@ extension FaceEdge.Set {
 	}
 }
 
-enum FaceCorner: Int, Codable {
+enum FaceCorner: Int, Codable, CaseIterable {
 	case northEast
 	case southEast
 	case southWest
@@ -74,6 +170,34 @@ enum FaceCorner: Int, Codable {
 	static let se = southEast
 	static let sw = southWest
 	static let nw = northWest
+	
+	var uPiece: Corner {
+		switch self {
+		case .northEast:
+			return .ubr
+		case .southEast:
+			return .urf
+		case .southWest:
+			return .ufl
+		case .northWest:
+			return .ulb
+		}
+	}
+	
+	init(uPiece: Corner) {
+		switch uPiece {
+		case .ubr:
+			self = .northEast
+		case .urf:
+			self = .southEast
+		case .ufl:
+			self = .southWest
+		case .ulb:
+			self = .northWest
+		case let other:
+			fatalError("piece \(other) not in U layer")
+		}
+	}
 	
 	struct Set: OptionSet, Codable {
 		static let ne = northEast

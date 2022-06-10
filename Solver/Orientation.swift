@@ -2,7 +2,7 @@ protocol SinglePieceOrientation: Hashable, CaseIterable, AdditiveArithmeticWithN
 	associatedtype Piece: CubePiece
 }
 
-enum SingleCornerOrientation: Int, SinglePieceOrientation {
+enum SingleCornerOrientation: Int, SinglePieceOrientation, Codable {
 	typealias Piece = Corner
 	
 	case neutral

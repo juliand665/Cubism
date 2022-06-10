@@ -1,12 +1,12 @@
 import Algorithms
 import HandyOperators
 
-let u = CubeTransformation.upTurn
-let f = CubeTransformation.frontTurn
-let r = CubeTransformation.rightTurn
-let d = CubeTransformation.downTurn
-let b = CubeTransformation.backTurn
-let l = CubeTransformation.leftTurn
+let u = CubeTransformation.singleU
+let f = CubeTransformation.singleF
+let r = CubeTransformation.singleR
+let d = CubeTransformation.singleD
+let b = CubeTransformation.singleB
+let l = CubeTransformation.singleL
 let uu = u + u
 let ff = f + f
 let rr = r + r
@@ -219,6 +219,7 @@ print("cube in a cube:", cubeInACube.solve())
 print("cube in a cube reversed:", (-cubeInACube).solve())
 */
 
+/*
 // TODO: compare to basic solver
 let solvers = (1...20).map { _ in ThreeWayTwoPhaseSolver(start: .random()) }
 for depth in 1... {
@@ -237,6 +238,7 @@ for depth in 1... {
 			.joined(separator: "\n")
 	)
 }
+*/
 
 /*
 while true {
@@ -269,3 +271,11 @@ while true {
 	print()
 }
 */
+
+func testSequence() {
+	let sequence: MoveSequence = "(U) Rw' R U R' F2 R U L' U (L M')"
+	let transform = try! sequence.transformReversingRotations()
+	let stateBefore = -transform
+	print(stateBefore)
+}
+testSequence()

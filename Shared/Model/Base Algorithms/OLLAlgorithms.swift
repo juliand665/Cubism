@@ -29,62 +29,76 @@ extension AlgorithmFolder {
 				},
 			]),
 			.init(name: "corners", algorithms: [
-				.builtIn(
-					id: "oll look 2 sune",
-					name: "Sune",
-					configuration: .oll(.cornersOnly(ne: .facingCW, se: .facingCW, nw: .facingCW))
-				) {
-					"(R U Ri) U (R UU Ri)"
-				},
-				.builtIn(
-					id: "oll look 2 anti-sune",
-					name: "Anti-Sune",
-					configuration: .oll(.cornersOnly(ne: .facingCCW, se: .facingCCW, sw: .facingCCW))
-				) {
-					"(Ri Ui R) Ui (Ri UU R)"
-				},
-				.builtIn(
-					id: "oll look 2 cross",
-					name: "Cross",
-					configuration: .oll(.cornersOnly(ne: .facingCCW, se: .facingCW, sw: .facingCCW, nw: .facingCW))
-				) {
-					"F (R U Ri Ui) (R U Ri Ui) (R U Ri Ui) Fi"
-					"y (Ri Ui R) Ui (Ri U R) Ui (Ri UU R)"
-					"y R U Ri U R Ui Ri U R UU Ri"
-					
-				},
-				.builtIn(
-					id: "oll look 2 pi",
-					name: "Pi",
-					configuration: .oll(.cornersOnly(ne: .facingCCW, se: .facingCW, sw: .facingCW, nw: .facingCCW))
-				) {
-					"[f (R U Ri Ui) fi] [F (R U Ri Ui) Fi]"
-					"R UU RR Ui RR Ui RR UU R"
-				},
-				.builtIn(
-					id: "oll look 2 headlights",
-					name: "Headlights",
-					configuration: .oll(.cornersOnly(se: .facingCW, sw: .facingCCW))
-				) {
-					"(RR D) (Ri UU) (R Di) (Ri UU Ri)"
-					"(RR D Ri UU Ri) (RR Di Ri UU Ri)"
-					
-				},
-				.builtIn(
-					id: "oll look 2 chameleon",
-					name: "Chameleon",
-					configuration: .oll(.cornersOnly(sw: .facingCCW, nw: .facingCW))
-				) {
-					"(r U Ri Ui) (ri F R Fi)"
-				},
-				.builtIn(
-					id: "oll look 2 bowtie",
-					name: "Bowtie",
-					configuration: .oll(.cornersOnly(se: .facingCW, nw: .facingCCW))
-				) {
-					"Fi (r U Ri Ui) (ri F R _)"
-				},
+				.sune,
+				.antiSune,
+				.cross,
+				.pi,
+				.headlights,
+				.chameleon,
+				.bowtie,
 			])
 		]
 	)
+}
+
+extension Algorithm {
+	static let sune = builtIn(
+		id: "sune",
+		name: "Sune",
+		configuration: .oll(.cornersOnly(ne: .twistedCCW, se: .twistedCCW, nw: .twistedCCW))
+	) {
+		"(R U Ri) U (R UU Ri)"
+	}
+	
+	static let antiSune = builtIn(
+		id: "anti-sune",
+		name: "Anti-Sune",
+		configuration: .oll(.cornersOnly(ne: .twistedCW, se: .twistedCW, sw: .twistedCW))
+	) {
+		"(Ri Ui R) Ui (Ri UU R)"
+	}
+	
+	static let cross = builtIn(
+		id: "cross",
+		name: "Cross",
+		configuration: .oll(.cornersOnly(ne: .twistedCW, se: .twistedCCW, sw: .twistedCW, nw: .twistedCCW))
+	) {
+		"F (R U Ri Ui) (R U Ri Ui) (R U Ri Ui) Fi"
+		"y (Ri Ui R) Ui (Ri U R) Ui (Ri UU R)"
+		"y R U Ri U R Ui Ri U R UU Ri"
+	}
+	
+	static let pi = builtIn(
+		id: "pi",
+		name: "Pi",
+		configuration: .oll(.cornersOnly(ne: .twistedCW, se: .twistedCCW, sw: .twistedCCW, nw: .twistedCW))
+	) {
+		"[f (R U Ri Ui) fi] [F (R U Ri Ui) Fi]"
+		"R UU RR Ui RR Ui RR UU R"
+	}
+	
+	static let headlights = builtIn(
+		id: "headlights",
+		name: "Headlights",
+		configuration: .oll(.cornersOnly(se: .twistedCCW, sw: .twistedCW))
+	) {
+		"(RR D) (Ri UU) (R Di) (Ri UU Ri)"
+		"(RR D Ri UU Ri) (RR Di Ri UU Ri)"
+	}
+	
+	static let chameleon = builtIn(
+		id: "chameleon",
+		name: "Chameleon",
+		configuration: .oll(.cornersOnly(sw: .twistedCW, nw: .twistedCCW))
+	) {
+		"(r U Ri Ui) (ri F R Fi)"
+	}
+	
+	static let bowtie = builtIn(
+		id: "bowtie",
+		name: "Bowtie",
+		configuration: .oll(.cornersOnly(se: .twistedCCW, nw: .twistedCW))
+	) {
+		"Fi (r U Ri Ui) (ri F R _)"
+	}
 }

@@ -1,5 +1,6 @@
 import Foundation
 import ArrayBuilder
+import HandyOperators
 
 struct Algorithm: Identifiable, Codable {
 	let id: ExtensibleID<Self>
@@ -25,6 +26,7 @@ extension Algorithm {
 		name: String,
 		description: String = "",
 		configuration: CubeConfiguration? = nil,
+		shouldCheckCorrectness: Bool = true,
 		@ArrayBuilder<MoveSequence> variants: () -> [MoveSequence]
 	) -> Self {
 		.init(
@@ -33,7 +35,22 @@ extension Algorithm {
 			description: description,
 			configuration: configuration,
 			variants: variants().map { .init(id: .builtIn(rawID(for: $0)), moves: $0) }
-		)
+		) <- {
+			if shouldCheckCorrectness {
+				$0.checkCorrectness()
+			}
+		}
+	}
+	
+	func checkCorrectness() {
+		#if DEBUG
+		guard let configuration = configuration else { return }
+		for variant in variants {
+			let transform = try! variant.moves.transformReversingRotations()
+			let isCorrect = (try? configuration.checkable.matches(transform)) ?? false
+			assert(isCorrect)
+		}
+		#endif
 	}
 	
 	private static func rawID(for sequence: MoveSequence) -> String {
@@ -61,7 +78,7 @@ enum ScrambleGenerator {
 	static private(set) var isPrepared = false
 	
 	static func prepare() async {
-		let basicState: CubeTransformation = .rightTurn + .frontTurn
+		let basicState: CubeTransformation = .singleR + .singleF
 		await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
 			DispatchQueue.global(qos: .userInitiated).async {
 				BasicTwoPhaseSolver(start: basicState).searchNextLevel()
@@ -141,8 +158,19 @@ struct Move: Codable, Hashable, Identifiable {
 		static let inCWOrder = [clockwise, double, counterclockwise]
 		
 		case clockwise
-		case counterclockwise
 		case double
+		case counterclockwise
+		
+		static prefix func - (direction: Self) -> Self {
+			switch direction {
+			case .clockwise:
+				return .counterclockwise
+			case .double:
+				return .double
+			case .counterclockwise:
+				return .clockwise
+			}
+		}
 	}
 }
 
@@ -151,8 +179,8 @@ enum Face: Character, Codable, CaseIterable {
 	case back = "B"
 	case up = "U"
 	case down = "D"
-	case left = "L"
 	case right = "R"
+	case left = "L"
 }
 
 enum Slice: Character, Codable {

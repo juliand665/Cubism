@@ -122,8 +122,12 @@ struct SolverMove: CustomStringConvertible {
 			.init(target: .singleFace(face), direction: direction)
 		}
 		
+		var transform: CubeTransformation {
+			SolverMove.transforms[self]
+		}
+		
 		var resolved: SolverMove {
-			.init(action: self, transform: SolverMove.transforms[self])
+			.init(action: self, transform: transform)
 		}
 		
 		var description: String {

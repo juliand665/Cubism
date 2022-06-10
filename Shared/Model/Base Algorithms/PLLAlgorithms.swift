@@ -58,7 +58,7 @@ extension Algorithm {
 			cornerCycles: [[.nw, .ne, .se]]
 		))
 	) {
-		"x (Ri U Ri) DD (R Ui Ri) DD RR"
+		"x (Ri U Ri) DD (R Ui Ri) DD RR xi"
 		"li U Ri DD R Ui Ri DD RR"
 		"yi x LL DD Li Ui L DD Li U Li"
 	}
@@ -70,7 +70,7 @@ extension Algorithm {
 			cornerCycles: [[.sw, .se, .ne]]
 		))
 	) {
-		"xi (R Ui R) DD (Ri U R) DD RR"
+		"xi (R Ui R) DD (Ri U R) DD RR x"
 		"l Ui R DD Ri U R DD RR"
 		"y xi LL DD L U Li DD L Ui L"
 	}

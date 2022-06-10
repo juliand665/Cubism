@@ -46,6 +46,8 @@
 		B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
 		B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
 		B96FEAA5277E9526008AD165 /* PrettyPrinting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */; };
+		B979C24F2853A32E00C60455 /* Algorithm+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */; };
+		B979C2502853A32E00C60455 /* Algorithm+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */; };
 		B984D7F527C801EC00BEDC7D /* OrderedEdgeSubsetCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B984D7F427C801EC00BEDC7D /* OrderedEdgeSubsetCoordinates.swift */; };
 		B984D7F627C801F100BEDC7D /* OrderedEdgeSubsetCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B984D7F427C801EC00BEDC7D /* OrderedEdgeSubsetCoordinates.swift */; };
 		B984D7F727C801F100BEDC7D /* OrderedEdgeSubsetCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B984D7F427C801EC00BEDC7D /* OrderedEdgeSubsetCoordinates.swift */; };
@@ -55,6 +57,11 @@
 		B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476526E5732200E19911 /* OLLAlgorithms.swift */; };
 		B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476726E5737500E19911 /* PLLAlgorithms.swift */; };
 		B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476926E5738D00E19911 /* MiscAlgorithms.swift */; };
+		B9A11F532852ABED00599719 /* CubeTransformation+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */; };
+		B9A11F542852ABF400599719 /* CubeTransformation+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */; };
+		B9A11F552852ABF500599719 /* CubeTransformation+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */; };
+		B9A11F562852B82400599719 /* NotationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962A26E43453005C59D1 /* NotationParser.swift */; };
+		B9A11F582852B89000599719 /* SimpleParser in Frameworks */ = {isa = PBXBuildFile; productRef = B9A11F572852B89000599719 /* SimpleParser */; };
 		B9A2962B26E43453005C59D1 /* NotationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962A26E43453005C59D1 /* NotationParser.swift */; };
 		B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */; };
 		B9A2962F26E43495005C59D1 /* Notation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962E26E43495005C59D1 /* Notation.swift */; };
@@ -166,11 +173,14 @@
 		B96E9C0E26E2883600A46A3B /* TimerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerScreen.swift; sourceTree = "<group>"; };
 		B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Previews.swift"; sourceTree = "<group>"; };
 		B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettyPrinting.swift; sourceTree = "<group>"; };
+		B979C24D28537E7100C60455 /* Cubism (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cubism (iOS).entitlements"; sourceTree = "<group>"; };
+		B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Algorithm+Transform.swift"; sourceTree = "<group>"; };
 		B984D7F427C801EC00BEDC7D /* OrderedEdgeSubsetCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedEdgeSubsetCoordinates.swift; sourceTree = "<group>"; };
 		B9855C1826EDA53E006764BD /* MoveSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveSequenceView.swift; sourceTree = "<group>"; };
 		B988476526E5732200E19911 /* OLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLLAlgorithms.swift; sourceTree = "<group>"; };
 		B988476726E5737500E19911 /* PLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLAlgorithms.swift; sourceTree = "<group>"; };
 		B988476926E5738D00E19911 /* MiscAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscAlgorithms.swift; sourceTree = "<group>"; };
+		B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CubeTransformation+Standard.swift"; sourceTree = "<group>"; };
 		B9A2962A26E43453005C59D1 /* NotationParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotationParser.swift; sourceTree = "<group>"; };
 		B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfiguration.swift; sourceTree = "<group>"; };
 		B9A2962E26E43495005C59D1 /* Notation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notation.swift; sourceTree = "<group>"; };
@@ -203,6 +213,7 @@
 				B96C70AC27091CB2001DAEF8 /* Algorithms in Frameworks */,
 				B96C7098270885AB001DAEF8 /* ArrayBuilder in Frameworks */,
 				B91526032715324A00E8B031 /* Collections in Frameworks */,
+				B9A11F582852B89000599719 /* SimpleParser in Frameworks */,
 				B96C70A62708EAF3001DAEF8 /* HandyOperators in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,6 +287,7 @@
 				B96C70A12708C524001DAEF8 /* PiecePermutation.swift */,
 				B96C70A32708C53E001DAEF8 /* CubeTransformation.swift */,
 				B9ABDAAA27BDD7C700C7D65B /* CubeTransformation+Random.swift */,
+				B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */,
 				B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */,
 				B93F8C122783A68300909080 /* Coordinates */,
 				B9AEB80027B1B7C70090A203 /* Info.plist */,
@@ -295,6 +307,7 @@
 		B96E9BE626E2755200A46A3B = {
 			isa = PBXGroup;
 			children = (
+				B979C24D28537E7100C60455 /* Cubism (iOS).entitlements */,
 				B96E9BEB26E2755300A46A3B /* Shared */,
 				B96C708F27088496001DAEF8 /* Solver */,
 				B96E9BF426E2755600A46A3B /* Products */,
@@ -352,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				B96AB4D026E3B358003E38E4 /* Algorithm.swift */,
+				B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */,
 				B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */,
 				B988476426E572D800E19911 /* Base Algorithms */,
 				B9A2962E26E43495005C59D1 /* Notation.swift */,
@@ -392,6 +406,7 @@
 				B96C70A52708EAF3001DAEF8 /* HandyOperators */,
 				B96C70AB27091CB2001DAEF8 /* Algorithms */,
 				B91526022715324A00E8B031 /* Collections */,
+				B9A11F572852B89000599719 /* SimpleParser */,
 			);
 			productName = Solver;
 			productReference = B96C708E27088495001DAEF8 /* Solver */;
@@ -518,7 +533,9 @@
 			files = (
 				B93F8C162783AB0E00909080 /* EdgePermutationCoordinates.swift in Sources */,
 				B93F8C0D2783A4F300909080 /* ComposedCoordinates.swift in Sources */,
+				B9A11F532852ABED00599719 /* CubeTransformation+Standard.swift in Sources */,
 				B96C709C2708C46A001DAEF8 /* Pieces.swift in Sources */,
+				B979C2502853A32E00C60455 /* Algorithm+Transform.swift in Sources */,
 				B9EC07F42713CF2500CAC7BE /* Swift+Helpers.swift in Sources */,
 				B984D7F527C801EC00BEDC7D /* OrderedEdgeSubsetCoordinates.swift in Sources */,
 				B96C709E2708C4B6001DAEF8 /* Orientation.swift in Sources */,
@@ -532,6 +549,7 @@
 				B93F8C182783B81200909080 /* Symmetry.swift in Sources */,
 				B96C7095270884DB001DAEF8 /* Algorithm.swift in Sources */,
 				B96C57DB27133EE7006D4EEA /* TaggedPieces.swift in Sources */,
+				B9A11F562852B82400599719 /* NotationParser.swift in Sources */,
 				B96FEAA5277E9526008AD165 /* PrettyPrinting.swift in Sources */,
 				B93F8C112783A63C00909080 /* ReducedCoordinates.swift in Sources */,
 				B9EC07F72715022B00CAC7BE /* MoveTable.swift in Sources */,
@@ -565,6 +583,7 @@
 				B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */,
 				B9B47D1C27B37E2C00EECC6F /* MoveTable+Cache.swift in Sources */,
 				B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */,
+				B9A11F542852ABF400599719 /* CubeTransformation+Standard.swift in Sources */,
 				B96E9BFC26E2755600A46A3B /* ContentView.swift in Sources */,
 				B9AEB7E027B17CDF0090A203 /* DirectCoordinates.swift in Sources */,
 				B9AEB7E727B17CDF0090A203 /* MoveTable.swift in Sources */,
@@ -583,6 +602,7 @@
 				B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */,
 				B9CF259926E2DFDA00E14E94 /* Stopwatch.swift in Sources */,
 				B9AEB7E627B17CDF0090A203 /* Swift+Helpers.swift in Sources */,
+				B979C24F2853A32E00C60455 /* Algorithm+Transform.swift in Sources */,
 				B9A2962F26E43495005C59D1 /* Notation.swift in Sources */,
 				B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */,
 				B9AEB7E227B17CDF0090A203 /* CubeTransformation.swift in Sources */,
@@ -613,6 +633,7 @@
 				B9AEB7EF27B17CDF0090A203 /* EdgePermutationCoordinates.swift in Sources */,
 				B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
 				B9AEB7F127B17CDF0090A203 /* Timing.swift in Sources */,
+				B9A11F552852ABF500599719 /* CubeTransformation+Standard.swift in Sources */,
 				B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
 				B9AEB7FA27B17CDF0090A203 /* TaggedPieces.swift in Sources */,
 				B96E9BFD26E2755600A46A3B /* ContentView.swift in Sources */,
@@ -801,6 +822,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Cubism (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = V2EPDFA9PV;
@@ -822,6 +844,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
 				PRODUCT_NAME = Cubism;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -833,6 +858,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Cubism (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = V2EPDFA9PV;
@@ -853,6 +879,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
 				PRODUCT_NAME = Cubism;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1085,6 +1114,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
+		};
+		B9A11F572852B89000599719 /* SimpleParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9D5CEF0277A833500A6DBE0 /* XCRemoteSwiftPackageReference "SimpleParser" */;
+			productName = SimpleParser;
 		};
 		B9D5CEF1277A833500A6DBE0 /* SimpleParser */ = {
 			isa = XCSwiftPackageProductDependency;

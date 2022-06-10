@@ -25,6 +25,22 @@ extension PiecePermutation {
 			}
 		}
 	}
+	
+	func cycles() -> [[Piece]] {
+		var handled: Set<Piece> = []
+		var cycles: [[Piece]] = []
+		for piece in Piece.allCases where !handled.contains(piece) {
+			handled.insert(piece)
+			let target = self[piece]
+			guard target != piece else { continue }
+			let cycle: [Piece] = sequence(first: target) { self[$0] }
+				.prefix { $0 != piece }
+				.reversed()
+			handled.formUnion(cycle)
+			cycles.append([piece] + cycle)
+		}
+		return cycles
+	}
 }
 
 /// defines for each spot what corner it receives

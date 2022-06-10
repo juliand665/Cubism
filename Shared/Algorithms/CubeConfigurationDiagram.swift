@@ -29,17 +29,17 @@ struct CubeConfigurationDiagram: View {
 				
 				HStack(spacing: spacing) {
 					Parts.cornerSpacer
-					Parts.horizontalTile(isYellow: c.nwCorner == .facingCW)
+					Parts.horizontalTile(isYellow: c.nwCorner == .twistedCCW)
 					Parts.horizontalTile(isYellow: !c.correctEdges.contains(.north))
-					Parts.horizontalTile(isYellow: c.neCorner == .facingCCW)
+					Parts.horizontalTile(isYellow: c.neCorner == .twistedCW)
 					Parts.cornerSpacer
 				}
 				HStack(spacing: spacing) {
-					Parts.verticalTile(isYellow: c.nwCorner == .facingCCW)
-					Parts.squareTile(isYellow: c.nwCorner == .correct)
+					Parts.verticalTile(isYellow: c.nwCorner == .twistedCW)
+					Parts.squareTile(isYellow: c.nwCorner == .neutral)
 					Parts.squareTile(isYellow: c.correctEdges.contains(.north))
-					Parts.squareTile(isYellow: c.neCorner == .correct)
-					Parts.verticalTile(isYellow: c.neCorner == .facingCW)
+					Parts.squareTile(isYellow: c.neCorner == .neutral)
+					Parts.verticalTile(isYellow: c.neCorner == .twistedCCW)
 				}
 				HStack(spacing: spacing) {
 					Parts.verticalTile(isYellow: !c.correctEdges.contains(.west))
@@ -49,17 +49,17 @@ struct CubeConfigurationDiagram: View {
 					Parts.verticalTile(isYellow: !c.correctEdges.contains(.east))
 				}
 				HStack(spacing: spacing) {
-					Parts.verticalTile(isYellow: c.swCorner == .facingCW)
-					Parts.squareTile(isYellow: c.swCorner == .correct)
+					Parts.verticalTile(isYellow: c.swCorner == .twistedCCW)
+					Parts.squareTile(isYellow: c.swCorner == .neutral)
 					Parts.squareTile(isYellow: c.correctEdges.contains(.south))
-					Parts.squareTile(isYellow: c.seCorner == .correct)
-					Parts.verticalTile(isYellow: c.seCorner == .facingCCW)
+					Parts.squareTile(isYellow: c.seCorner == .neutral)
+					Parts.verticalTile(isYellow: c.seCorner == .twistedCW)
 				}
 				HStack(spacing: spacing) {
 					Parts.cornerSpacer
-					Parts.horizontalTile(isYellow: c.swCorner == .facingCCW)
+					Parts.horizontalTile(isYellow: c.swCorner == .twistedCW)
 					Parts.horizontalTile(isYellow: !c.correctEdges.contains(.south))
-					Parts.horizontalTile(isYellow: c.seCorner == .facingCW)
+					Parts.horizontalTile(isYellow: c.seCorner == .twistedCCW)
 					Parts.cornerSpacer
 				}
 			}
@@ -317,7 +317,7 @@ struct CubeConfigurationDiagram_Previews: PreviewProvider {
 		HStack(spacing: 20) {
 			CubeConfigurationDiagram(configuration: .oll(.init(
 				correctEdges: [.south, .east],
-				neCorner: .facingCCW, swCorner: .facingCW, nwCorner: .correct
+				neCorner: .twistedCCW, swCorner: .twistedCW, nwCorner: .neutral
 			)))
 			CubeConfigurationDiagram(configuration: Algorithm.tPerm.configuration!)
 			CubeConfigurationDiagram(configuration: Algorithm.uPermB.configuration!)
