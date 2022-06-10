@@ -25,36 +25,75 @@ extension Algorithm {
 		id: String,
 		name: String,
 		description: String = "",
-		configuration: CubeConfiguration? = nil,
-		shouldCheckCorrectness: Bool = true,
+		configuration: BuiltInConfiguration = .none,
 		@ArrayBuilder<MoveSequence> variants: () -> [MoveSequence]
 	) -> Self {
-		.init(
+		let variants = variants()
+		let resolved = configuration.resolve(variants: variants)
+		resolved?.check(variants)
+		return .init(
 			id: .builtIn(id),
 			name: name,
 			description: description,
-			configuration: configuration,
-			variants: variants().map { .init(id: .builtIn(rawID(for: $0)), moves: $0) }
-		) <- {
-			if shouldCheckCorrectness {
-				$0.checkCorrectness()
+			configuration: resolved,
+			variants: variants.map { .init(id: .builtIn(rawID(for: $0)), moves: $0) }
+		)
+	}
+	
+	enum BuiltInConfiguration {
+		case none
+		case computedOLL
+		case computedPLL
+		case oll(OLLConfiguration)
+		case pll(PLLPermutation)
+		
+		func resolve(variants: [MoveSequence]) -> CubeConfiguration? {
+			switch self {
+			case .none:
+				return nil
+			case .computedOLL:
+				return .oll(try! .init(
+					variants.first!.transformReversingRotations()
+				))
+			case .computedPLL:
+				return .pll(try! .init(
+					variants.first!.transformReversingRotations()
+				))
+			case .oll(let oll):
+				return .oll(oll)
+			case .pll(let pll):
+				return .pll(pll)
 			}
 		}
 	}
 	
-	func checkCorrectness() {
-		#if DEBUG
-		guard let configuration = configuration else { return }
-		for variant in variants {
-			let transform = try! variant.moves.transformReversingRotations()
-			let isCorrect = (try? configuration.checkable.matches(transform)) ?? false
-			assert(isCorrect)
-		}
-		#endif
-	}
-	
 	private static func rawID(for sequence: MoveSequence) -> String {
 		sequence.map(StandardNotation.description(for:)).joined(separator: " ")
+	}
+}
+
+extension CubeConfiguration {
+	func check(_ variants: [MoveSequence]) {
+#if DEBUG
+		for variant in variants {
+			do {
+				try check(variant)
+			} catch {
+				fatalError("variant \(variant) failed correctness check due to \(error)")
+			}
+		}
+#endif
+	}
+	
+	func check(_ sequence: MoveSequence) throws {
+		enum CorrectnessError: Error {
+			case configurationMismatch(CubeTransformation)
+		}
+		
+		let transform = try sequence.transformReversingRotations()
+		guard try checkable.matches(transform) else {
+			throw CorrectnessError.configurationMismatch(transform)
+		}
 	}
 }
 
@@ -65,6 +104,12 @@ struct MoveSequence: Codable {
 extension MoveSequence {
 	init(_ maneuver: SolverManeuver) {
 		self.init(moves: maneuver.moves.map(\.action.move))
+	}
+}
+
+extension MoveSequence: CustomStringConvertible {
+	var description: String {
+		moves.map(StandardNotation.description(for:)).joined(separator: " ")
 	}
 }
 

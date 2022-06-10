@@ -45,7 +45,7 @@ extension Algorithm {
 	static let sune = builtIn(
 		id: "sune",
 		name: "Sune",
-		configuration: .oll(.cornersOnly(ne: .twistedCCW, se: .twistedCCW, nw: .twistedCCW))
+		configuration: .computedOLL
 	) {
 		"(R U Ri) U (R UU Ri)"
 	}
@@ -53,7 +53,7 @@ extension Algorithm {
 	static let antiSune = builtIn(
 		id: "anti-sune",
 		name: "Anti-Sune",
-		configuration: .oll(.cornersOnly(ne: .twistedCW, se: .twistedCW, sw: .twistedCW))
+		configuration: .computedOLL
 	) {
 		"(Ri Ui R) Ui (Ri UU R)"
 	}
@@ -61,7 +61,7 @@ extension Algorithm {
 	static let cross = builtIn(
 		id: "cross",
 		name: "Cross",
-		configuration: .oll(.cornersOnly(ne: .twistedCW, se: .twistedCCW, sw: .twistedCW, nw: .twistedCCW))
+		configuration: .computedOLL
 	) {
 		"F (R U Ri Ui) (R U Ri Ui) (R U Ri Ui) Fi"
 		"y (Ri Ui R) Ui (Ri U R) Ui (Ri UU R)"
@@ -71,7 +71,7 @@ extension Algorithm {
 	static let pi = builtIn(
 		id: "pi",
 		name: "Pi",
-		configuration: .oll(.cornersOnly(ne: .twistedCW, se: .twistedCCW, sw: .twistedCCW, nw: .twistedCW))
+		configuration: .computedOLL
 	) {
 		"[f (R U Ri Ui) fi] [F (R U Ri Ui) Fi]"
 		"R UU RR Ui RR Ui RR UU R"
@@ -80,7 +80,7 @@ extension Algorithm {
 	static let headlights = builtIn(
 		id: "headlights",
 		name: "Headlights",
-		configuration: .oll(.cornersOnly(se: .twistedCCW, sw: .twistedCW))
+		configuration: .computedOLL
 	) {
 		"(RR D) (Ri UU) (R Di) (Ri UU Ri)"
 		"(RR D Ri UU Ri) (RR Di Ri UU Ri)"
@@ -89,7 +89,7 @@ extension Algorithm {
 	static let chameleon = builtIn(
 		id: "chameleon",
 		name: "Chameleon",
-		configuration: .oll(.cornersOnly(sw: .twistedCW, nw: .twistedCCW))
+		configuration: .computedOLL
 	) {
 		"(r U Ri Ui) (ri F R Fi)"
 	}
@@ -97,7 +97,7 @@ extension Algorithm {
 	static let bowtie = builtIn(
 		id: "bowtie",
 		name: "Bowtie",
-		configuration: .oll(.cornersOnly(se: .twistedCCW, nw: .twistedCW))
+		configuration: .computedOLL
 	) {
 		"Fi (r U Ri Ui) (ri F R _)"
 	}

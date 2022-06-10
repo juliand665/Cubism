@@ -54,9 +54,7 @@ extension Algorithm {
 	static let aPermA = builtIn(
 		id: "a perm a",
 		name: "Aa (clockwise)",
-		configuration: .pll(.init(
-			cornerCycles: [[.nw, .ne, .se]]
-		))
+		configuration: .computedPLL
 	) {
 		"x (Ri U Ri) DD (R Ui Ri) DD RR xi"
 		"li U Ri DD R Ui Ri DD RR"
@@ -66,9 +64,7 @@ extension Algorithm {
 	static let aPermB = builtIn(
 		id: "a perm b",
 		name: "Ab (counterclockwise)",
-		configuration: .pll(.init(
-			cornerCycles: [[.sw, .se, .ne]]
-		))
+		configuration: .computedPLL
 	) {
 		"xi (R Ui R) DD (Ri U R) DD RR x"
 		"l Ui R DD Ri U R DD RR"
@@ -78,9 +74,7 @@ extension Algorithm {
 	static let ePerm = builtIn(
 		id: "e perm",
 		name: "E",
-		configuration: .pll(.init(
-			cornerCycles: [[.ne, .se], [.nw, .sw]]
-		))
+		configuration: .computedPLL
 	) {
 		"xi (R Ui Ri) D (R U Ri) Di (R U Ri) D (R Ui Ri) Di"
 		"xi (R Ui Ri) D (R U Ri) uu (Ri U R) D (Ri Ui R)"
@@ -90,10 +84,7 @@ extension Algorithm {
 	static let fPerm = builtIn(
 		id: "f perm",
 		name: "F",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .south]],
-			cornerCycles: [[.ne, .se]]
-		))
+		configuration: .computedPLL
 	) {
 		"Ri Ui Fi (R U Ri Ui) (Ri F) (RR Ui Ri Ui) R U Ri U R"
 		"y (Ri UU Ri di) Ri Fi (RR Ui Ri U) (Ri F R Ui F)"
@@ -102,10 +93,7 @@ extension Algorithm {
 	static let gPermA = builtIn(
 		id: "g perm a",
 		name: "Ga (corners CW)",
-		configuration: .pll(.init(
-			edgeCycles: [[.east, .north, .west]],
-			cornerCycles: [[.sw, .nw, .ne]]
-		))
+		configuration: .computedPLL
 	) {
 		"RR u Ri U Ri Ui R ui RR yi Ri U R"
 		"RR u Ri U Ri Ui R ui RR Fi U F"
@@ -115,10 +103,7 @@ extension Algorithm {
 	static let gPermB = builtIn(
 		id: "g perm b",
 		name: "Gb (corners CCW)",
-		configuration: .pll(.init(
-			edgeCycles: [[.west, .north, .east]],
-			cornerCycles: [[.ne, .nw, .sw]]
-		))
+		configuration: .computedPLL
 	) {
 		"yi Ri Ui R y RR u Ri U R Ui R ui RR"
 		"Fi Ui F RR u Ri U R Ui R ui RR"
@@ -128,10 +113,7 @@ extension Algorithm {
 	static let gPermC = builtIn(
 		id: "g perm c",
 		name: "Gc (corners CCW)",
-		configuration: .pll(.init(
-			edgeCycles: [[.east, .south, .west]],
-			cornerCycles: [[.nw, .sw, .se]]
-		))
+		configuration: .computedPLL
 	) {
 		"RR ui R Ui R U Ri u RR y R Ui Ri"
 		"RR ui R Ui R U Ri u RR B Ui Bi"
@@ -141,10 +123,7 @@ extension Algorithm {
 	static let gPermD = builtIn(
 		id: "g perm d",
 		name: "Gd (corners CW)",
-		configuration: .pll(.init(
-			edgeCycles: [[.west, .south, .east]],
-			cornerCycles: [[.se, .sw, .nw]]
-		))
+		configuration: .computedPLL
 	) {
 		"y R U Ri yi RR ui R Ui Ri U Ri u RR"
 		"B U Bi RR ui R Ui Ri U Ri u RR"
@@ -154,9 +133,7 @@ extension Algorithm {
 	static let hPerm = builtIn(
 		id: "h perm",
 		name: "H",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .south], [.east, .west]]
-		))
+		configuration: .computedPLL
 	) {
 		"MM U MM UU MM U MM"
 	}
@@ -164,10 +141,7 @@ extension Algorithm {
 	static let jPermA = builtIn(
 		id: "j perm a",
 		name: "Ja",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .west]],
-			cornerCycles: [[.nw, .ne]]
-		))
+		configuration: .computedPLL
 	) {
 		"(Ri U Li) UU (R Ui Ri) UU (R L Ui)"
 		"y li Ri F R Fi R UU ri U r UU"
@@ -177,10 +151,7 @@ extension Algorithm {
 	static let jPermB = builtIn(
 		id: "j perm b",
 		name: "Jb",
-		configuration: .pll(.init(
-			edgeCycles: [[.south, .east]],
-			cornerCycles: [[.se, .ne]]
-		))
+		configuration: .computedPLL
 	) {
 		"(R U Ri Fi) (R U Ri Ui) (Ri F) (RR Ui Ri Ui)"
 	}
@@ -188,10 +159,7 @@ extension Algorithm {
 	static let nPermA = builtIn(
 		id: "n perm a",
 		name: "Na",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .south]],
-			cornerCycles: [[.nw, .se]]
-		))
+		configuration: .computedPLL
 	) {
 		"((L Ui R) UU (Li U Ri)) ((L Ui R) UU (Li U Ri)) U"
 		"y R Ui Ri U l U F Ui Ri Fi R Ui R U li U Ri"
@@ -201,10 +169,7 @@ extension Algorithm {
 	static let nPermB = builtIn(
 		id: "n perm b",
 		name: "Nb",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .south]],
-			cornerCycles: [[.ne, .sw]]
-		))
+		configuration: .computedPLL
 	) {
 		"((Ri U Li) UU (R Ui L)) ((Ri U Li) UU (R Ui L)) Ui"
 		"y Ri U R Ui Ri Fi Ui F R U Ri F Ri Fi R Ui R"
@@ -213,10 +178,7 @@ extension Algorithm {
 	static let rPermA = builtIn(
 		id: "r perm a",
 		name: "Ra",
-		configuration: .pll(.init(
-			edgeCycles: [[.south, .west]],
-			cornerCycles: [[.nw, .ne]]
-		))
+		configuration: .computedPLL
 	) {
 		"L UU Li UU L Fi Li Ui L U L F LL U"
 		"y R Ui Ri Ui R U R D Ri Ui R Di Ri UU Ri Ui"
@@ -225,10 +187,7 @@ extension Algorithm {
 	static let rPermB = builtIn(
 		id: "r perm b",
 		name: "Rb",
-		configuration: .pll(.init(
-			edgeCycles: [[.south, .east]],
-			cornerCycles: [[.nw, .ne]]
-		))
+		configuration: .computedPLL
 	) {
 		"Ri UU R UU (Ri F) (R U Ri Ui) Ri Fi RR Ui"
 		"y RR F R U R Ui Ri Fi R UU Ri UU R U"
@@ -237,10 +196,7 @@ extension Algorithm {
 	static let tPerm = builtIn(
 		id: "t perm",
 		name: "T",
-		configuration: .pll(.init(
-			edgeCycles: [[.east, .west]],
-			cornerCycles: [[.ne, .se]]
-		))
+		configuration: .computedPLL
 	) {
 		"(R U Ri Ui) (Ri F) (RR Ui Ri Ui) (R U Ri Fi)"
 	}
@@ -248,9 +204,7 @@ extension Algorithm {
 	static let uPermA = builtIn(
 		id: "u perm a",
 		name: "Ua (counterclockwise)",
-		configuration: .pll(.init(
-			edgeCycles: [[.west, .south, .east]]
-		))
+		configuration: .computedPLL
 	) {
 		"MM U M UU Mi U MM"
 		"FF Ui (L Ri) FF (Li R) Ui FF"
@@ -260,9 +214,7 @@ extension Algorithm {
 	static let uPermB = builtIn(
 		id: "u perm b",
 		name: "Ub (clockwise)",
-		configuration: .pll(.init(
-			edgeCycles: [[.east, .south, .west]]
-		))
+		configuration: .computedPLL
 	) {
 		"MM Ui M UU Mi Ui MM"
 		"FF U (L Ri) FF (Li R) U FF"
@@ -272,10 +224,7 @@ extension Algorithm {
 	static let vPerm = builtIn(
 		id: "v perm",
 		name: "V",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .east]],
-			cornerCycles: [[.nw, .se]]
-		))
+		configuration: .computedPLL
 	) {
 		"Ri U Ri di Ri Fi RR Ui Ri U Ri F R F"
 		"Ri U Ri Ui y Ri Fi RR Ui Ri U Ri F R F"
@@ -286,10 +235,7 @@ extension Algorithm {
 	static let yPerm = builtIn(
 		id: "y perm",
 		name: "Y",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .west]],
-			cornerCycles: [[.nw, .se]]
-		))
+		configuration: .computedPLL
 	) {
 		"F [R Ui Ri Ui] [R U Ri Fi] {[R U Ri Ui] [Ri F R Fi]}"
 	}
@@ -297,9 +243,7 @@ extension Algorithm {
 	static let zPerm = builtIn(
 		id: "z perm",
 		name: "Z",
-		configuration: .pll(.init(
-			edgeCycles: [[.north, .west], [.south, .east]]
-		))
+		configuration: .computedPLL
 	) {
 		"MM U MM U Mi UU MM UU Mi UU"
 		"MM U MM U M UU MM UU M UU"

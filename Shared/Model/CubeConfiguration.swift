@@ -43,7 +43,8 @@ struct OLLConfiguration: Codable {
 }
 
 extension OLLConfiguration: CheckableConfiguration {
-	init(_ state: CubeTransformation) {
+	init(_ transform: CubeTransformation) {
+		let state = -transform // OLLs are defined in terms of the previous state
 		let edges = state.edges.orientation
 		correctEdges = .init(FaceEdge.allCases
 			.filter { edges[$0.uPiece] == .neutral }
@@ -58,7 +59,7 @@ extension OLLConfiguration: CheckableConfiguration {
 	}
 	
 	func matches(_ state: CubeTransformation) -> Bool {
-		let other = Self(-state) // OLLs are defined in terms of the previous state
+		let other = Self(state)
 		return correctEdges == other.correctEdges
 		&& (neCorner.map { $0 == other.neCorner } ?? true)
 		&& (seCorner.map { $0 == other.seCorner } ?? true)
@@ -73,21 +74,22 @@ struct PLLPermutation: Codable {
 }
 
 extension PLLPermutation: CheckableConfiguration {
-	init(_ state: CubeTransformation) throws {
-		edgeCycles = try state.edges.permutation.cycles().map {
+	init(_ transform: CubeTransformation) throws {
+		// PLLs are defined in terms of how they move pieces
+		edgeCycles = try transform.edges.permutation.cycles().map {
 			try $0.map {
 				try FaceEdge(uPiece: $0)
 				??? TransformationConversionError.pieceOutsideULayerAffected($0)
 			}
 		}
 		
-		cornerCycles = state.corners.permutation.cycles().map {
+		cornerCycles = transform.corners.permutation.cycles().map {
 			$0.map(FaceCorner.init(uPiece:))
 		}
 	}
 	
 	func matches(_ state: CubeTransformation) throws -> Bool {
-		let other = try Self(state) // PLLs are defined in terms of how they move pieces
+		let other = try Self(state)
 		return cyclesMatch(edgeCycles, other.edgeCycles)
 		&& cyclesMatch(cornerCycles, other.cornerCycles)
 	}
