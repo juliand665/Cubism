@@ -44,6 +44,8 @@ struct OLLConfiguration: Codable {
 
 extension OLLConfiguration: CheckableConfiguration {
 	init(_ transform: CubeTransformation) {
+		assert(transform.affectsOnlyULayer())
+		
 		let state = -transform // OLLs are defined in terms of the previous state
 		let edges = state.edges.orientation
 		correctEdges = .init(FaceEdge.allCases
@@ -75,6 +77,8 @@ struct PLLPermutation: Codable {
 
 extension PLLPermutation: CheckableConfiguration {
 	init(_ transform: CubeTransformation) throws {
+		assert(transform.affectsOnlyULayer())
+		
 		// PLLs are defined in terms of how they move pieces
 		edgeCycles = try transform.edges.permutation.cycles().map {
 			try $0.map {
@@ -108,6 +112,16 @@ private func cyclesMatch<T: Equatable>(_ lhs: [[T]], _ rhs: [[T]]) -> Bool {
 		guard aligned.starts(with: cycle) else { return false }
 	}
 	return true
+}
+
+extension CubeTransformation {
+	func affectsOnlyULayer() -> Bool {
+		true
+		&& edges.orientation.dropFirst(4).allSatisfy { $0 == .neutral }
+		&& edges.permutation.dropFirst(4).elementsEqual(Edge.allCases.dropFirst(4))
+		&& corners.orientation.dropFirst(4).allSatisfy { $0 == .neutral }
+		&& corners.permutation.dropFirst(4).elementsEqual(Corner.allCases.dropFirst(4))
+	}
 }
 
 enum FaceEdge: Int, Codable, CaseIterable {
