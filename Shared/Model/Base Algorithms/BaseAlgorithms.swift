@@ -5,6 +5,7 @@ extension AlgorithmCollection {
 		let start = Date()
 		let collection = Self(folders: [
 			.twoLookOLL,
+			.fullOLL,
 			.simplifiedPLL,
 			.fullPLL,
 			.miscellaneous,
