@@ -10,9 +10,28 @@ struct AlgorithmsScreen: View {
 					NavigationLink {
 						AlgorithmsList(folder: folder)
 					} label: {
-						VStack(alignment: .leading, spacing: 4) {
-							Text(folder.name).font(.headline)
-							Text(folder.description).font(.footnote).foregroundStyle(.secondary)
+						HStack {
+							VStack(alignment: .leading, spacing: 4) {
+								Text(folder.name)
+									.font(.headline)
+								Text(folder.description)
+									.font(.footnote)
+									.foregroundStyle(.secondary)
+							}
+							
+							Spacer()
+							
+							let algorithmCount = folder.sections.map(\.algorithms.count).sum()
+							Text("\(algorithmCount)")
+								.font(.footnote)
+								.blendMode(.destinationOut)
+								.padding(4)
+								.frame(minWidth: 30)
+								.background {
+									Capsule()
+										.foregroundStyle(.secondary)
+								}
+								.compositingGroup()
 						}
 						.padding(.vertical, 8)
 					}
@@ -95,7 +114,6 @@ extension MoveSequence {
 struct AlgorithmsScreen_Previews: PreviewProvider {
     static var previews: some View {
         AlgorithmsScreen()
-			.inEachColorScheme()
 		
 		NavigationView {
 			AlgorithmsList(folder: .twoLookOLL)
