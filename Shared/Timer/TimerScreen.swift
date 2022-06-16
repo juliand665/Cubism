@@ -271,8 +271,6 @@ struct TimerScreen_Previews: PreviewProvider {
 		]
 		
 		TimerScreen(storage: .init(results: exampleResults))
-			.inEachColorScheme()
-			.inEachOrientation()
 		
 		let _ = ScrambleGenerator.mockInitializeForPreviews()
 		TimerScreen(scramble: "R D' F2 D2 R2 B2 R2 B2 U2 F L2 B' D B2 F2 L R B")
@@ -283,10 +281,9 @@ struct TimerScreen_Previews: PreviewProvider {
 			storage: .init(results: Array(exampleResults.prefix(3))),
 			latestResult: .init(timeTaken: 69.420, finishTime: .now)
 		)
-			.previewInterfaceOrientation(.landscapeLeft)
+		.previewInterfaceOrientation(.landscapeLeft)
 		
 		TimerScreen(stopwatch: .init(startTime: .now, elapsedTime: 69.420))
-			.inEachOrientation()
 	}
 }
 #endif

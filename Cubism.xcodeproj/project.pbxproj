@@ -43,8 +43,6 @@
 		B96E9C0F26E2883600A46A3B /* TimerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C0E26E2883600A46A3B /* TimerScreen.swift */; };
 		B96E9C1026E2883600A46A3B /* TimerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C0E26E2883600A46A3B /* TimerScreen.swift */; };
 		B96E9C1326E2992D00A46A3B /* UserDefault in Frameworks */ = {isa = PBXBuildFile; productRef = B96E9C1226E2992D00A46A3B /* UserDefault */; };
-		B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
-		B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */; };
 		B96FEAA5277E9526008AD165 /* PrettyPrinting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */; };
 		B979C24F2853A32E00C60455 /* Algorithm+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */; };
 		B979C2502853A32E00C60455 /* Algorithm+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */; };
@@ -171,7 +169,6 @@
 		B96E9BF326E2755600A46A3B /* Cubism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubism.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96E9BF926E2755600A46A3B /* Cubism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubism.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96E9C0E26E2883600A46A3B /* TimerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerScreen.swift; sourceTree = "<group>"; };
-		B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Previews.swift"; sourceTree = "<group>"; };
 		B96FEAA4277E9526008AD165 /* PrettyPrinting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettyPrinting.swift; sourceTree = "<group>"; };
 		B979C24D28537E7100C60455 /* Cubism (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cubism (iOS).entitlements"; sourceTree = "<group>"; };
 		B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Algorithm+Transform.swift"; sourceTree = "<group>"; };
@@ -344,7 +341,6 @@
 			children = (
 				B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */,
 				B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */,
-				B96E9C1526E2D83200A46A3B /* SwiftUI+Previews.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -579,7 +575,6 @@
 				B9AEB7E527B17CDF0090A203 /* Symmetry.swift in Sources */,
 				B9CF259C26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
 				B9A2963126E434C4005C59D1 /* BaseAlgorithms.swift in Sources */,
-				B96E9C1626E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
 				B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */,
 				B9B47D1C27B37E2C00EECC6F /* MoveTable+Cache.swift in Sources */,
 				B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */,
@@ -634,7 +629,6 @@
 				B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
 				B9AEB7F127B17CDF0090A203 /* Timing.swift in Sources */,
 				B9A11F552852ABF500599719 /* CubeTransformation+Standard.swift in Sources */,
-				B96E9C1726E2D83200A46A3B /* SwiftUI+Previews.swift in Sources */,
 				B9AEB7FA27B17CDF0090A203 /* TaggedPieces.swift in Sources */,
 				B96E9BFD26E2755600A46A3B /* ContentView.swift in Sources */,
 				B96E9C1026E2883600A46A3B /* TimerScreen.swift in Sources */,

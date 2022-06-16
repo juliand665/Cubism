@@ -323,7 +323,6 @@ struct CubeConfigurationDiagram_Previews: PreviewProvider {
 			CubeConfigurationDiagram(configuration: Algorithm.uPermB.configuration!)
 			CubeConfigurationDiagram(configuration: Algorithm.gPermA.configuration!)
 		}
-		.inEachColorScheme()
 		.previewInterfaceOrientation(.landscapeLeft)
     }
 }

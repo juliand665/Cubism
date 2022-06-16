@@ -70,7 +70,6 @@ struct MoveSequenceView: View {
 struct MoveSequenceView_Previews: PreviewProvider {
     static var previews: some View {
 		MoveSequenceView(moves: "R U Ri Ui x ri F R Fi y RR d Ri UU R Di Ri uu Ri z L u BB Li xx M EE Si MM Ei S Rw 3Fw2 4L 2DD")
-			.inEachColorScheme()
 			.previewLayout(.fixed(width: 420, height: 320))
 			.padding()
     }

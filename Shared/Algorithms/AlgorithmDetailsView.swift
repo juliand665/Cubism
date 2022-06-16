@@ -149,6 +149,5 @@ struct AlgorithmDetailsView_Previews: PreviewProvider {
 				]
 			)))
 		}
-		.inEachColorScheme()
 	}
 }
