@@ -9,39 +9,13 @@ struct ContentView: View {
 			AlgorithmsScreen()
 				.tabItem { Label("Algorithms", systemImage: "list.number") }
 			
-			TestScreen()
-				.tabItem { Label("Testing", systemImage: "testtube.2") }
+			TrainerScreen()
+				.tabItem { Label("Trainer", systemImage: "dial.max") }
 			
 			Text("TODO")
 				.tabItem { Label("Settings", systemImage: "gear") }
 		}
-	}
-}
-
-struct TestScreen: View {
-	@State var timeTaken: TimeInterval?
-	
-	var body: some View {
-		VStack(spacing: 8) {
-			Button("Time Stuff", action: testPruningTable)
-			
-			if let timeTaken = timeTaken {
-				Text("Time taken: \(timeTaken) seconds")
-			}
-		}
-	}
-	
-	func testPruningTable() {
-		_ = UDSliceCoordinate.standardSymmetryTable
-		_ = EdgeOrientationCoordinate.standardSymmetryTable
-		print(ReducedFlipUDSliceCoordinate.count, "representants")
-		print()
-		_ = ReducedFlipUDSliceCoordinate.moveTable
-		
-		let start = Date.now
-		let table = PruningTable<Phase1Coordinate>()
-		timeTaken = -start.timeIntervalSinceNow
-		print("done!", table.entries.count, "entries")
+		.environmentObject(AlgorithmCustomizer())
 	}
 }
 

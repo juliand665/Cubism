@@ -24,14 +24,7 @@ struct AlgorithmsScreen: View {
 							let algorithmCount = folder.sections.map(\.algorithms.count).sum()
 							Text("\(algorithmCount)")
 								.font(.footnote)
-								.blendMode(.destinationOut)
-								.padding(4)
-								.frame(minWidth: 30)
-								.background {
-									Capsule()
-										.foregroundStyle(.secondary)
-								}
-								.compositingGroup()
+								.foregroundStyle(.secondary)
 						}
 						.padding(.vertical, 8)
 					}
@@ -44,7 +37,6 @@ struct AlgorithmsScreen: View {
 			}
 			.navigationTitle("Algorithms")
 		}
-		.environmentObject(AlgorithmCustomizer())
     }
 }
 
@@ -69,36 +61,46 @@ struct AlgorithmCell: View {
 	@EnvironmentObject private var customizer: AlgorithmCustomizer
 	
 	var body: some View {
-		let customization = customizer[algorithm.id]
 		NavigationLink {
 			AlgorithmDetailsView(algorithm: algorithm, customization: $customizer[algorithm.id])
 		} label: {
-			HStack(spacing: 20) {
-				if let configuration = algorithm.configuration {
-					CubeConfigurationDiagram(configuration: configuration)
-				}
+			AlgorithmLabel(algorithm: algorithm)
+		}
+	}
+}
+
+struct AlgorithmLabel: View {
+	let algorithm: Algorithm
+	
+	@EnvironmentObject private var customizer: AlgorithmCustomizer
+	
+	var body: some View {
+		HStack(spacing: 20) {
+			let customization = customizer[algorithm.id]
+			if let configuration = algorithm.configuration {
+				CubeConfigurationDiagram(configuration: configuration)
+			}
+			
+			VStack(alignment: .leading, spacing: 4) {
+				Text(customization.nameOverride ?? algorithm.name)
+					.bold()
+					.font(.subheadline)
+					.foregroundStyle(.secondary)
 				
-				VStack(alignment: .leading, spacing: 4) {
-					Text(customization.nameOverride ?? algorithm.name)
-						.bold()
-						.font(.subheadline)
-						.foregroundStyle(.secondary)
-					
-					let variant = algorithm.preferredVariant(using: customization)
-						?? algorithm.variants.first!
-					Text(variant.moves.description(using: NaturalNotation.self)) // TODO: allow choosing notation
-						.fixedSize(horizontal: false, vertical: true) // allow multiple lines
-					
-					let variantCount = algorithm.variants.count + customization.customVariants.count
-					if variantCount > 1 {
-						Text("\(variantCount) variants available")
-							.font(.footnote)
-							.foregroundColor(.secondary)
-					}
+				let variant = algorithm.preferredVariant(using: customization)
+				?? algorithm.variants.first!
+				Text(variant.moves.description(using: NaturalNotation.self)) // TODO: allow choosing notation
+					.fixedSize(horizontal: false, vertical: true) // allow multiple lines
+				
+				let variantCount = algorithm.variants.count + customization.customVariants.count
+				if variantCount > 1 {
+					Text("\(variantCount) variants available")
+						.font(.footnote)
+						.foregroundColor(.secondary)
 				}
 			}
-			.padding(.vertical, 6)
 		}
+		.padding(.vertical, 6)
 	}
 }
 

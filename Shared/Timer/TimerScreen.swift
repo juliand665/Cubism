@@ -7,7 +7,6 @@ struct TimerScreen: View {
 	@StateObject var storage = ResultsStorage()
 	@State var latestResult: TimerResult?
 	@State var scramble: MoveSequence?
-	@AppStorage("showScrambleAsText") var showScrambleAsText = true
 	
 	var body: some View {
 		NavigationView {
@@ -107,19 +106,7 @@ struct TimerScreen: View {
 		VStack(spacing: 16) {
 			if ScrambleGenerator.isPrepared {
 				if let scramble = scramble {
-					ZStack {
-						if showScrambleAsText {
-							Text(scramble.description())
-								.textSelection(.enabled)
-								.fixedSize(horizontal: false, vertical: true)
-								.frame(maxWidth: .infinity, alignment: .leading)
-						} else {
-							MoveSequenceView(moves: scramble)
-						}
-					}
-					.onTapGesture {
-						showScrambleAsText.toggle()
-					}
+					ScrambleView(scramble: scramble)
 					
 					Button {
 						UIPasteboard.general.string = scramble.description()
@@ -204,6 +191,33 @@ struct TimerScreen: View {
 	}
 }
 
+struct ScrambleView: View {
+	var scramble: MoveSequence
+	
+	@AppStorage("showScrambleAsText") private var showScrambleAsText = true
+	
+	var body: some View {
+		ZStack {
+			if scramble.isEmpty {
+				Text("Empty Scramble!")
+					.foregroundColor(.secondary)
+			} else {
+				if showScrambleAsText {
+					Text(scramble.description())
+						.textSelection(.enabled)
+						.fixedSize(horizontal: false, vertical: true)
+						.frame(maxWidth: .infinity, alignment: .leading)
+				} else {
+					MoveSequenceView(moves: scramble)
+				}
+			}
+		}
+		.onTapGesture {
+			showScrambleAsText.toggle()
+		}
+	}
+}
+
 struct StoredResultsList: View {
 	@Binding var storedResults: [TimerResult]
 	
@@ -274,8 +288,6 @@ struct TimerScreen_Previews: PreviewProvider {
 		
 		let _ = ScrambleGenerator.mockInitializeForPreviews()
 		TimerScreen(scramble: "R D' F2 D2 R2 B2 R2 B2 U2 F L2 B' D B2 F2 L R B")
-		TimerScreen(scramble: "R D' F2 D2 R2 B2 R2 B2 U2 F L2 B' D B2 F2 L R B", showScrambleAsText: false)
-			.preferredColorScheme(.dark)
 		
 		TimerScreen(
 			storage: .init(results: Array(exampleResults.prefix(3))),

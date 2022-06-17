@@ -55,6 +55,7 @@
 		B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476526E5732200E19911 /* OLLAlgorithms.swift */; };
 		B988476826E5737500E19911 /* PLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476726E5737500E19911 /* PLLAlgorithms.swift */; };
 		B988476A26E5738D00E19911 /* MiscAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476926E5738D00E19911 /* MiscAlgorithms.swift */; };
+		B994B159285BF67F006AD912 /* TrainerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994B158285BF67F006AD912 /* TrainerScreen.swift */; };
 		B9A11F532852ABED00599719 /* CubeTransformation+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */; };
 		B9A11F542852ABF400599719 /* CubeTransformation+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */; };
 		B9A11F552852ABF500599719 /* CubeTransformation+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */; };
@@ -177,6 +178,7 @@
 		B988476526E5732200E19911 /* OLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLLAlgorithms.swift; sourceTree = "<group>"; };
 		B988476726E5737500E19911 /* PLLAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLAlgorithms.swift; sourceTree = "<group>"; };
 		B988476926E5738D00E19911 /* MiscAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscAlgorithms.swift; sourceTree = "<group>"; };
+		B994B158285BF67F006AD912 /* TrainerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerScreen.swift; sourceTree = "<group>"; };
 		B9A11F522852ABED00599719 /* CubeTransformation+Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CubeTransformation+Standard.swift"; sourceTree = "<group>"; };
 		B9A2962A26E43453005C59D1 /* NotationParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotationParser.swift; sourceTree = "<group>"; };
 		B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfiguration.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				B96E9BED26E2755300A46A3B /* ContentView.swift */,
 				B9CF259126E2DF5700E14E94 /* Timer */,
 				B96AB4CD26E3B31E003E38E4 /* Algorithms */,
+				B994B157285BF672006AD912 /* Trainer */,
 				B9A2963226E434ED005C59D1 /* Model */,
 				B96E9C1426E2D82700A46A3B /* Helpers */,
 				B96E9BEE26E2755600A46A3B /* Assets.xcassets */,
@@ -355,6 +358,14 @@
 				B9D5CEF4277A857800A6DBE0 /* BigCubeAlgorithms.swift */,
 			);
 			path = "Base Algorithms";
+			sourceTree = "<group>";
+		};
+		B994B157285BF672006AD912 /* Trainer */ = {
+			isa = PBXGroup;
+			children = (
+				B994B158285BF67F006AD912 /* TrainerScreen.swift */,
+			);
+			path = Trainer;
 			sourceTree = "<group>";
 		};
 		B9A2963226E434ED005C59D1 /* Model */ = {
@@ -567,6 +578,7 @@
 				B9AEB7EB27B17CDF0090A203 /* Pieces.swift in Sources */,
 				B9CF259326E2DF6C00E14E94 /* TimerResult.swift in Sources */,
 				B9DE914126F292F200DE0E29 /* Colors.swift in Sources */,
+				B994B159285BF67F006AD912 /* TrainerScreen.swift in Sources */,
 				B955EF9E26ED73C0008F65E3 /* AlgorithmDetailsView.swift in Sources */,
 				B9AEB7E927B17CDF0090A203 /* UDSliceCoordinate.swift in Sources */,
 				B9AEB7E327B17CDF0090A203 /* PieceOrientation.swift in Sources */,

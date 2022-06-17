@@ -138,7 +138,7 @@ enum ScrambleGenerator {
 		repeat {
 			solver.searchNextLevel()
 		} while solver.bestSolution!.length > 24
-		return .init(moves: solver.bestSolution!.moves.map(\.action.move))
+		return .init(solver.bestSolution!)
 	}
 }
 
