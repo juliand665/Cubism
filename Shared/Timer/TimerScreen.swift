@@ -11,16 +11,18 @@ struct TimerScreen: View {
 	var body: some View {
 		NavigationView {
 			ZStack {
-				VStack(spacing: 16) {
-					box { timerArea }
-					box { storedResultsArea }
-					box { scrambleArea }
-					Spacer(minLength: 0)
+				ScrollView {
+					VStack(spacing: 16) {
+						box { timerArea }
+						box { storedResultsArea }
+						box { scrambleArea }
+						Spacer(minLength: 0)
+					}
+					.compositingGroup()
+					.shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
+					.padding()
+					.background(Color.groupedBackground)
 				}
-				.compositingGroup()
-				.shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
-				.padding()
-				.background(Color.groupedBackground)
 				
 				VStack { // transitions don't work in ZStacks
 					if stopwatch.isRunning {
