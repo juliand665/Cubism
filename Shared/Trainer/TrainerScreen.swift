@@ -18,7 +18,7 @@ struct TrainerScreen: View {
     var body: some View {
 		NavigationView {
 			Form {
-				Section("OLLs") {
+				Section {
 					Toggle("Train OLLs", isOn: $shouldTrainOLLs)
 					
 					NavigationLink {
@@ -32,6 +32,15 @@ struct TrainerScreen: View {
 						}
 					}
 					.disabled(!shouldTrainOLLs)
+				} header: {
+					Text("OLLs")
+				} footer: {
+					if shouldTrainOLLs {
+						Text("Since some OLLs are symmetrical, you may receive a PLL you did not select (if any) because you solved it from a different angle than it was generated.")
+							.foregroundStyle(.secondary)
+							.font(.footnote)
+							.frame(maxWidth: .infinity, alignment: .leading)
+					}
 				}
 				
 				Section("PLLs") {
@@ -74,7 +83,7 @@ struct TrainerScreen: View {
 				.filter { plls.contains($0.id) }
 			if shouldTrainPLLs, let algorithm = pllOptions.randomElement() {
 				let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
-				state += transform
+				state -= transform
 			}
 			
 			state += uTurns.randomElement()!
@@ -85,7 +94,7 @@ struct TrainerScreen: View {
 				.filter { olls.contains($0.id) }
 			if shouldTrainOLLs, let algorithm = ollOptions.randomElement() {
 				let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
-				state += transform
+				state -= transform
 			}
 			
 			state += uTurns.randomElement()!
@@ -93,7 +102,7 @@ struct TrainerScreen: View {
 		
 		let solver = ThreeWayTwoPhaseSolver(start: state)
 		solver.searchNextLevel()
-		scramble = solver.bestSolution.map(MoveSequence.init)
+		scramble = solver.bestSolution.map(-).map(MoveSequence.init)
 	}
 }
 

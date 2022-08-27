@@ -101,6 +101,10 @@ struct SolverMove: CustomStringConvertible {
 		"SolverMove(\(action))"
 	}
 	
+	static prefix func - (move: Self) -> Self {
+		.init(action: -move.action, transform: -move.transform)
+	}
+	
 	struct Action: Hashable, CustomStringConvertible {
 		static let all = Face.allCases.flatMap { face in
 			Move.Direction.allCases.map { Self(face: face, direction: $0) }
@@ -132,6 +136,10 @@ struct SolverMove: CustomStringConvertible {
 		
 		var description: String {
 			StandardNotation.description(for: move)
+		}
+		
+		static prefix func - (action: Self) -> Self {
+			.init(face: action.face, direction: -action.direction)
 		}
 	}
 }

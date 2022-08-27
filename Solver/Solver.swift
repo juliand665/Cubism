@@ -121,7 +121,7 @@ final class BasicTwoPhaseSolver: Solver {
 			guard length < bestLength else { continue }
 			
 			bestSolution = phase1 + phase2
-			//print("found solution with \(length) moves")
+			//print("found solution with \(length) moves: \(phase1) + \(phase2)")
 		}
 		
 		nextPhase1Length += 1
@@ -231,5 +231,9 @@ struct SolverManeuver: CustomStringConvertible {
 	
 	static func + (lhs: Self, rhs: Self) -> Self {
 		.init(moves: lhs.moves + rhs.moves)
+	}
+	
+	static prefix func - (maneuver: Self) -> Self {
+		.init(moves: maneuver.moves.reversed().map(-))
 	}
 }
