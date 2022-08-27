@@ -7,14 +7,19 @@ typealias FloatLiteralType = CGFloat
 
 struct CubeConfigurationDiagram: View {
 	let configuration: CubeConfiguration
+	var scale: CGFloat = 1
 	
 	var body: some View {
-		switch configuration {
-		case .oll(let configuration):
-			OLLDiagram(configuration: configuration)
-		case .pll(let permutation):
-			PLLDiagram(permutation: permutation)
+		Group {
+			switch configuration {
+			case .oll(let configuration):
+				OLLDiagram(configuration: configuration)
+			case .pll(let permutation):
+				PLLDiagram(permutation: permutation)
+			}
 		}
+		.scaleEffect(scale)
+		.frame(width: scale * 64, height: scale * 64)
 	}
 	
 	struct OLLDiagram: View {
@@ -321,7 +326,7 @@ struct CubeConfigurationDiagram_Previews: PreviewProvider {
 			)))
 			CubeConfigurationDiagram(configuration: Algorithm.tPerm.configuration!)
 			CubeConfigurationDiagram(configuration: Algorithm.uPermB.configuration!)
-			CubeConfigurationDiagram(configuration: Algorithm.gPermA.configuration!)
+			CubeConfigurationDiagram(configuration: Algorithm.gPermA.configuration!, scale: 2)
 		}
 		.previewInterfaceOrientation(.landscapeLeft)
     }
