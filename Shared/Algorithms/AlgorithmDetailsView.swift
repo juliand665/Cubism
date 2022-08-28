@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct AlgorithmDetailsView: View {
-	let algorithm: Algorithm
+	var algorithm: Algorithm
 	@Binding var customization: AlgorithmCustomization
+	@State var isAddingVariant = false
 	
 	var body: some View {
 		List {
@@ -31,6 +32,13 @@ struct AlgorithmDetailsView: View {
 		.toolbar {
 			EditButton()
 		}
+		.sheet(isPresented: $isAddingVariant) {
+			NavigationView {
+				AddVariantSheet(algorithm: algorithm) { variant in
+					customization.customVariants.append(variant)
+				}
+			}
+		}
 		.navigationTitle(algorithm.name)
 		.navigationBarTitleDisplayMode(.inline)
 	}
@@ -58,7 +66,7 @@ struct AlgorithmDetailsView: View {
 		}
 		
 		Button {
-			// TODO
+			isAddingVariant = true
 		} label: {
 			Label("Add Custom Variant", systemImage: "plus")
 		}
@@ -124,5 +132,6 @@ struct AlgorithmDetailsView_Previews: PreviewProvider {
 		NavigationView {
 			AlgorithmDetailsView(algorithm: .edgeEndSwap, customization: .constant(.init()))
 		}
+		.previewDisplayName("No Configuration")
 	}
 }

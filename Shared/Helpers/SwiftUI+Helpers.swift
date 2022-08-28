@@ -45,3 +45,16 @@ extension View {
 			.frame(width: 2, height: 2) // zero frames are treated as hidden
 	}
 }
+
+extension HorizontalAlignment {
+	static var compatibleListRowSeparatorLeading: Self {
+		if #available(iOS 16.0, *) {
+			return .listRowSeparatorLeading
+		} else {
+			struct Dummy: AlignmentID {
+				static func defaultValue(in context: ViewDimensions) -> CGFloat { context[.leading] }
+			}
+			return .init(Dummy.self)
+		}
+	}
+}

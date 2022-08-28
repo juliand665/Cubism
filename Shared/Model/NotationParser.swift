@@ -30,7 +30,7 @@ enum NotationParser {
 			switch parser.consumeRest() {
 			case "":
 				direction = .clockwise
-			case "'", "i":
+			case "'", "i", "‘", "’":
 				direction = .counterclockwise
 			case "2", StandardNotation.description(for: target).suffix(1):
 				direction = .double
@@ -42,42 +42,49 @@ enum NotationParser {
 		}
 	}
 	
+	static func target(from string: String) throws -> Move.Target {
+		var parser = Parser(reading: string)
+		return try target(from: &parser)
+	}
+	
 	static func target(from parser: inout Parser) throws -> Move.Target {
 		if parser.next!.isNumber {
 			// wide turn with explicit slice count
 			let sliceCount = parser.readInt()
-			let raw = parser.consumeNext()
+			guard let raw = parser.tryConsumeNext() else {
+				throw ParseError.missingWideTurnTarget
+			}
 			guard let face = Face(rawValue: raw) else {
 				throw ParseError.unknownTarget(raw)
 			}
-			if parser.next == "w" {
-				parser.consumeNext()
+			if parser.tryConsume("w") {
 				return .wideTurn(face, sliceCount: sliceCount)
 			} else {
 				return .bigSlice(face, sliceNumber: sliceCount)
 			}
-		}
-		let raw = parser.consumeNext()
-		if let face = Face(rawValue: raw) {
-			if parser.next == "w" {
-				parser.consumeNext()
-				return .wideTurn(face, sliceCount: 2)
-			} else {
-				return .singleFace(face)
-			}
-		} else if let uppercased = raw.uppercased().first, let face = Face(rawValue: uppercased) {
-			return .doubleFace(face)
-		} else if let slice = Slice(rawValue: raw) {
-			return .slice(slice)
-		} else if let rotation = FullCubeRotation(rawValue: raw) {
-			return .rotation(rotation)
 		} else {
-			throw ParseError.unknownTarget(raw)
+			let raw = parser.consumeNext()
+			if let face = Face(rawValue: raw) {
+				if parser.tryConsume("w") {
+					return .wideTurn(face, sliceCount: 2)
+				} else {
+					return .singleFace(face)
+				}
+			} else if let uppercased = raw.uppercased().first, let face = Face(rawValue: uppercased) {
+				return .doubleFace(face)
+			} else if let slice = Slice(rawValue: raw) {
+				return .slice(slice)
+			} else if let rotation = FullCubeRotation(rawValue: raw) {
+				return .rotation(rotation)
+			} else {
+				throw ParseError.unknownTarget(raw)
+			}
 		}
 	}
 	
 	enum ParseError: Error {
 		case unknownTarget(Character)
 		case unknownDirection(String)
+		case missingWideTurnTarget
 	}
 }

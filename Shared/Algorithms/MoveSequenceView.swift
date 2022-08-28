@@ -27,7 +27,7 @@ struct MoveSequenceView: View {
 					.position(x: x, y: rowOffset + boxSize / 2)
 			}
 		}
-		.frame(height: ceil(CGFloat(moves.count) / boxesPerRow) * rowHeight - rowSpacing)
+		.frame(height: max(0, ceil(CGFloat(moves.count) / boxesPerRow) * rowHeight - rowSpacing))
 		.measured { width = $0.width }
     }
 	

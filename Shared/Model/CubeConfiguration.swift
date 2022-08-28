@@ -13,6 +13,15 @@ enum CubeConfiguration: Codable {
 			return pll
 		}
 	}
+	
+	func same(with transform: CubeTransformation) throws -> Self {
+		switch self {
+		case .oll:
+			return .oll(try .init(transform))
+		case .pll:
+			return .pll(try .init(transform))
+		}
+	}
 }
 
 protocol CheckableConfiguration {
@@ -43,8 +52,10 @@ struct OLLConfiguration: Codable {
 }
 
 extension OLLConfiguration: CheckableConfiguration {
-	init(_ transform: CubeTransformation) {
-		assert(transform.affectsOnlyULayer())
+	init(_ transform: CubeTransformation) throws {
+		guard transform.affectsOnlyULayer() else {
+			throw TransformationConversionError.notLimitedToULayer
+		}
 		
 		let state = -transform // OLLs are defined in terms of the previous state
 		let edges = state.edges.orientation
@@ -60,8 +71,8 @@ extension OLLConfiguration: CheckableConfiguration {
 		nwCorner = corners.ulb
 	}
 	
-	func matches(_ state: CubeTransformation) -> Bool {
-		let other = Self(state)
+	func matches(_ state: CubeTransformation) throws -> Bool {
+		let other = try Self(state)
 		return correctEdges == other.correctEdges
 		&& (neCorner.map { $0 == other.neCorner } ?? true)
 		&& (seCorner.map { $0 == other.seCorner } ?? true)
@@ -77,18 +88,17 @@ struct PLLPermutation: Codable {
 
 extension PLLPermutation: CheckableConfiguration {
 	init(_ transform: CubeTransformation) throws {
-		assert(transform.affectsOnlyULayer())
+		guard transform.affectsOnlyULayer() else {
+			throw TransformationConversionError.notLimitedToULayer
+		}
 		
 		// PLLs are defined in terms of how they move pieces
-		edgeCycles = try transform.edges.permutation.cycles().map {
-			try $0.map {
-				try FaceEdge(uPiece: $0)
-				??? TransformationConversionError.pieceOutsideULayerAffected($0)
-			}
+		edgeCycles = transform.edges.permutation.cycles().map {
+			$0.map { FaceEdge(uPiece: $0)! }
 		}
 		
 		cornerCycles = transform.corners.permutation.cycles().map {
-			$0.map(FaceCorner.init(uPiece:))
+			$0.map { FaceCorner(uPiece: $0)! }
 		}
 	}
 	
@@ -97,10 +107,10 @@ extension PLLPermutation: CheckableConfiguration {
 		return cyclesMatch(edgeCycles, other.edgeCycles)
 		&& cyclesMatch(cornerCycles, other.cornerCycles)
 	}
-	
-	enum TransformationConversionError: Error {
-		case pieceOutsideULayerAffected(Edge)
-	}
+}
+
+enum TransformationConversionError: Error {
+	case notLimitedToULayer
 }
 
 private func cyclesMatch<T: Equatable>(_ lhs: [[T]], _ rhs: [[T]]) -> Bool {
@@ -200,7 +210,7 @@ enum FaceCorner: Int, Codable, CaseIterable {
 		}
 	}
 	
-	init(uPiece: Corner) {
+	init?(uPiece: Corner) {
 		switch uPiece {
 		case .ubr:
 			self = .northEast
@@ -210,8 +220,8 @@ enum FaceCorner: Int, Codable, CaseIterable {
 			self = .southWest
 		case .ulb:
 			self = .northWest
-		case let other:
-			fatalError("piece \(other) not in U layer")
+		default:
+			return nil
 		}
 	}
 	

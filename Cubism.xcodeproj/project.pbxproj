@@ -110,6 +110,7 @@
 		B9B47D1E27B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
 		B9B47D1F27B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
 		B9B47D2027B4078600EECC6F /* Data+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B47D1D27B4078600EECC6F /* Data+Compression.swift */; };
+		B9BA895728BAF9D400B3462A /* AddVariantSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA895628BAF9D400B3462A /* AddVariantSheet.swift */; };
 		B9CF259326E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
 		B9CF259426E2DF6C00E14E94 /* TimerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259226E2DF6C00E14E94 /* TimerResult.swift */; };
 		B9CF259626E2DF9E00E14E94 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */; };
@@ -191,6 +192,7 @@
 		B9AEB80127B1BD990090A203 /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
 		B9B47D1927B37E2400EECC6F /* MoveTable+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoveTable+Cache.swift"; sourceTree = "<group>"; };
 		B9B47D1D27B4078600EECC6F /* Data+Compression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Compression.swift"; sourceTree = "<group>"; };
+		B9BA895628BAF9D400B3462A /* AddVariantSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVariantSheet.swift; sourceTree = "<group>"; };
 		B9CF259226E2DF6C00E14E94 /* TimerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerResult.swift; sourceTree = "<group>"; };
 		B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		B9CF259826E2DFDA00E14E94 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			children = (
 				B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */,
 				B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */,
+				B9BA895628BAF9D400B3462A /* AddVariantSheet.swift */,
 				B9855C1826EDA53E006764BD /* MoveSequenceView.swift */,
 				B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */,
 				B9DE914026F292F200DE0E29 /* Colors.swift */,
@@ -597,6 +600,7 @@
 				B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */,
 				B9B47D1E27B4078600EECC6F /* Data+Compression.swift in Sources */,
 				B9E8EB9A27C9B42400AB614B /* Solver.swift in Sources */,
+				B9BA895728BAF9D400B3462A /* AddVariantSheet.swift in Sources */,
 				B9855C1926EDA53E006764BD /* MoveSequenceView.swift in Sources */,
 				B9AEB7DB27B17CDE0090A203 /* Coordinate.swift in Sources */,
 				B9AEB7E827B17CDF0090A203 /* TaggedPieces.swift in Sources */,
