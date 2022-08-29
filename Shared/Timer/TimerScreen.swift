@@ -20,9 +20,9 @@ struct TimerScreen: View {
 					}
 					.compositingGroup()
 					.shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
-					.padding()
-					.background(Color.groupedBackground)
+					.padding(20)
 				}
+				.background(Color.groupedBackground)
 				
 				VStack { // transitions don't work in ZStacks
 					if stopwatch.isRunning {
