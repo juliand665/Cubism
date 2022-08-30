@@ -69,6 +69,7 @@ struct TrainerScreen: View {
 			}
 			.navigationTitle("Algorithm Trainer")
 		}
+		.navigationViewStyle(.stack)
     }
 	
 	func generateScramble() {
@@ -104,6 +105,8 @@ struct AlgorithmPicker: View {
 	var folder: AlgorithmFolder
 	@Binding var selection: Set<Algorithm.ID>
 	
+	@EnvironmentObject private var customizer: AlgorithmCustomizer
+	
 	var body: some View {
 		List {
 			ForEach(folder.sections) { section in
@@ -121,6 +124,22 @@ struct AlgorithmPicker: View {
 				Button("Select None") {
 					selection = []
 				}
+				
+				Menu {
+					ForEach(customizer.allTags) { tag in
+						Button(tag.name) {
+							selection = .init(
+								folder.allAlgorithms
+									.map(\.id)
+									.filter { customizer[$0].tags.contains(tag) }
+							)
+						}
+					}
+				} label: {
+					Label("Select by Tag", systemImage: "tag")
+				}
+				
+				Spacer()
 			}
 		}
 		.navigationTitle("Choose Algorithms")

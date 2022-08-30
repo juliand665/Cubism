@@ -62,6 +62,8 @@ final class AlgorithmCustomizer: ObservableObject {
 		}
 	}
 	
+	var allTags: [Tag] { Tag.predefinedTags + userDefinedTags }
+	
 	struct Storage: Codable, DefaultsValueConvertible {
 		var customizations: [Algorithm.ID: AlgorithmCustomization] = [:]
 		var userDefinedTags: [Tag] = []

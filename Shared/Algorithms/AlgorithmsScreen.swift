@@ -94,7 +94,7 @@ struct TagFilterButton: View {
 			
 			Divider()
 			
-			ForEach(Tag.predefinedTags + customizer.userDefinedTags) { tag in
+			ForEach(customizer.allTags) { tag in
 				Button {
 					filter = filter == tag ? nil : tag
 				} label: {
