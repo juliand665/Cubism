@@ -90,18 +90,16 @@ struct TagFilterButton: View {
 	
 	var body: some View {
 		Menu {
-			Text("Show Tag Status for:")
-			
-			Divider()
-			
-			ForEach(customizer.allTags) { tag in
-				Button {
-					filter = filter == tag ? nil : tag
-				} label: {
-					Text(tag.name)
-					
-					if filter == tag {
-						Image(systemName: "checkmark")
+			Section("Show Tag Status for:") {
+				ForEach(customizer.allTags) { tag in
+					Button {
+						filter = filter == tag ? nil : tag
+					} label: {
+						Text(tag.name)
+						
+						if filter == tag {
+							Image(systemName: "checkmark")
+						}
 					}
 				}
 			}
