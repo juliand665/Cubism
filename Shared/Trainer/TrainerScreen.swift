@@ -77,10 +77,7 @@ struct TrainerScreen: View {
 			
 			state += uTurns.randomElement()!
 			
-			let pllOptions = AlgorithmFolder.fullPLL.sections
-				.lazy
-				.flatMap(\.algorithms)
-				.filter { plls.contains($0.id) }
+			let pllOptions = AlgorithmFolder.fullPLL.allAlgorithms.filter { plls.contains($0.id) }
 			if shouldTrainPLLs, let algorithm = pllOptions.randomElement() {
 				let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
 				state -= transform
@@ -88,10 +85,7 @@ struct TrainerScreen: View {
 			
 			state += uTurns.randomElement()!
 			
-			let ollOptions = AlgorithmFolder.fullOLL.sections
-				.lazy
-				.flatMap(\.algorithms)
-				.filter { olls.contains($0.id) }
+			let ollOptions = AlgorithmFolder.fullOLL.allAlgorithms.filter { olls.contains($0.id) }
 			if shouldTrainOLLs, let algorithm = ollOptions.randomElement() {
 				let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
 				state -= transform
@@ -121,7 +115,7 @@ struct AlgorithmPicker: View {
 		.toolbar {
 			ToolbarItemGroup(placement: .bottomBar) {
 				Button("Select All") {
-					selection = .init(folder.sections.lazy.flatMap(\.algorithms).map(\.id))
+					selection = .init(folder.allAlgorithms.map(\.id))
 				}
 				
 				Button("Select None") {

@@ -123,8 +123,8 @@ struct AlgorithmDetailsView_Previews: PreviewProvider {
 				preferredVariant: Algorithm.uPermA.variants[1].id,
 				rotation: 1,
 				customVariants: [
-					.init(id: .dynamic(.init()), moves: "U R Ui Ri"),
-					.init(id: .dynamic(.init()), moves: "R U Ri Ui R U Ri Ui R U Ri Ui R U Ri Ui R U Ri Ui"),
+					.init(id: .newDynamic(), moves: "U R Ui Ri"),
+					.init(id: .newDynamic(), moves: "R U Ri Ui R U Ri Ui R U Ri Ui R U Ri Ui R U Ri Ui"),
 				]
 			)))
 		}

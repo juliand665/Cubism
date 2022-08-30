@@ -41,7 +41,7 @@ struct AddVariantSheet: View {
 			ToolbarItem(placement: .confirmationAction) {
 				Button("Done") {
 					guard case .success(let sequence) = parsed else { return }
-					add(Algorithm.Variant(id: .dynamic(.init()), moves: sequence))
+					add(Algorithm.Variant(id: .newDynamic(), moves: sequence))
 					dismiss()
 				}
 				.disabled(!parsed.isSuccess)

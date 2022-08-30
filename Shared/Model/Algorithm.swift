@@ -20,6 +20,12 @@ enum ExtensibleID<Object>: Hashable, Codable {
 	case dynamic(UUID)
 }
 
+extension ExtensibleID {
+	static func newDynamic() -> Self {
+		.dynamic(.init())
+	}
+}
+
 extension Algorithm {
 	static func builtIn(
 		id: String,
@@ -171,6 +177,10 @@ struct AlgorithmFolder: Identifiable {
 	var name: String
 	var description: String
 	var sections: [Section]
+	
+	var allAlgorithms: some Collection<Algorithm> {
+		sections.lazy.flatMap(\.algorithms)
+	}
 	
 	struct Section: Identifiable {
 		let id = UUID()
