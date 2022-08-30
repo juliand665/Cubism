@@ -5,6 +5,8 @@ struct AlgorithmDetailsView: View {
 	@Binding var customization: AlgorithmCustomization
 	@State var isAddingVariant = false
 	
+	@EnvironmentObject private var customizer: AlgorithmCustomizer
+	
 	var body: some View {
 		List {
 			Section {
@@ -27,6 +29,10 @@ struct AlgorithmDetailsView: View {
 				MoveSequenceView(moves: variant.moves)
 				
 				variantsList
+			}
+			
+			Section("Tags") {
+				tagsList
 			}
 		}
 		.toolbar {
@@ -58,12 +64,7 @@ struct AlgorithmDetailsView: View {
 				preferredVariant: $customization.preferredVariant
 			)
 		}
-		.onDelete { toDelete in
-			customization.customVariants.remove(atOffsets: toDelete)
-		}
-		.onMove { toMove, target in
-			customization.customVariants.move(fromOffsets: toMove, toOffset: target)
-		}
+		.withEditActions($collection: $customization.customVariants)
 		
 		Button {
 			isAddingVariant = true
@@ -73,17 +74,21 @@ struct AlgorithmDetailsView: View {
 	}
 	
 	@ViewBuilder
-	func sectionHeader(_ title: String) -> some View {
-		Divider()
+	var tagsList: some View {
+		ForEach(Tag.predefinedTags) { tag in
+			TagRow(tag: .constant(tag), isApplied: $customization[tag], isPredefined: true)
+		}
 		
-		Text(title)
-			.font(.footnote.smallCaps())
-			.padding(4)
-			.foregroundColor(.secondary)
-			.frame(maxWidth: .infinity)
-			.background(Color.primary.opacity(0.05).blendMode(.destinationOut))
+		ForEach($customizer.userDefinedTags) { $tag in
+			TagRow(tag: $tag, isApplied: $customization[tag], isPredefined: false)
+		}
+		.withEditActions($collection: $customizer.userDefinedTags)
 		
-		Divider()
+		Button {
+			customizer.userDefinedTags.append(.init(name: "New Tag", id: .newDynamic()))
+		} label: {
+			Label("Add Custom Tag", systemImage: "plus")
+		}
 	}
 	
 	struct VariantRow: View {
@@ -102,16 +107,58 @@ struct AlgorithmDetailsView: View {
 						.fontWeight(isSelected ? .medium : .regular)
 						.foregroundColor(.primary)
 				} icon: {
-					Group {
-						if isSelected {
-							Image(systemName: "largecircle.fill.circle")
-						} else {
-							Image(systemName: "circle")
-						}
+					if isSelected {
+						Image(systemName: "largecircle.fill.circle")
+					} else {
+						Image(systemName: "circle")
 					}
 				}
 			}
 		}
+	}
+	
+	struct TagRow: View {
+		@Binding var tag: Tag
+		@Binding var isApplied: Bool
+		var isPredefined: Bool
+		
+		var body: some View {
+			Button {
+				isApplied.toggle()
+			} label: {
+				HStack {
+					Label {
+						nameLabel
+							.foregroundColor(.primary)
+					} icon: {
+						Image(systemName: "tag")
+							.symbolVariant(isApplied ? .fill : .none)
+					}
+				}
+				.font(.body.weight(isApplied ? .medium : .regular))
+			}
+		}
+		
+		@ViewBuilder
+		var nameLabel: some View {
+			if !isPredefined {
+				TextField("Name", text: $tag.name)
+			} else {
+				Text(tag.name)
+			}
+		}
+	}
+}
+
+extension ForEach where Content: View {
+	func withEditActions<T>(@Binding collection: [T]) -> some View {
+		self
+			.onDelete { toDelete in
+				collection.remove(atOffsets: toDelete)
+			}
+			.onMove { toMove, target in
+				collection.move(fromOffsets: toMove, toOffset: target)
+			}
 	}
 }
 

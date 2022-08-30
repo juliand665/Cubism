@@ -6,6 +6,28 @@ struct AlgorithmCustomization: Codable {
 	var preferredVariant: Algorithm.Variant.ID?
 	var rotation = 0
 	var customVariants: [Algorithm.Variant] = []
+	var tags: Set<Tag> = []
+	
+	subscript(tag: Tag) -> Bool {
+		get { tags.contains(tag) }
+		set {
+			if newValue {
+				tags.insert(tag)
+			} else {
+				tags.remove(tag)
+			}
+		}
+	}
+}
+
+struct Tag: Codable, Hashable, Identifiable {
+	static let learning = Self(name: "Learning", id: .builtIn("learning"))
+	static let known = Self(name: "Known", id: .builtIn("known"))
+	
+	static let predefinedTags = [learning, known]
+	
+	var name: String
+	var id: ExtensibleID<Self>
 }
 
 extension Algorithm {
@@ -30,7 +52,18 @@ final class AlgorithmCustomizer: ObservableObject {
 		}
 	}
 	
+	var userDefinedTags: [Tag] {
+		get {
+			Self.storage.userDefinedTags
+		}
+		set {
+			objectWillChange.send()
+			Self.storage.userDefinedTags = newValue
+		}
+	}
+	
 	struct Storage: Codable, DefaultsValueConvertible {
 		var customizations: [Algorithm.ID: AlgorithmCustomization] = [:]
+		var userDefinedTags: [Tag] = []
 	}
 }
