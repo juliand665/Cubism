@@ -96,14 +96,17 @@ struct AlgorithmDetailsView: View {
 		
 		@Binding var preferredVariant: Algorithm.Variant.ID?
 		
+		@Environment(\.editMode) private var editMode
+		
 		var body: some View {
 			let isSelected = preferredVariant == variant.id
+			let description = variant.moves.description(using: StandardNotation.self)
 			Button {
 				preferredVariant = isSelected ? nil : variant.id
 			} label: {
 				// using a label to get the same spacing as the add button
 				Label {
-					Text(variant.moves.description(using: StandardNotation.self))
+					Text(description)
 						.fontWeight(isSelected ? .medium : .regular)
 						.foregroundColor(.primary)
 				} icon: {
@@ -111,6 +114,15 @@ struct AlgorithmDetailsView: View {
 						Image(systemName: "largecircle.fill.circle")
 					} else {
 						Image(systemName: "circle")
+					}
+				}
+			}
+			.swipeActions {
+				if editMode?.wrappedValue != .active { // otherwise we'd be replacing swipe-to-delete lmao
+					Button {
+						UIPasteboard.general.string = description
+					} label: {
+						Label("Copy", systemImage: "doc.on.doc")
 					}
 				}
 			}
