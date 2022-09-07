@@ -2,8 +2,8 @@ import Foundation
 
 extension AlgorithmFolder {
 	static let simplifiedPLL = Self(
-		name: "Simplified PLL",
-		description: "A small subset of easy PLL algorithms allowing you to solve any configuration in up to 3 applications.",
+		name: "2-Look PLL",
+		description: "A small subset of easy PLL algorithms allowing you to solve any configuration in up to 2 applications. (Start here!)",
 		sections: [
 			.init(name: "corners", algorithms: [
 				.tPerm,
@@ -44,7 +44,7 @@ extension AlgorithmFolder {
 			]),
 			.init(name: "double spins", algorithms: [
 				.gPermA, .gPermB,
-				.gPermD, .gPermC,
+				.gPermC, .gPermD,
 			]),
 		]
 	)
