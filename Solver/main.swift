@@ -273,12 +273,17 @@ while true {
 */
 
 func testSequence() {
-	let sequence: MoveSequence = "Ri U Ri DD R Ui Ri DD RR"
+	let sequence: MoveSequence = "L' B2 R2 D' L2 D U2 F2 U B2 F2 D2 F' L' R2 F2 R U2 F L'"
+	print(sequence.moves.count)
 	let transform = try! sequence.transformReversingRotations()
 	let stateBefore = -transform
 	print(stateBefore)
-	let solver = BasicTwoPhaseSolver(start: stateBefore)
-	solver.searchNextLevel()
-	print(solver.bestSolution!)
+	let solver = ThreeWayTwoPhaseSolver(start: stateBefore)
+	while true {
+		measureTime {
+			solver.searchNextLevel()
+		}
+		print(solver.bestSolution!.moves.count, solver.bestSolution!)
+	}
 }
 testSequence()
