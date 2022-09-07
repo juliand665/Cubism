@@ -13,8 +13,8 @@ struct TimerScreen: View {
 			ZStack {
 				ScrollView {
 					VStack(spacing: 16) {
-						box { timerArea }
 						box { storedResultsArea }
+						box { timerArea }
 						box { scrambleArea }
 						Spacer(minLength: 0)
 					}
