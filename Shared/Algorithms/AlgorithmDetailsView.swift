@@ -9,8 +9,10 @@ struct AlgorithmDetailsView: View {
 	
 	var body: some View {
 		List {
+			let (variant, configuration) = algorithm.variantInfo(using: customization)
+			
 			Section {
-				if let configuration = algorithm.configuration {
+				if let configuration {
 					CubeConfigurationDiagram(configuration: configuration, scale: 2)
 						.frame(maxWidth: .infinity)
 						.listRowBackground(EmptyView())
@@ -25,8 +27,7 @@ struct AlgorithmDetailsView: View {
 			}
 			
 			Section("Variants") {
-				let variant = algorithm.preferredVariant(using: customization) ?? algorithm.variants.first!
-				MoveSequenceView(moves: variant.moves)
+				MoveSequenceView(moves: variant.moves.rotated(by: -variant.rotation))
 				
 				variantsList
 			}
@@ -51,16 +52,18 @@ struct AlgorithmDetailsView: View {
 	
 	@ViewBuilder
 	var variantsList: some View {
+		let rotation = algorithm.preferredVariant(using: customization).rotation
+		
 		ForEach(algorithm.variants) { variant in
 			VariantRow(
-				variant: variant,
+				variant: variant.rotated(by: -rotation),
 				preferredVariant: $customization.preferredVariant
 			)
 		}
 		
 		ForEach(customization.customVariants) { variant in
 			VariantRow(
-				variant: variant,
+				variant: variant.rotated(by: -rotation),
 				preferredVariant: $customization.preferredVariant
 			)
 		}
@@ -102,7 +105,9 @@ struct AlgorithmDetailsView: View {
 			let isSelected = preferredVariant == variant.id
 			let description = variant.moves.description(using: StandardNotation.self)
 			Button {
-				preferredVariant = isSelected ? nil : variant.id
+				withAnimation(.default.speed(2)) {
+					preferredVariant = isSelected ? nil : variant.id
+				}
 			} label: {
 				// using a label to get the same spacing as the add button
 				Label {

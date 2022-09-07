@@ -31,9 +31,18 @@ struct Tag: Codable, Hashable, Identifiable {
 }
 
 extension Algorithm {
-	func preferredVariant(using customization: AlgorithmCustomization) -> Algorithm.Variant? {
+	func preferredVariant(using customization: AlgorithmCustomization) -> Variant {
 		(variants + customization.customVariants)
 			.first { $0.id == customization.preferredVariant }
+			?? variants.first!
+	}
+	
+	func variantInfo(using customization: AlgorithmCustomization) -> (Variant, CubeConfiguration?) {
+		let variant = preferredVariant(using: customization)
+		let configuration = configuration.map {
+			$0.rotated(by: variant.moves.rotation)
+		}
+		return (variant, configuration)
 	}
 }
 

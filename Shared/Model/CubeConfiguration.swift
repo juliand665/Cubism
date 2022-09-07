@@ -1,11 +1,11 @@
 import Foundation
 import HandyOperators
 
-enum CubeConfiguration: Codable {
+enum CubeConfiguration: Codable, Equatable {
 	case oll(OLLConfiguration)
 	case pll(PLLPermutation)
 	
-	var checkable: CheckableConfiguration {
+	var wrappedValue: any CubeConfigurationProtocol {
 		switch self {
 		case .oll(let oll):
 			return oll
@@ -15,21 +15,22 @@ enum CubeConfiguration: Codable {
 	}
 	
 	func same(with transform: CubeTransformation) throws -> Self {
-		switch self {
-		case .oll:
-			return .oll(try .init(transform))
-		case .pll:
-			return .pll(try .init(transform))
-		}
+		try type(of: wrappedValue).init(transform).wrapped()
+	}
+	
+	func rotated(by ordinal: Int) -> Self {
+		wrappedValue.rotated(by: ordinal).wrapped()
 	}
 }
 
-protocol CheckableConfiguration {
+protocol CubeConfigurationProtocol {
 	init(_ state: CubeTransformation) throws
 	func matches(_ state: CubeTransformation) throws -> Bool
+	func rotated(by ordinal: Int) -> Self
+	func wrapped() -> CubeConfiguration
 }
 
-struct OLLConfiguration: Codable {
+struct OLLConfiguration: Codable, Equatable {
 	var correctEdges = FaceEdge.Set.all
 	
 	var neCorner: SingleCornerOrientation?
@@ -51,7 +52,7 @@ struct OLLConfiguration: Codable {
 	}
 }
 
-extension OLLConfiguration: CheckableConfiguration {
+extension OLLConfiguration: CubeConfigurationProtocol {
 	init(_ transform: CubeTransformation) throws {
 		guard transform.affectsOnlyULayer() else {
 			throw TransformationConversionError.notLimitedToULayer
@@ -79,14 +80,31 @@ extension OLLConfiguration: CheckableConfiguration {
 		&& (swCorner.map { $0 == other.swCorner } ?? true)
 		&& (nwCorner.map { $0 == other.nwCorner } ?? true)
 	}
+	
+	func rotated(by ordinal: Int) -> Self {
+		let offset = (4 - ordinal) % 4
+		let corners = [neCorner, seCorner, swCorner, nwCorner]
+		return .init(
+			correctEdges: FaceEdge.allCases
+				.filter { correctEdges.contains(.init($0)) }
+				.map { $0.rotated(by: offset) }
+				.reduce(into: .init()) { $0.insert(.init($1)) },
+			neCorner: corners[(offset + 0) % 4],
+			seCorner: corners[(offset + 1) % 4],
+			swCorner: corners[(offset + 2) % 4],
+			nwCorner: corners[(offset + 3) % 4]
+		)
+	}
+	
+	func wrapped() -> CubeConfiguration { .oll(self) }
 }
 
-struct PLLPermutation: Codable {
+struct PLLPermutation: Codable, Equatable {
 	var edgeCycles: [[FaceEdge]] = []
 	var cornerCycles: [[FaceCorner]] = []
 }
 
-extension PLLPermutation: CheckableConfiguration {
+extension PLLPermutation: CubeConfigurationProtocol {
 	init(_ transform: CubeTransformation) throws {
 		guard transform.affectsOnlyULayer() else {
 			throw TransformationConversionError.notLimitedToULayer
@@ -107,6 +125,15 @@ extension PLLPermutation: CheckableConfiguration {
 		return cyclesMatch(edgeCycles, other.edgeCycles)
 		&& cyclesMatch(cornerCycles, other.cornerCycles)
 	}
+	
+	func rotated(by ordinal: Int) -> Self {
+		.init(
+			edgeCycles: edgeCycles.map { $0.map { $0.rotated(by: ordinal) } },
+			cornerCycles: cornerCycles.map { $0.map { $0.rotated(by: ordinal) } }
+		)
+	}
+	
+	func wrapped() -> CubeConfiguration { .pll(self) }
 }
 
 enum TransformationConversionError: Error {
@@ -168,6 +195,10 @@ enum FaceEdge: Int, Codable, CaseIterable {
 		}
 	}
 	
+	func rotated(by ordinal: Int) -> Self {
+		Self.allCases[(rawValue + ordinal) % Self.allCases.count]
+	}
+	
 	struct Set: OptionSet, Codable {
 		static let north = Self(.north)
 		static let east = Self(.east)
@@ -223,6 +254,10 @@ enum FaceCorner: Int, Codable, CaseIterable {
 		default:
 			return nil
 		}
+	}
+	
+	func rotated(by ordinal: Int) -> Self {
+		Self.allCases[(rawValue + ordinal) % Self.allCases.count]
 	}
 	
 	struct Set: OptionSet, Codable {

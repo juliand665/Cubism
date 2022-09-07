@@ -12,6 +12,16 @@ struct Algorithm: Identifiable, Codable {
 	struct Variant: Identifiable, Codable {
 		let id: ExtensibleID<Self>
 		var moves: MoveSequence
+		
+		var rotation: Int { moves.rotation }
+		
+		func rotated(by ordinal: Int) -> Self {
+			.init(id: id, moves: moves.rotated(by: ordinal))
+		}
+		
+		func withoutRotation() -> Self {
+			rotated(by: -rotation)
+		}
 	}
 }
 
@@ -97,7 +107,7 @@ extension CubeConfiguration {
 		}
 		
 		let transform = try sequence.transformReversingRotations()
-		guard try checkable.matches(transform) else {
+		guard try wrappedValue.matches(transform) else {
 			throw CorrectnessError.configurationMismatch(transform)
 		}
 	}
@@ -105,6 +115,27 @@ extension CubeConfiguration {
 
 struct MoveSequence: Codable {
 	var moves: [Move]
+	
+	func rotated(by ordinal: Int) -> Self {
+		.init(moves: moves <- { moves in
+			var rotation = ordinal + self.rotation
+			if moves.first?.target == .rotation(.y) {
+				moves.removeFirst()
+			}
+			rotation = (rotation % 4 + 4) % 4
+			if let direction = Move.Direction(ordinal: rotation) {
+				moves.insert(.init(target: .rotation(.y), direction: direction), at: 0)
+			}
+		})
+	}
+	
+	var rotation: Int {
+		guard
+			let first = moves.first,
+			first.target == .rotation(.y)
+		else { return 0 }
+		return first.direction.ordinal
+	}
 }
 
 extension MoveSequence {
@@ -215,6 +246,22 @@ struct Move: Codable, Hashable, Identifiable {
 		case clockwise
 		case double
 		case counterclockwise
+		
+		init?(ordinal: Int) {
+			guard Self.inCWOrder.indices.contains(ordinal - 1) else { return nil }
+			self = Self.inCWOrder[ordinal - 1]
+		}
+		
+		var ordinal: Int {
+			switch self {
+			case .clockwise:
+				return 1
+			case .double:
+				return 2
+			case .counterclockwise:
+				return 3
+			}
+		}
 		
 		static prefix func - (direction: Self) -> Self {
 			switch direction {

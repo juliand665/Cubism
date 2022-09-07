@@ -147,7 +147,8 @@ struct AlgorithmLabel: View {
 	var body: some View {
 		HStack(spacing: 20) {
 			let customization = customizer[algorithm.id]
-			if let configuration = algorithm.configuration {
+			let (variant, configuration) = algorithm.variantInfo(using: customization)
+			if let configuration {
 				CubeConfigurationDiagram(configuration: configuration)
 			}
 			
@@ -157,8 +158,7 @@ struct AlgorithmLabel: View {
 					.font(.subheadline)
 					.foregroundStyle(.secondary)
 				
-				let variant = algorithm.preferredVariant(using: customization)
-				?? algorithm.variants.first!
+				let variant = variant.withoutRotation()
 				Text(variant.moves.description(using: NaturalNotation.self)) // TODO: allow choosing notation
 					.fixedSize(horizontal: false, vertical: true) // allow multiple lines
 				
