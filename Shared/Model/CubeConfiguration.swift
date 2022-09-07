@@ -119,7 +119,7 @@ private func cyclesMatch<T: Equatable>(_ lhs: [[T]], _ rhs: [[T]]) -> Bool {
 		let start = cycle.first!
 		guard let other = rhs.first(where: { $0.contains(start) }) else { return false }
 		let aligned = other.drop { $0 != start } + other
-		guard aligned.starts(with: cycle) else { return false }
+		guard aligned.starts(with: cycle + [start]) else { return false }
 	}
 	return true
 }
