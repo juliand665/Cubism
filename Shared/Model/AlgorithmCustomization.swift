@@ -7,17 +7,6 @@ struct AlgorithmCustomization: Codable {
 	var rotation = 0
 	var customVariants: [Algorithm.Variant] = []
 	var tags: Set<Tag> = []
-	
-	subscript(tag: Tag) -> Bool {
-		get { tags.contains(tag) }
-		set {
-			if newValue {
-				tags.insert(tag)
-			} else {
-				tags.remove(tag)
-			}
-		}
-	}
 }
 
 struct Tag: Codable, Hashable, Identifiable {

@@ -79,11 +79,11 @@ struct AlgorithmDetailsView: View {
 	@ViewBuilder
 	var tagsList: some View {
 		ForEach(Tag.predefinedTags) { tag in
-			TagRow(tag: .constant(tag), isApplied: $customization[tag], isPredefined: true)
+			TagRow(tag: .constant(tag), isApplied: $customization.tags.contains(tag), isPredefined: true)
 		}
 		
 		ForEach($customizer.userDefinedTags) { $tag in
-			TagRow(tag: $tag, isApplied: $customization[tag], isPredefined: false)
+			TagRow(tag: $tag, isApplied: $customization.tags.contains(tag), isPredefined: false)
 		}
 		.withEditActions($collection: $customizer.userDefinedTags)
 		
