@@ -86,9 +86,8 @@ extension OLLConfiguration: CubeConfigurationProtocol {
 		let corners = [neCorner, seCorner, swCorner, nwCorner]
 		return .init(
 			correctEdges: FaceEdge.allCases
-				.filter { correctEdges.contains(.init($0)) }
-				.map { $0.rotated(by: offset) }
-				.reduce(into: .init()) { $0.insert(.init($1)) },
+				.filter { correctEdges.contains(.init($0.rotated(by: offset))) }
+				.reduce(into: []) { $0.insert(.init($1)) },
 			neCorner: corners[(offset + 0) % 4],
 			seCorner: corners[(offset + 1) % 4],
 			swCorner: corners[(offset + 2) % 4],
