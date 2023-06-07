@@ -65,6 +65,12 @@
 		B9A2962D26E4346D005C59D1 /* CubeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */; };
 		B9A2962F26E43495005C59D1 /* Notation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962E26E43495005C59D1 /* Notation.swift */; };
 		B9A2963126E434C4005C59D1 /* BaseAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */; };
+		B9ABB6F92A2E1568004D345D /* SwiftUI+Contrast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABB6F82A2E1568004D345D /* SwiftUI+Contrast.swift */; };
+		B9ABB6FA2A2E1568004D345D /* SwiftUI+Contrast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABB6F82A2E1568004D345D /* SwiftUI+Contrast.swift */; };
+		B9ABB6FD2A2FCA92004D345D /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABB6FC2A2FCA92004D345D /* SettingsScreen.swift */; };
+		B9ABB6FE2A2FCA92004D345D /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABB6FC2A2FCA92004D345D /* SettingsScreen.swift */; };
+		B9ABB7002A30D728004D345D /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABB6FF2A30D728004D345D /* AppSettings.swift */; };
+		B9ABB7012A30D728004D345D /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABB6FF2A30D728004D345D /* AppSettings.swift */; };
 		B9ABDAAB27BDD7C700C7D65B /* CubeTransformation+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ABDAAA27BDD7C700C7D65B /* CubeTransformation+Random.swift */; };
 		B9AEB7DA27B17C950090A203 /* PruningTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AEB7D927B17C950090A203 /* PruningTable.swift */; };
 		B9AEB7DB27B17CDE0090A203 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F3C91F270CE9E7002FBEBD /* Coordinate.swift */; };
@@ -185,6 +191,9 @@
 		B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeConfiguration.swift; sourceTree = "<group>"; };
 		B9A2962E26E43495005C59D1 /* Notation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notation.swift; sourceTree = "<group>"; };
 		B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAlgorithms.swift; sourceTree = "<group>"; };
+		B9ABB6F82A2E1568004D345D /* SwiftUI+Contrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Contrast.swift"; sourceTree = "<group>"; };
+		B9ABB6FC2A2FCA92004D345D /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		B9ABB6FF2A30D728004D345D /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		B9ABDAAA27BDD7C700C7D65B /* CubeTransformation+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CubeTransformation+Random.swift"; sourceTree = "<group>"; };
 		B9AEB7D927B17C950090A203 /* PruningTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PruningTable.swift; sourceTree = "<group>"; };
 		B9AEB7FF27B1B7500090A203 /* Solver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solver.entitlements; sourceTree = "<group>"; };
@@ -325,6 +334,7 @@
 				B9CF259126E2DF5700E14E94 /* Timer */,
 				B96AB4CD26E3B31E003E38E4 /* Algorithms */,
 				B994B157285BF672006AD912 /* Trainer */,
+				B9ABB6FB2A2FCA84004D345D /* Settings */,
 				B9A2963226E434ED005C59D1 /* Model */,
 				B96E9C1426E2D82700A46A3B /* Helpers */,
 				B96E9BEE26E2755600A46A3B /* Assets.xcassets */,
@@ -347,6 +357,7 @@
 			children = (
 				B9CF259526E2DF9E00E14E94 /* TimeFormatting.swift */,
 				B9CF259B26E2E04D00E14E94 /* SwiftUI+Helpers.swift */,
+				B9ABB6F82A2E1568004D345D /* SwiftUI+Contrast.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -381,8 +392,17 @@
 				B9A2962E26E43495005C59D1 /* Notation.swift */,
 				B9A2962A26E43453005C59D1 /* NotationParser.swift */,
 				B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */,
+				B9ABB6FF2A30D728004D345D /* AppSettings.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B9ABB6FB2A2FCA84004D345D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B9ABB6FC2A2FCA92004D345D /* SettingsScreen.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		B9CF259126E2DF5700E14E94 /* Timer */ = {
@@ -604,8 +624,10 @@
 				B9855C1926EDA53E006764BD /* MoveSequenceView.swift in Sources */,
 				B9AEB7DB27B17CDE0090A203 /* Coordinate.swift in Sources */,
 				B9AEB7E827B17CDF0090A203 /* TaggedPieces.swift in Sources */,
+				B9ABB7002A30D728004D345D /* AppSettings.swift in Sources */,
 				B9AEB7DD27B17CDF0090A203 /* EdgePermutationCoordinates.swift in Sources */,
 				B984D7F627C801F100BEDC7D /* OrderedEdgeSubsetCoordinates.swift in Sources */,
+				B9ABB6FD2A2FCA92004D345D /* SettingsScreen.swift in Sources */,
 				B9A2962B26E43453005C59D1 /* NotationParser.swift in Sources */,
 				B9AEB7E427B17CDF0090A203 /* PrettyPrinting.swift in Sources */,
 				B9AEB7E127B17CDF0090A203 /* Orientation.swift in Sources */,
@@ -623,6 +645,7 @@
 				B9AEB7DF27B17CDF0090A203 /* Timing.swift in Sources */,
 				B9AEB7DC27B17CDF0090A203 /* ReducedCoordinates.swift in Sources */,
 				B96AB4D126E3B358003E38E4 /* Algorithm.swift in Sources */,
+				B9ABB6F92A2E1568004D345D /* SwiftUI+Contrast.swift in Sources */,
 				B988476626E5732200E19911 /* OLLAlgorithms.swift in Sources */,
 				B9D5CEF5277A857800A6DBE0 /* BigCubeAlgorithms.swift in Sources */,
 				B9E8EB9D27C9B43400AB614B /* CubeTransformation+Random.swift in Sources */,
@@ -641,6 +664,7 @@
 				B9E8EB9C27C9B43400AB614B /* CubeTransformation+Random.swift in Sources */,
 				B9AEB7F727B17CDF0090A203 /* Symmetry.swift in Sources */,
 				B9CF259426E2DF6C00E14E94 /* TimerResult.swift in Sources */,
+				B9ABB6FE2A2FCA92004D345D /* SettingsScreen.swift in Sources */,
 				B9AEB7EF27B17CDF0090A203 /* EdgePermutationCoordinates.swift in Sources */,
 				B9CF259D26E2E04D00E14E94 /* SwiftUI+Helpers.swift in Sources */,
 				B9AEB7F127B17CDF0090A203 /* Timing.swift in Sources */,
@@ -649,12 +673,14 @@
 				B96E9BFD26E2755600A46A3B /* ContentView.swift in Sources */,
 				B96E9C1026E2883600A46A3B /* TimerScreen.swift in Sources */,
 				B9AEB7F427B17CDF0090A203 /* CubeTransformation.swift in Sources */,
+				B9ABB7012A30D728004D345D /* AppSettings.swift in Sources */,
 				B9B47D1B27B37E2C00EECC6F /* MoveTable+Cache.swift in Sources */,
 				B9AEB7F227B17CDF0090A203 /* DirectCoordinates.swift in Sources */,
 				B9AEB7ED27B17CDF0090A203 /* Coordinate.swift in Sources */,
 				B9AEB7FE27B17CDF0090A203 /* PiecePermutation.swift in Sources */,
 				B9AEB7F827B17CDF0090A203 /* Swift+Helpers.swift in Sources */,
 				B9AEB7F527B17CDF0090A203 /* PieceOrientation.swift in Sources */,
+				B9ABB6FA2A2E1568004D345D /* SwiftUI+Contrast.swift in Sources */,
 				B9E8EB9B27C9B42500AB614B /* Solver.swift in Sources */,
 				B9AEB7EE27B17CDF0090A203 /* ReducedCoordinates.swift in Sources */,
 				B9AEB7FC27B17CDF0090A203 /* ComposedCoordinates.swift in Sources */,
@@ -844,7 +870,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -880,7 +906,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

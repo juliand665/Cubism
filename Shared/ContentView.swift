@@ -3,6 +3,8 @@ import SwiftUI
 struct ContentView: View {
 	@SceneStorage("ContentView.tab") var tab = Tab.timer
 	
+	@Binding var settings: AppSettings
+	
 	var body: some View {
 		TabView(selection: $tab) {
 			TimerScreen()
@@ -17,7 +19,7 @@ struct ContentView: View {
 				.tabItem { Label("Trainer", systemImage: "dial.max") }
 				.tag(Tab.trainer)
 			
-			Text("TODO")
+			SettingsScreen(settings: $settings)
 				.tabItem { Label("Settings", systemImage: "gear") }
 				.tag(Tab.settings)
 		}
@@ -34,6 +36,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
-		ContentView()
+		ContentView(settings: .constant(.init()))
 	}
 }

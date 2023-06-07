@@ -159,8 +159,7 @@ struct AlgorithmLabel: View {
 					.foregroundStyle(.secondary)
 				
 				let variant = variant.withoutRotation()
-				Text(variant.moves.description(using: NaturalNotation.self)) // TODO: allow choosing notation
-					.fixedSize(horizontal: false, vertical: true) // allow multiple lines
+				MoveSequenceLabel(moves: variant.moves)
 				
 				let variantCount = algorithm.variants.count + customization.customVariants.count
 				if variantCount > 1 {
@@ -178,6 +177,17 @@ struct AlgorithmLabel: View {
 			}
 		}
 		.padding(.vertical, 6)
+	}
+}
+
+struct MoveSequenceLabel: View {
+	var moves: MoveSequence
+	
+	@Environment(\.settings.notation.notation) private var notation
+	
+	var body: some View {
+		Text(moves.description(using: notation))
+			.fixedSize(horizontal: false, vertical: true) // allow multiple lines
 	}
 }
 
