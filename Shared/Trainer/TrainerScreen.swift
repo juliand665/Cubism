@@ -13,10 +13,10 @@ struct TrainerScreen: View {
 	@UserDefault.State("TrainerScreen.plls")
 	var plls: Set<Algorithm.ID> = []
 	
-	@State var scramble: MoveSequence?
+	@StateObject var scrambler = ScrambleGenerator()
 	
     var body: some View {
-		NavigationView {
+		NavigationStack {
 			Form {
 				Section {
 					Toggle("Train OLLs", isOn: $shouldTrainOLLs)
@@ -59,17 +59,16 @@ struct TrainerScreen: View {
 					.disabled(!shouldTrainPLLs)
 				}
 				
-				Section("Train") {
-					if let scramble = scramble {
-						ScrambleView(scramble: scramble)
+				SectionBox(title: "Train") {
+					VStack(spacing: 12) {
+						ScramblerView(scrambler: scrambler) {
+							Button("Generate Scramble", action: generateScramble)
+						}
 					}
-					
-					Button("Generate Scramble", action: generateScramble)
 				}
 			}
 			.navigationTitle("Algorithm Trainer")
 		}
-		.navigationViewStyle(.stack)
     }
 	
 	func generateScramble() {
@@ -95,9 +94,9 @@ struct TrainerScreen: View {
 			state += uTurns.randomElement()!
 		}
 		
-		let solver = ThreeWayTwoPhaseSolver(start: state)
-		solver.searchNextLevel()
-		scramble = solver.bestSolution.map(-).map(MoveSequence.init)
+		Task {
+			await scrambler.solve(from: state)
+		}
 	}
 }
 
@@ -168,13 +167,11 @@ extension ExtensibleID: DefaultsValueConvertible {
 }
 
 struct TrainerScreen_Previews: PreviewProvider {
-    static var previews: some View {
-		NavigationView {
-			TrainerScreen()
-		}
-		.environmentObject(AlgorithmCustomizer())
+	static var previews: some View {
+		TrainerScreen()
+			.environmentObject(AlgorithmCustomizer())
 		
-		NavigationView {
+		NavigationStack {
 			AlgorithmPicker(folder: .fullPLL, selection: .constant([
 				.builtIn("u perm a"),
 				.builtIn("z perm"),

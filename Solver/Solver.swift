@@ -52,6 +52,13 @@ final class ThreeWayTwoPhaseSolver: Solver {
 			isDone = nextPhase1Length >= bestSolution.length
 		}
 	}
+	
+	func search(untilLength length: Int = 24) -> SolverManeuver {
+		repeat {
+			searchNextLevel()
+		} while bestSolution!.length > length
+		return bestSolution!
+	}
 }
 
 final class BasicTwoPhaseSolver: Solver {

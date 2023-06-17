@@ -50,7 +50,6 @@ struct NotationPicker: View {
 				VStack(alignment: .leading, spacing: 4) {
 					notation.label()
 						.font(.title3.weight(.semibold))
-					//.foregroundColor(selection == notation ? .accentColor : nil)
 					
 					description(for: notation)
 						.foregroundStyle(.secondary)
@@ -62,7 +61,7 @@ struct NotationPicker: View {
 				Text(Self.example.description(using: notation.notation))
 					.tint(.primary)
 				
-				MoveSequenceView(moves: Self.example, anchor: .leading, notationOverride: notation)
+				MoveSequenceView(moves: Self.example, notationOverride: notation)
 			}
 			
 			Image(systemName: "checkmark")

@@ -273,17 +273,69 @@ while true {
 */
 
 func testSequence() {
-	let sequence: MoveSequence = "L' B2 R2 D' L2 D U2 F2 U B2 F2 D2 F' L' R2 F2 R U2 F L'"
-	print(sequence.moves.count)
-	let transform = try! sequence.transformReversingRotations()
-	let stateBefore = -transform
-	print(stateBefore)
-	let solver = ThreeWayTwoPhaseSolver(start: stateBefore)
+	//let sequence: MoveSequence = "L' B2 R2 D' L2 D U2 F2 U B2 F2 D2 F' L' R2 F2 R U2 F L'"
+	//print(sequence.moves.count)
+	//let transform = try! sequence.transformReversingRotations()
+	//let stateBefore = -transform
+	//print(stateBefore)
 	while true {
+		print()
 		measureTime {
-			solver.searchNextLevel()
+			let scramble = CubeTransformation.random() <- {
+				$0.edges.orientation = .zero
+			}
+			let solver = ThreeWayTwoPhaseSolver(start: scramble)
+			repeat {
+				solver.searchNextLevel()
+				print(solver.bestSolution!.moves.count, solver.bestSolution!)
+			} while solver.bestSolution!.moves.count > 19
 		}
-		print(solver.bestSolution!.moves.count, solver.bestSolution!)
 	}
 }
 testSequence()
+
+func testRepetition() {
+	var best = 0
+	var searched = 0
+	
+	func search(length: Int, prefix: [SolverMove] = []) {
+		if length > 0 {
+			for move in SolverMove.all {
+				guard move.action.face != prefix.last?.action.face else { continue }
+				search(length: length - 1, prefix: prefix + [move])
+			}
+		} else {
+			searched += 1
+			print(searched, terminator: "\r")
+			let maneuver = SolverManeuver(moves: prefix)
+			let transform = maneuver.applied(to: .zero)
+			let repetitions = sequence(first: CubeTransformation.zero) { $0 + transform }
+				.enumerated()
+				.dropFirst()
+				.first { $0.element == .zero }!
+				.offset
+			if repetitions > best {
+				best = repetitions
+				print("new best! \(repetitions)x \(maneuver)")
+			}
+		}
+	}
+	
+	for length in 1... {
+		searched = 0
+		print("searching length", length)
+		measureTime {
+			// we can fix the first move
+			search(length: length - 1, prefix: [SolverMove.resolving(face: .right, direction: .clockwise)])
+			search(length: length - 1, prefix: [SolverMove.resolving(face: .right, direction: .double)])
+		}
+		print("searched:", searched)
+	}
+}
+//testRepetition()
+
+//let test: MoveSequence = "M E M' E'"
+//print(try! test.transform())
+//print(try! test.transformReversingRotations())
+
+//print(try! test.transformReversingRotations())

@@ -113,7 +113,7 @@ extension CubeConfiguration {
 	}
 }
 
-struct MoveSequence: Codable {
+struct MoveSequence: Codable, Hashable {
 	var moves: [Move]
 	
 	func rotated(by ordinal: Int) -> Self {
@@ -147,35 +147,6 @@ extension MoveSequence {
 extension MoveSequence: CustomStringConvertible {
 	var description: String {
 		moves.map(StandardNotation.description(for:)).joined(separator: " ")
-	}
-}
-
-enum ScrambleGenerator {
-	#if DEBUG
-	static func mockInitializeForPreviews() {
-		isPrepared = true
-	}
-	#endif
-	
-	static private(set) var isPrepared = false
-	
-	static func prepare() async {
-		let basicState: CubeTransformation = .singleR + .singleF
-		await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-			DispatchQueue.global(qos: .userInitiated).async {
-				BasicTwoPhaseSolver(start: basicState).searchNextLevel()
-				continuation.resume()
-			}
-		}
-		isPrepared = true
-	}
-	
-	static func generate() -> MoveSequence {
-		let solver = ThreeWayTwoPhaseSolver(start: .random())
-		repeat {
-			solver.searchNextLevel()
-		} while solver.bestSolution!.length > 24
-		return .init(solver.bestSolution!)
 	}
 }
 

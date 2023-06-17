@@ -5,43 +5,28 @@ import ArrayBuilder
 struct TimerScreen: View {
 	@StateObject var stopwatch = Stopwatch()
 	@StateObject var storage = ResultsStorage()
+	@StateObject var scrambler = ScrambleGenerator()
 	@State var latestResult: TimerResult?
-	@State var scramble: MoveSequence?
 	
 	var body: some View {
-		NavigationView {
-			ZStack {
-				ScrollView {
-					VStack(spacing: 16) {
-						box { storedResultsArea }
-						box { timerArea }
-						box { scrambleArea }
-						Spacer(minLength: 0)
-					}
-					.compositingGroup()
-					.shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
-					.padding(20)
+		NavigationStack {
+			List {
+				SectionBox(title: "Results") {
+					storedResultsArea
 				}
-				.background(Color.groupedBackground)
-				
-				VStack { // transitions don't work in ZStacks
-					if stopwatch.isRunning {
-						stopOverlay
-					}
+				SectionBox(title: "Timer") {
+					timerArea
+				}
+				SectionBox(title: "Scramble") {
+					scrambleArea
 				}
 			}
 			.navigationTitle("Timer")
+			.fullScreenCover(isPresented: .constant(stopwatch.isRunning)) {
+				stopOverlay
+			}
 		}
 		.navigationViewStyle(.stack)
-	}
-	
-	func box<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-		content()
-			.buttonStyle(.bordered)
-			.padding()
-			.frame(maxWidth: .infinity)
-			.background(Color.groupedContentBackground)
-			.cornerRadius(16)
 	}
 	
 	var stopOverlay: some View {
@@ -74,7 +59,7 @@ struct TimerScreen: View {
 				)
 			
 			if let latestResult = latestResult {
-				VStack {
+				HStack {
 					Button {
 						storage.results.insert(latestResult, at: 0)
 						self.latestResult = nil
@@ -85,7 +70,7 @@ struct TimerScreen: View {
 					Button(role: .destructive) {
 						self.latestResult = nil
 					} label: {
-						Label("Discard Result", systemImage: "trash")
+						Label("Discard", systemImage: "trash")
 					}
 				}
 			} else {
@@ -103,42 +88,15 @@ struct TimerScreen: View {
 		}
 	}
 	
-	@State private var isPreparingScrambler = false
 	var scrambleArea: some View {
-		VStack(spacing: 16) {
-			if ScrambleGenerator.isPrepared {
-				if let scramble = scramble {
-					ScrambleView(scramble: scramble)
-					
-					Button {
-						UIPasteboard.general.string = scramble.description()
-					} label: {
-						Label("Copy", systemImage: "doc.on.doc")
-					}
-					.buttonStyle(.borderless)
-				}
-				
+		VStack(spacing: 12) {
+			ScramblerView(scrambler: scrambler) {
 				Button {
-					scramble = ScrambleGenerator.generate()
+					Task { await scrambler.generate() }
 				} label: {
 					Label("Generate Scramble", systemImage: "shuffle")
 				}
-			} else {
-				ZStack {
-					if isPreparingScrambler {
-						ProgressView()
-					}
-					
-					Button("Initialize Scrambler") {
-						isPreparingScrambler = true
-						Task {
-							await ScrambleGenerator.prepare()
-							isPreparingScrambler = false
-						}
-					}
-					.disabled(isPreparingScrambler)
-					.opacity(isPreparingScrambler ? 0.5 : 1)
-				}
+				.buttonStyle(.borderedProminent)
 			}
 		}
 	}
@@ -167,14 +125,9 @@ struct TimerScreen: View {
 					}
 				}
 				
-				NavigationLink {
+				NavigationLink("View All Results") {
 					StoredResultsList(storedResults: $storage.results)
 						.background(Color.groupedContentBackground, ignoresSafeAreaEdges: .all)
-				} label: {
-					HStack {
-						Text("View All Results")
-						Image(systemName: "chevron.right")
-					}
 				}
 			}
 		}
@@ -193,10 +146,50 @@ struct TimerScreen: View {
 	}
 }
 
+struct ScramblerView<PrimaryAction: View>: View {
+	@ObservedObject var scrambler: ScrambleGenerator
+	
+	@ViewBuilder var primaryAction: PrimaryAction
+	
+	var body: some View {
+		switch scrambler.state {
+		case nil:
+			Button("Initialize Scrambler") {
+				Task {
+					await scrambler.prepare()
+				}
+			}
+		case .preparing:
+			progressView("Preparing Scrambler…")
+		case .ready:
+			primaryAction
+		case .scrambling:
+			primaryAction
+				.disabled(true)
+			progressView("Generating Scramble…")
+		case .done(let scramble):
+			primaryAction
+			
+			ScrambleView(scramble: scramble)
+		}
+	}
+	
+	func progressView(_ title: LocalizedStringKey) -> some View {
+		ZStack {
+			if let lastScramble = scrambler.lastScramble {
+				ScrambleView(scramble: lastScramble).hidden()
+			}
+			ProgressView(title)
+		}
+	}
+}
+
 struct ScrambleView: View {
 	var scramble: MoveSequence
 	
 	@AppStorage("showScrambleAsText") private var showScrambleAsText = true
+	
+	@Environment(\.settings.notation.notation) private var notation
 	
 	var body: some View {
 		ZStack {
@@ -204,18 +197,31 @@ struct ScrambleView: View {
 				Text("Empty Scramble!")
 					.foregroundColor(.secondary)
 			} else {
-				if showScrambleAsText {
-					Text(scramble.description())
-						.textSelection(.enabled)
-						.fixedSize(horizontal: false, vertical: true)
-						.frame(maxWidth: .infinity, alignment: .leading)
-				} else {
-					MoveSequenceView(moves: scramble)
+				Menu {
+					Toggle(isOn: $showScrambleAsText) {
+						Label("Show as Text", systemImage: "textformat")
+					}
+					
+					Button {
+						UIPasteboard.general.string = scramble.description(using: notation)
+					} label: {
+						Label("Copy", systemImage: "doc.on.doc")
+					}
+				} label: {
+					scrambleView()
 				}
+				.menuStyle(.borderlessButton)
 			}
 		}
-		.onTapGesture {
-			showScrambleAsText.toggle()
+	}
+	
+	@ViewBuilder
+	func scrambleView() -> some View {
+		if showScrambleAsText {
+			MoveSequenceLabel(moves: scramble)
+				.frame(maxWidth: .infinity, alignment: .leading)
+		} else {
+			MoveSequenceView(moves: scramble)
 		}
 	}
 }
@@ -288,8 +294,11 @@ struct TimerScreen_Previews: PreviewProvider {
 		
 		TimerScreen(storage: .init(results: exampleResults))
 		
-		let _ = ScrambleGenerator.mockInitializeForPreviews()
-		TimerScreen(scramble: "R D' F2 D2 R2 B2 R2 B2 U2 F L2 B' D B2 F2 L R B")
+		TimerScreen(scrambler: .mockInitialized())
+		
+		TimerScreen(scrambler: .mockInitialized(
+			state: .done("R D' F2 D2 R2 B2 R2 B2 U2 F L2 B' D B2 F2 L R B")
+		))
 		
 		TimerScreen(
 			storage: .init(results: Array(exampleResults.prefix(3))),

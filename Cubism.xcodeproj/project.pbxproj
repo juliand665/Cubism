@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B90D0F962A3D4F7F009BB6CA /* ScrambleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D0F952A3D4F7F009BB6CA /* ScrambleGenerator.swift */; };
+		B90D0F972A3D4F7F009BB6CA /* ScrambleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D0F952A3D4F7F009BB6CA /* ScrambleGenerator.swift */; };
+		B90D0F9A2A3D4FEC009BB6CA /* SectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D0F992A3D4FEC009BB6CA /* SectionBox.swift */; };
+		B90D0F9B2A3D4FEC009BB6CA /* SectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D0F992A3D4FEC009BB6CA /* SectionBox.swift */; };
 		B91526012715322A00E8B031 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B91526002715322A00E8B031 /* Collections */; };
 		B91526032715324A00E8B031 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B91526022715324A00E8B031 /* Collections */; };
 		B92A59D626E46B64002AC260 /* CGeometry in Frameworks */ = {isa = PBXBuildFile; productRef = B92A59D526E46B64002AC260 /* CGeometry */; };
@@ -153,6 +157,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B90D0F952A3D4F7F009BB6CA /* ScrambleGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrambleGenerator.swift; sourceTree = "<group>"; };
+		B90D0F992A3D4FEC009BB6CA /* SectionBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBox.swift; sourceTree = "<group>"; };
 		B93F8C082783A39500909080 /* DirectCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectCoordinates.swift; sourceTree = "<group>"; };
 		B93F8C0A2783A42700909080 /* Timing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timing.swift; sourceTree = "<group>"; };
 		B93F8C0C2783A4F300909080 /* ComposedCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposedCoordinates.swift; sourceTree = "<group>"; };
@@ -253,6 +259,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B90D0F982A3D4FDF009BB6CA /* General */ = {
+			isa = PBXGroup;
+			children = (
+				B90D0F992A3D4FEC009BB6CA /* SectionBox.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		B93F8C122783A68300909080 /* Coordinates */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,6 +349,7 @@
 				B96AB4CD26E3B31E003E38E4 /* Algorithms */,
 				B994B157285BF672006AD912 /* Trainer */,
 				B9ABB6FB2A2FCA84004D345D /* Settings */,
+				B90D0F982A3D4FDF009BB6CA /* General */,
 				B9A2963226E434ED005C59D1 /* Model */,
 				B96E9C1426E2D82700A46A3B /* Helpers */,
 				B96E9BEE26E2755600A46A3B /* Assets.xcassets */,
@@ -393,6 +408,7 @@
 				B9A2962A26E43453005C59D1 /* NotationParser.swift */,
 				B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */,
 				B9ABB6FF2A30D728004D345D /* AppSettings.swift */,
+				B90D0F952A3D4F7F009BB6CA /* ScrambleGenerator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -629,6 +645,7 @@
 				B984D7F627C801F100BEDC7D /* OrderedEdgeSubsetCoordinates.swift in Sources */,
 				B9ABB6FD2A2FCA92004D345D /* SettingsScreen.swift in Sources */,
 				B9A2962B26E43453005C59D1 /* NotationParser.swift in Sources */,
+				B90D0F9A2A3D4FEC009BB6CA /* SectionBox.swift in Sources */,
 				B9AEB7E427B17CDF0090A203 /* PrettyPrinting.swift in Sources */,
 				B9AEB7E127B17CDF0090A203 /* Orientation.swift in Sources */,
 				B96E9C0F26E2883600A46A3B /* TimerScreen.swift in Sources */,
@@ -637,6 +654,7 @@
 				B9AEB7E627B17CDF0090A203 /* Swift+Helpers.swift in Sources */,
 				B979C24F2853A32E00C60455 /* Algorithm+Transform.swift in Sources */,
 				B9A2962F26E43495005C59D1 /* Notation.swift in Sources */,
+				B90D0F962A3D4F7F009BB6CA /* ScrambleGenerator.swift in Sources */,
 				B9D8429126E44F60007D5533 /* CubeConfigurationDiagram.swift in Sources */,
 				B9AEB7E227B17CDF0090A203 /* CubeTransformation.swift in Sources */,
 				B96E9BFA26E2755600A46A3B /* CubismApp.swift in Sources */,
@@ -670,6 +688,7 @@
 				B9AEB7F127B17CDF0090A203 /* Timing.swift in Sources */,
 				B9A11F552852ABF500599719 /* CubeTransformation+Standard.swift in Sources */,
 				B9AEB7FA27B17CDF0090A203 /* TaggedPieces.swift in Sources */,
+				B90D0F9B2A3D4FEC009BB6CA /* SectionBox.swift in Sources */,
 				B96E9BFD26E2755600A46A3B /* ContentView.swift in Sources */,
 				B96E9C1026E2883600A46A3B /* TimerScreen.swift in Sources */,
 				B9AEB7F427B17CDF0090A203 /* CubeTransformation.swift in Sources */,
@@ -678,6 +697,7 @@
 				B9AEB7F227B17CDF0090A203 /* DirectCoordinates.swift in Sources */,
 				B9AEB7ED27B17CDF0090A203 /* Coordinate.swift in Sources */,
 				B9AEB7FE27B17CDF0090A203 /* PiecePermutation.swift in Sources */,
+				B90D0F972A3D4F7F009BB6CA /* ScrambleGenerator.swift in Sources */,
 				B9AEB7F827B17CDF0090A203 /* Swift+Helpers.swift in Sources */,
 				B9AEB7F527B17CDF0090A203 /* PieceOrientation.swift in Sources */,
 				B9ABB6FA2A2E1568004D345D /* SwiftUI+Contrast.swift in Sources */,
