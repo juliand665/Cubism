@@ -22,13 +22,15 @@ struct TimerScreen: View {
 				}
 			}
 			.navigationTitle("Timer")
+#if !os(macOS)
 			.fullScreenCover(isPresented: .constant(stopwatch.isRunning)) {
 				stopOverlay
 			}
+#endif
 		}
-		.navigationViewStyle(.stack)
 	}
 	
+#if !os(macOS)
 	var stopOverlay: some View {
 		VStack(spacing: 0) {
 			timerText
@@ -48,6 +50,7 @@ struct TimerScreen: View {
 		.transition(.move(edge: .bottom))
 		.transition(.slide)
 	}
+#endif
 	
 	var timerArea: some View {
 		VStack(spacing: 16) {
@@ -58,33 +61,55 @@ struct TimerScreen: View {
 						.monospacedDigit()
 				)
 			
-			if let latestResult = latestResult {
-				HStack {
-					Button {
-						storage.results.insert(latestResult, at: 0)
-						self.latestResult = nil
-					} label: {
-						Label("Store Result", systemImage: "square.and.arrow.down")
-					}
-					
-					Button(role: .destructive) {
-						self.latestResult = nil
-					} label: {
-						Label("Discard", systemImage: "trash")
-					}
-				}
-			} else {
+			#if os(macOS)
+			if stopwatch.isRunning {
 				Button {
-					withAnimation(.default.speed(2)) {
-						stopwatch.start()
+					withAnimation {
+						latestResult = stopwatch.stop()
 					}
 				} label: {
-					Text("Start Timer")
+					Text("Stop Timer")
 						.fontWeight(.bold)
 						.padding(8)
 				}
 				.buttonStyle(.borderedProminent)
+			} else {
+				sharedTimerButtons
 			}
+			#else
+			sharedTimerButtons
+			#endif
+		}
+	}
+	
+	@ViewBuilder
+	var sharedTimerButtons: some View {
+		if let latestResult = latestResult {
+			HStack {
+				Button {
+					storage.results.insert(latestResult, at: 0)
+					self.latestResult = nil
+				} label: {
+					Label("Store Result", systemImage: "square.and.arrow.down")
+				}
+				
+				Button(role: .destructive) {
+					self.latestResult = nil
+				} label: {
+					Label("Discard", systemImage: "trash")
+				}
+			}
+		} else {
+			Button {
+				withAnimation(.default.speed(2)) {
+					stopwatch.start()
+				}
+			} label: {
+				Text("Start Timer")
+					.fontWeight(.bold)
+					.padding(8)
+			}
+			.buttonStyle(.borderedProminent)
 		}
 	}
 	
@@ -127,7 +152,6 @@ struct TimerScreen: View {
 				
 				NavigationLink("View All Results") {
 					StoredResultsList(storedResults: $storage.results)
-						.background(Color.groupedContentBackground, ignoresSafeAreaEdges: .all)
 				}
 			}
 		}
@@ -203,7 +227,11 @@ struct ScrambleView: View {
 					}
 					
 					Button {
+#if os(macOS)
+						NSPasteboard.general.setString(scramble.description(using: notation), forType: .string)
+#else
 						UIPasteboard.general.string = scramble.description(using: notation)
+#endif
 					} label: {
 						Label("Copy", systemImage: "doc.on.doc")
 					}
@@ -253,8 +281,12 @@ struct StoredResultsList: View {
 			}
 		}
 		.navigationTitle("Previous Times")
-		.navigationBarTitleDisplayMode(.inline)
-		.toolbar { EditButton() }
+		.inlineNavigationTitle()
+		.toolbar {
+#if !os(macOS)
+			EditButton()
+#endif
+		}
 	}
 }
 

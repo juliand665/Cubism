@@ -1,8 +1,20 @@
 import SwiftUI
 
 extension Color {
+	#if !os(macOS)
 	static let groupedBackground = Color(uiColor: .systemGroupedBackground)
 	static let groupedContentBackground = Color(uiColor: .secondarySystemGroupedBackground)
+	#endif
+}
+
+extension View {
+	func inlineNavigationTitle() -> some View {
+		#if os(macOS)
+		self
+		#else
+		navigationBarTitleDisplayMode(.inline)
+		#endif
+	}
 }
 
 extension ForEach where Content: View {

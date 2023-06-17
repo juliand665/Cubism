@@ -11,6 +11,32 @@
 		B90D0F972A3D4F7F009BB6CA /* ScrambleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D0F952A3D4F7F009BB6CA /* ScrambleGenerator.swift */; };
 		B90D0F9A2A3D4FEC009BB6CA /* SectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D0F992A3D4FEC009BB6CA /* SectionBox.swift */; };
 		B90D0F9B2A3D4FEC009BB6CA /* SectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D0F992A3D4FEC009BB6CA /* SectionBox.swift */; };
+		B90D0F9D2A3D53F6009BB6CA /* HandyOperators in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0F9C2A3D53F6009BB6CA /* HandyOperators */; };
+		B90D0F9F2A3D53F6009BB6CA /* ArrayBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0F9E2A3D53F6009BB6CA /* ArrayBuilder */; };
+		B90D0FA12A3D53F6009BB6CA /* UserDefault in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0FA02A3D53F6009BB6CA /* UserDefault */; };
+		B90D0FA32A3D53F6009BB6CA /* CGeometry in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0FA22A3D53F6009BB6CA /* CGeometry */; };
+		B90D0FA52A3D53F6009BB6CA /* SwiftUIMissingPieces in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0FA42A3D53F6009BB6CA /* SwiftUIMissingPieces */; };
+		B90D0FA72A3D53F6009BB6CA /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0FA62A3D53F6009BB6CA /* Algorithms */; };
+		B90D0FA92A3D53F6009BB6CA /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0FA82A3D53F6009BB6CA /* Collections */; };
+		B90D0FAB2A3D53F6009BB6CA /* SimpleParser in Frameworks */ = {isa = PBXBuildFile; productRef = B90D0FAA2A3D53F6009BB6CA /* SimpleParser */; };
+		B90D0FAC2A3D5444009BB6CA /* AlgorithmsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4CE26E3B32D003E38E4 /* AlgorithmsScreen.swift */; };
+		B90D0FAD2A3D5444009BB6CA /* AlgorithmDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B955EF9D26ED73C0008F65E3 /* AlgorithmDetailsView.swift */; };
+		B90D0FAE2A3D5444009BB6CA /* AddVariantSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA895628BAF9D400B3462A /* AddVariantSheet.swift */; };
+		B90D0FAF2A3D5444009BB6CA /* MoveSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9855C1826EDA53E006764BD /* MoveSequenceView.swift */; };
+		B90D0FB02A3D5444009BB6CA /* CubeConfigurationDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8429026E44F60007D5533 /* CubeConfigurationDiagram.swift */; };
+		B90D0FB12A3D5444009BB6CA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DE914026F292F200DE0E29 /* Colors.swift */; };
+		B90D0FB22A3D5444009BB6CA /* TrainerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994B158285BF67F006AD912 /* TrainerScreen.swift */; };
+		B90D0FB32A3D5444009BB6CA /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96AB4D026E3B358003E38E4 /* Algorithm.swift */; };
+		B90D0FB42A3D5444009BB6CA /* Algorithm+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B979C24E2853A32E00C60455 /* Algorithm+Transform.swift */; };
+		B90D0FB52A3D5444009BB6CA /* CubeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962C26E4346D005C59D1 /* CubeConfiguration.swift */; };
+		B90D0FB62A3D5444009BB6CA /* BaseAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2963026E434C4005C59D1 /* BaseAlgorithms.swift */; };
+		B90D0FB72A3D5444009BB6CA /* OLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476526E5732200E19911 /* OLLAlgorithms.swift */; };
+		B90D0FB82A3D5444009BB6CA /* PLLAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476726E5737500E19911 /* PLLAlgorithms.swift */; };
+		B90D0FB92A3D5444009BB6CA /* MiscAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988476926E5738D00E19911 /* MiscAlgorithms.swift */; };
+		B90D0FBA2A3D5444009BB6CA /* BigCubeAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D5CEF4277A857800A6DBE0 /* BigCubeAlgorithms.swift */; };
+		B90D0FBB2A3D5444009BB6CA /* Notation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962E26E43495005C59D1 /* Notation.swift */; };
+		B90D0FBC2A3D5444009BB6CA /* NotationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2962A26E43453005C59D1 /* NotationParser.swift */; };
+		B90D0FBD2A3D5444009BB6CA /* AlgorithmCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F5E6B326EA4DA100652979 /* AlgorithmCustomization.swift */; };
 		B91526012715322A00E8B031 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B91526002715322A00E8B031 /* Collections */; };
 		B91526032715324A00E8B031 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B91526022715324A00E8B031 /* Collections */; };
 		B92A59D626E46B64002AC260 /* CGeometry in Frameworks */ = {isa = PBXBuildFile; productRef = B92A59D526E46B64002AC260 /* CGeometry */; };
@@ -253,6 +279,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B90D0FA92A3D53F6009BB6CA /* Collections in Frameworks */,
+				B90D0FA72A3D53F6009BB6CA /* Algorithms in Frameworks */,
+				B90D0FA32A3D53F6009BB6CA /* CGeometry in Frameworks */,
+				B90D0FAB2A3D53F6009BB6CA /* SimpleParser in Frameworks */,
+				B90D0F9F2A3D53F6009BB6CA /* ArrayBuilder in Frameworks */,
+				B90D0F9D2A3D53F6009BB6CA /* HandyOperators in Frameworks */,
+				B90D0FA12A3D53F6009BB6CA /* UserDefault in Frameworks */,
+				B90D0FA52A3D53F6009BB6CA /* SwiftUIMissingPieces in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +532,16 @@
 			dependencies = (
 			);
 			name = "Cubism (macOS)";
+			packageProductDependencies = (
+				B90D0F9C2A3D53F6009BB6CA /* HandyOperators */,
+				B90D0F9E2A3D53F6009BB6CA /* ArrayBuilder */,
+				B90D0FA02A3D53F6009BB6CA /* UserDefault */,
+				B90D0FA22A3D53F6009BB6CA /* CGeometry */,
+				B90D0FA42A3D53F6009BB6CA /* SwiftUIMissingPieces */,
+				B90D0FA62A3D53F6009BB6CA /* Algorithms */,
+				B90D0FA82A3D53F6009BB6CA /* Collections */,
+				B90D0FAA2A3D53F6009BB6CA /* SimpleParser */,
+			);
 			productName = "Cubism (macOS)";
 			productReference = B96E9BF926E2755600A46A3B /* Cubism.app */;
 			productType = "com.apple.product-type.application";
@@ -510,7 +554,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					B96C708D27088495001DAEF8 = {
 						CreatedOnToolsVersion = 13.0;
@@ -675,6 +719,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B90D0FAC2A3D5444009BB6CA /* AlgorithmsScreen.swift in Sources */,
+				B90D0FAD2A3D5444009BB6CA /* AlgorithmDetailsView.swift in Sources */,
+				B90D0FAE2A3D5444009BB6CA /* AddVariantSheet.swift in Sources */,
+				B90D0FAF2A3D5444009BB6CA /* MoveSequenceView.swift in Sources */,
+				B90D0FB02A3D5444009BB6CA /* CubeConfigurationDiagram.swift in Sources */,
+				B90D0FB12A3D5444009BB6CA /* Colors.swift in Sources */,
+				B90D0FB22A3D5444009BB6CA /* TrainerScreen.swift in Sources */,
+				B90D0FB32A3D5444009BB6CA /* Algorithm.swift in Sources */,
+				B90D0FB42A3D5444009BB6CA /* Algorithm+Transform.swift in Sources */,
+				B90D0FB52A3D5444009BB6CA /* CubeConfiguration.swift in Sources */,
+				B90D0FB62A3D5444009BB6CA /* BaseAlgorithms.swift in Sources */,
+				B90D0FB72A3D5444009BB6CA /* OLLAlgorithms.swift in Sources */,
+				B90D0FB82A3D5444009BB6CA /* PLLAlgorithms.swift in Sources */,
+				B90D0FB92A3D5444009BB6CA /* MiscAlgorithms.swift in Sources */,
+				B90D0FBA2A3D5444009BB6CA /* BigCubeAlgorithms.swift in Sources */,
+				B90D0FBB2A3D5444009BB6CA /* Notation.swift in Sources */,
+				B90D0FBC2A3D5444009BB6CA /* NotationParser.swift in Sources */,
+				B90D0FBD2A3D5444009BB6CA /* AlgorithmCustomization.swift in Sources */,
 				B9B47D1F27B4078600EECC6F /* Data+Compression.swift in Sources */,
 				B9AEB7FD27B17CDF0090A203 /* Pieces.swift in Sources */,
 				B9AEB7F027B17CDF0090A203 /* PruningTable.swift in Sources */,
@@ -798,6 +860,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -858,6 +921,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -966,7 +1030,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
 				PRODUCT_NAME = Cubism;
@@ -997,7 +1061,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = juliand665.Cubism;
 				PRODUCT_NAME = Cubism;
@@ -1116,6 +1180,46 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B90D0F9C2A3D53F6009BB6CA /* HandyOperators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C0826E27A4C00A46A3B /* XCRemoteSwiftPackageReference "HandyOperators" */;
+			productName = HandyOperators;
+		};
+		B90D0F9E2A3D53F6009BB6CA /* ArrayBuilder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C0B26E2867800A46A3B /* XCRemoteSwiftPackageReference "ArrayBuilder" */;
+			productName = ArrayBuilder;
+		};
+		B90D0FA02A3D53F6009BB6CA /* UserDefault */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96E9C1126E2992D00A46A3B /* XCRemoteSwiftPackageReference "UserDefault" */;
+			productName = UserDefault;
+		};
+		B90D0FA22A3D53F6009BB6CA /* CGeometry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B92A59D426E46B64002AC260 /* XCRemoteSwiftPackageReference "CGeometry" */;
+			productName = CGeometry;
+		};
+		B90D0FA42A3D53F6009BB6CA /* SwiftUIMissingPieces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9855C1A26EE2848006764BD /* XCRemoteSwiftPackageReference "SwifUI-Missing-Pieces" */;
+			productName = SwiftUIMissingPieces;
+		};
+		B90D0FA62A3D53F6009BB6CA /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9855C1D26EE2AB5006764BD /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+		B90D0FA82A3D53F6009BB6CA /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B91525FF2715322A00E8B031 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		B90D0FAA2A3D53F6009BB6CA /* SimpleParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9D5CEF0277A833500A6DBE0 /* XCRemoteSwiftPackageReference "SimpleParser" */;
+			productName = SimpleParser;
+		};
 		B91526002715322A00E8B031 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B91525FF2715322A00E8B031 /* XCRemoteSwiftPackageReference "swift-collections" */;

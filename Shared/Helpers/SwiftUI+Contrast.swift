@@ -19,12 +19,18 @@ private struct AdjustedForegroundColor: ViewModifier {
 	}
 }
 
+#if os(macOS)
+private typealias PlatformColor = NSColor
+#else
+private typealias PlatformColor = UIColor
+#endif
+
 extension Color {
 	func darkened(strength: CGFloat) -> Self {
 		guard strength > 0 else { return self }
 		let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
 		
-		let color = UIColor(self).cgColor.converted(to: colorSpace, intent: .defaultIntent, options: nil)!
+		let color = PlatformColor(self).cgColor.converted(to: colorSpace, intent: .defaultIntent, options: nil)!
 		
 		var components = color.components!
 		var remaining = strength

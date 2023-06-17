@@ -49,7 +49,7 @@ struct AddVariantSheet: View {
 			}
 		}
 		.navigationTitle("Add Variant")
-		.navigationBarTitleDisplayMode(.inline)
+		.inlineNavigationTitle()
 	}
 	
 	@ViewBuilder

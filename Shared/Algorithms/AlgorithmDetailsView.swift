@@ -37,7 +37,9 @@ struct AlgorithmDetailsView: View {
 			}
 		}
 		.toolbar {
+#if !os(macOS)
 			EditButton()
+#endif
 		}
 		.sheet(isPresented: $isAddingVariant) {
 			NavigationView {
@@ -47,7 +49,7 @@ struct AlgorithmDetailsView: View {
 			}
 		}
 		.navigationTitle(algorithm.name)
-		.navigationBarTitleDisplayMode(.inline)
+		.inlineNavigationTitle()
 	}
 	
 	@ViewBuilder
@@ -99,7 +101,9 @@ struct AlgorithmDetailsView: View {
 		
 		@Binding var preferredVariant: Algorithm.Variant.ID?
 		
+#if !os(macOS)
 		@Environment(\.editMode) private var editMode
+#endif
 		
 		var body: some View {
 			let isSelected = preferredVariant == variant.id
@@ -122,6 +126,7 @@ struct AlgorithmDetailsView: View {
 					}
 				}
 			}
+#if !os(macOS)
 			.swipeActions {
 				if editMode?.wrappedValue != .active { // otherwise we'd be replacing swipe-to-delete lmao
 					Button {
@@ -131,6 +136,7 @@ struct AlgorithmDetailsView: View {
 					}
 				}
 			}
+#endif
 		}
 	}
 	

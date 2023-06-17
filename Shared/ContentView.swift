@@ -24,6 +24,9 @@ struct ContentView: View {
 				.tag(Tab.settings)
 		}
 		.environmentObject(AlgorithmCustomizer())
+#if os(macOS)
+		.padding()
+#endif
 	}
 	
 	enum Tab: String {

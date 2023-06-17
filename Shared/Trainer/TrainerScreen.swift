@@ -115,7 +115,7 @@ struct AlgorithmPicker: View {
 			}
 		}
 		.toolbar {
-			ToolbarItemGroup(placement: .bottomBar) {
+			ToolbarItemGroup(placement: .principal) {
 				Button("Select All") {
 					selection = .init(folder.allAlgorithms.map(\.id))
 				}
@@ -142,7 +142,7 @@ struct AlgorithmPicker: View {
 			}
 		}
 		.navigationTitle("Choose Algorithms")
-		.navigationBarTitleDisplayMode(.inline)
+		.inlineNavigationTitle()
 	}
 	
 	@ViewBuilder
