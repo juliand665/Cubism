@@ -319,7 +319,7 @@ struct PLLEdges {
 
 struct CubeConfigurationDiagram_Previews: PreviewProvider {
     static var previews: some View {
-		HStack(spacing: 20) {
+		VStack(spacing: 20) {
 			CubeConfigurationDiagram(configuration: .oll(.init(
 				correctEdges: [.south, .east],
 				neCorner: .twistedCCW, swCorner: .twistedCW, nwCorner: .neutral
@@ -328,6 +328,5 @@ struct CubeConfigurationDiagram_Previews: PreviewProvider {
 			CubeConfigurationDiagram(configuration: Algorithm.uPermB.configuration!)
 			CubeConfigurationDiagram(configuration: Algorithm.gPermA.configuration!, scale: 2)
 		}
-		.previewInterfaceOrientation(.landscapeLeft)
     }
 }
