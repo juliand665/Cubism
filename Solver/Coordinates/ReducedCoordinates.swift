@@ -5,11 +5,11 @@ import HandyOperators
 /// Same as `FlipUDSliceCoordinate`, except that it's been reduced using symmetries.
 struct ReducedFlipUDSliceCoordinate: ReducedCoordinate, CoordinateWithMoveTable {
 	typealias BaseCoord = FlipUDSliceCoordinate
+    typealias ClassIndex = UInt16 // need this to work around a compiler crash here
 	
 	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	
-    // need to annotate types to work around a compiler crash here
-    static let (representants, classIndices): ([Representant], [ClassIndex]) = loadOrComputeRepresentants()
+    static let (representants, classIndices) = loadOrComputeRepresentants()
 	
 	var index: UInt16
 	var symmetry: StandardSymmetry
@@ -18,11 +18,11 @@ struct ReducedFlipUDSliceCoordinate: ReducedCoordinate, CoordinateWithMoveTable 
 /// Same as `CornerOrientationCoordinate`, except that it's been reduced using symmetries.
 struct ReducedCornerPermutationCoordinate: ReducedCoordinate, CoordinateWithMoveTable {
 	typealias BaseCoord = CornerPermutationCoordinate
+    typealias ClassIndex = UInt16 // need this to work around a compiler crash here
 	
 	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	
-    // need to annotate types to work around a compiler crash here
-    static let (representants, classIndices): ([Representant], [ClassIndex]) = loadOrComputeRepresentants()
+    static let (representants, classIndices) = loadOrComputeRepresentants()
 	
 	var index: UInt16
 	var symmetry: StandardSymmetry
