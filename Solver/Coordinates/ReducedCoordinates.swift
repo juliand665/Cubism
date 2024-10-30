@@ -8,7 +8,8 @@ struct ReducedFlipUDSliceCoordinate: ReducedCoordinate, CoordinateWithMoveTable 
 	
 	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	
-	static let (representants, classIndices) = loadOrComputeRepresentants()
+    // need to annotate types to work around a compiler crash here
+    static let (representants, classIndices): ([Representant], [ClassIndex]) = loadOrComputeRepresentants()
 	
 	var index: UInt16
 	var symmetry: StandardSymmetry
@@ -20,7 +21,8 @@ struct ReducedCornerPermutationCoordinate: ReducedCoordinate, CoordinateWithMove
 	
 	static let moveTable = FaceTurnMoveTable<Self>.cached().load()
 	
-	static let (representants, classIndices) = loadOrComputeRepresentants()
+    // need to annotate types to work around a compiler crash here
+    static let (representants, classIndices): ([Representant], [ClassIndex]) = loadOrComputeRepresentants()
 	
 	var index: UInt16
 	var symmetry: StandardSymmetry
