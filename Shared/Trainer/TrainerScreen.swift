@@ -77,20 +77,21 @@ struct TrainerScreen: View {
 			
 			state += uTurns.randomElement()!
 			
-			let pllOptions = AlgorithmFolder.fullPLL.allAlgorithms.filter { plls.contains($0.id) }
-			if shouldTrainPLLs, let algorithm = pllOptions.randomElement() {
-				let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
-				state -= transform
-			}
-			
+            let ollOptions = AlgorithmFolder.fullOLL.allAlgorithms.filter { olls.contains($0.id) }
+            if shouldTrainOLLs, let algorithm = ollOptions.randomElement() {
+                let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
+                // TODO: intuitively i would have expected this to need to be -=, but somehow += makes it work as expected?? not sure what's up with that
+                state += transform
+            }
+            
 			state += uTurns.randomElement()!
 			
-			let ollOptions = AlgorithmFolder.fullOLL.allAlgorithms.filter { olls.contains($0.id) }
-			if shouldTrainOLLs, let algorithm = ollOptions.randomElement() {
-				let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
-				state -= transform
-			}
-			
+            let pllOptions = AlgorithmFolder.fullPLL.allAlgorithms.filter { plls.contains($0.id) }
+            if shouldTrainPLLs, let algorithm = pllOptions.randomElement() {
+                let transform = try! algorithm.variants.first!.moves.transformReversingRotations()
+                state += transform
+            }
+            
 			state += uTurns.randomElement()!
 		}
 		
